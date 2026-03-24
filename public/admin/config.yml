@@ -1,5 +1,6 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: marcorosso-collab/Exploreans-Mara-River-Camp-Website
   branch: main
 
 media_folder: "public/images/uploads"
