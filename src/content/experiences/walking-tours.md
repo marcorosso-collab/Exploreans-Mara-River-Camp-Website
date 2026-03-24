@@ -1,8 +1,8 @@
 ---
-title: "Walking Tours"
-label: "On Foot"
-description: "Leave the vehicle behind. Walk the Mara with our guides — slower, quieter, closer to the ground and everything on it."
-image: "/images/walking-tour.jpg"
+title: Walking Tours
+label: On Foot
+description: Leave the vehicle behind. Walk the Mara with our guides — slower, quieter, closer to the ground and everything on it.
+image: /images/uploads/Activity_Walking Safari.png
 featured: false
 order: 5
 ---
