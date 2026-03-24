@@ -1,8 +1,8 @@
 ---
-title: "Maasai Village & Dance"
-label: "Culture"
-description: "Step into the rhythms and traditions of the Maasai — a visit to a local village and a performance that has echoed across these plains for centuries."
-image: "/images/maasai-culture.jpg"
+title: Maasai Village & Dance
+label: Culture
+description: Step into the rhythms and traditions of the Maasai — a visit to a local village and a performance that has echoed across these plains for centuries.
+image: /images/uploads/Activity_Masai Village Dance.jpg
 featured: true
 order: 2
 ---
