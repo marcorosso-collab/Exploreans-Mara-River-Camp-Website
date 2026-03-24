@@ -21,6 +21,7 @@ collections:
       - { label: "Booking URL", name: "bookingUrl", widget: "string", required: false }
       - { label: "Transfer Info", name: "transferInfo", widget: "string" }
       - { label: "Migration Season", name: "migrationSeason", widget: "string" }
+      - { label: "Logo", name: "logo", widget: "image", required: false }
       - label: "Social Links"
         name: "socialLinks"
         widget: "object"

@@ -11,6 +11,7 @@ const settings = defineCollection({
     bookingUrl: z.string().optional(),
     transferInfo: z.string(),
     migrationSeason: z.string(),
+    logo: z.string().optional(),
     socialLinks: z.object({
       instagram: z.string().optional(),
       facebook: z.string().optional(),

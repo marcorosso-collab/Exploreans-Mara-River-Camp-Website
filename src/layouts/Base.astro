@@ -27,7 +27,13 @@ const {
 
   <!-- Navigation -->
   <nav class="nav" id="mainNav">
-    <a href="/" class="nav-brand">{site.siteName}</a>
+    <a href="/" class="nav-brand">
+      {site.logo ? (
+        <img src={site.logo} alt={site.siteName} class="nav-logo-img" />
+      ) : (
+        site.siteName
+      )}
+    </a>
     <ul class="nav-links">
       <li><a href="#camp">The Camp</a></li>
       <li><a href="#stay">Stay</a></li>
