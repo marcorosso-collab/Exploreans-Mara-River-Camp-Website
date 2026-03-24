@@ -2,14 +2,15 @@
   "hero": {
     "tagline": "Maasai Mara, Kenya",
     "headline": "Where the river bends, the wild begins",
-    "image": "/images/hero.jpg"
+    "image": "/images/uploads/MaraRiverCamp-kleinBeyond Images-183 (1).jpg",
+    "video": ""
   },
   "intro": {
     "label": "The Camp",
     "headline": "A front-row seat to one of Earth's greatest spectacles",
     "leadText": "Perched on a graceful bend of the Mara River at the foot of the Oloololo Escarpment, the camp sits where comfort and the raw African wilderness dissolve into one another.",
     "bodyText": "This is not a place designed to impress — it is a place that reveals itself. Elephants crossing the grounds at dusk. Hippos surfacing a stone's throw from your terrace. The escarpment catching the last light. Every moment here is unscripted, and that is precisely the point.",
-    "image": "/images/camp-overview.jpg"
+    "image": "/images/uploads/Gemini_Generated_Image_e5obgee5obgee5ob.png"
   },
   "riverUsp": {
     "label": "What makes us different",
@@ -17,9 +18,18 @@
     "bodyText": "Because the camp sits directly on the Mara River, wildlife is not something you drive to — it is something you wake up to. Elephants, giraffes, hippos, and crocodiles are daily visitors to the grounds.",
     "image": "/images/river-panoramic.jpg",
     "stats": [
-      { "number": "23", "label": "Tents & one cabin — intimate by design" },
-      { "number": "0 km", "label": "Distance to wildlife — they come to you" },
-      { "number": "15 min", "label": "From Kichwa Tembo Airstrip to camp" }
+      {
+        "number": "23",
+        "label": "Tents & one cabin — intimate by design"
+      },
+      {
+        "number": "0 km",
+        "label": "Distance to wildlife — they come to you"
+      },
+      {
+        "number": "15 min",
+        "label": "From Kichwa Tembo Airstrip to camp"
+      }
     ]
   },
   "migration": {
@@ -29,7 +39,12 @@
     "bodyText": "Vast herds of wildebeest and zebra gather at the banks, waiting for the moment to plunge into the current — braving crocodiles and the sheer force of the water. The camp's location near several major crossing points places you within reach of this drama.",
     "disclaimer": "Peak migration season highlighted. River crossings are unpredictable and depend on herd movement and water levels.",
     "image": "/images/migration-crossing.jpg",
-    "activeMonths": ["Jul", "Aug", "Sep", "Oct"]
+    "activeMonths": [
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct"
+    ]
   },
   "dining": {
     "label": "Dining",
@@ -50,9 +65,18 @@
     "ctaText": "Plan Your Visit",
     "ctaUrl": "/plan",
     "infoItems": [
-      { "label": "Getting Here", "value": "15 min from Kichwa Tembo Airstrip" },
-      { "label": "Best For Migration", "value": "July — October" },
-      { "label": "Enquire", "value": "reservations@exploreans.com" }
+      {
+        "label": "Getting Here",
+        "value": "15 min from Kichwa Tembo Airstrip"
+      },
+      {
+        "label": "Best For Migration",
+        "value": "July — October"
+      },
+      {
+        "label": "Enquire",
+        "value": "reservations@exploreans.com"
+      }
     ]
   },
   "stay": {
