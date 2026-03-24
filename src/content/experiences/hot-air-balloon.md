@@ -1,8 +1,8 @@
 ---
-title: "Hot Air Balloon"
-label: "From Above"
-description: "Drift silently over the Mara at dawn — the plains, the river, the herds, all laid out beneath you in the first light."
-image: "/images/hot-air-balloon.jpg"
+title: Hot Air Balloon
+label: From Above
+description: Drift silently over the Mara at dawn — the plains, the river, the herds, all laid out beneath you in the first light.
+image: /images/uploads/Activity_Hot Air Balloon (1).png
 featured: true
 order: 3
 ---
