@@ -1,8 +1,8 @@
 ---
-title: "Bush Dining"
-label: "Out There"
-description: "Breakfast at dawn on the savanna. Lunch under an acacia tree. Sundowners as the sky turns gold. Meals served where the wild sets the table."
-image: "/images/bush-dining.jpg"
+title: Bush Dining
+label: Out There
+description: Breakfast at dawn on the savanna. Lunch under an acacia tree. Sundowners as the sky turns gold. Meals served where the wild sets the table.
+image: /images/uploads/Activity_BushDining.jpg
 featured: false
 order: 4
 ---
