@@ -1,0 +1,169 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "settings"
+    label: "Site Settings"
+    folder: "src/content/settings"
+    create: false
+    delete: false
+    extension: json
+    format: json
+    fields:
+      - { label: "Site Name", name: "siteName", widget: "string" }
+      - { label: "Property Name", name: "propertyName", widget: "string" }
+      - { label: "Tagline", name: "tagline", widget: "string" }
+      - { label: "Contact Email", name: "contactEmail", widget: "string" }
+      - { label: "Booking URL", name: "bookingUrl", widget: "string", required: false }
+      - { label: "Transfer Info", name: "transferInfo", widget: "string" }
+      - { label: "Migration Season", name: "migrationSeason", widget: "string" }
+      - label: "Social Links"
+        name: "socialLinks"
+        widget: "object"
+        required: false
+        fields:
+          - { label: "Instagram", name: "instagram", widget: "string", required: false }
+          - { label: "Facebook", name: "facebook", widget: "string", required: false }
+          - { label: "TripAdvisor", name: "tripadvisor", widget: "string", required: false }
+
+  - name: "homepage"
+    label: "Homepage Sections"
+    folder: "src/content/homepage"
+    create: false
+    delete: false
+    extension: json
+    format: json
+    fields:
+      - label: "Hero"
+        name: "hero"
+        widget: "object"
+        fields:
+          - { label: "Tagline", name: "tagline", widget: "string" }
+          - { label: "Headline", name: "headline", widget: "string" }
+          - { label: "Image", name: "image", widget: "image", required: false }
+      - label: "Intro"
+        name: "intro"
+        widget: "object"
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "Headline", name: "headline", widget: "string" }
+          - { label: "Lead Text", name: "leadText", widget: "text" }
+          - { label: "Body Text", name: "bodyText", widget: "text" }
+          - { label: "Image", name: "image", widget: "image", required: false }
+      - label: "River USP"
+        name: "riverUsp"
+        widget: "object"
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "Headline", name: "headline", widget: "string" }
+          - { label: "Body Text", name: "bodyText", widget: "text" }
+          - { label: "Image", name: "image", widget: "image", required: false }
+          - label: "Stats"
+            name: "stats"
+            widget: "list"
+            fields:
+              - { label: "Number", name: "number", widget: "string" }
+              - { label: "Label", name: "label", widget: "string" }
+      - label: "Migration"
+        name: "migration"
+        widget: "object"
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "Headline", name: "headline", widget: "string" }
+          - { label: "Lead Text", name: "leadText", widget: "text" }
+          - { label: "Body Text", name: "bodyText", widget: "text" }
+          - { label: "Disclaimer", name: "disclaimer", widget: "text" }
+          - { label: "Image", name: "image", widget: "image", required: false }
+          - { label: "Active Months", name: "activeMonths", widget: "list" }
+      - label: "Dining"
+        name: "dining"
+        widget: "object"
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "Headline", name: "headline", widget: "string" }
+          - { label: "Body Text", name: "bodyText", widget: "text" }
+          - { label: "Secondary Text", name: "secondaryText", widget: "text" }
+          - { label: "Bush Experiences", name: "bushExperiences", widget: "list" }
+          - { label: "Image", name: "image", widget: "image", required: false }
+      - label: "Plan Visit"
+        name: "planVisit"
+        widget: "object"
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "Headline", name: "headline", widget: "string" }
+          - { label: "Body Text", name: "bodyText", widget: "text" }
+          - { label: "CTA Text", name: "ctaText", widget: "string" }
+          - { label: "CTA URL", name: "ctaUrl", widget: "string" }
+          - label: "Info Items"
+            name: "infoItems"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Value", name: "value", widget: "string" }
+      - label: "Stay Section"
+        name: "stay"
+        widget: "object"
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "Headline", name: "headline", widget: "string" }
+          - { label: "Subtitle", name: "subtitle", widget: "string" }
+      - label: "Experiences Section"
+        name: "experiencesSection"
+        widget: "object"
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "Headline", name: "headline", widget: "string" }
+      - label: "Journal Section"
+        name: "journalSection"
+        widget: "object"
+        fields:
+          - { label: "Label", name: "label", widget: "string" }
+          - { label: "Headline", name: "headline", widget: "string" }
+
+  - name: "accommodation"
+    label: "Accommodation"
+    folder: "src/content/accommodation"
+    create: true
+    extension: md
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Category", name: "category", widget: "string" }
+      - { label: "Quantity", name: "quantity", widget: "number" }
+      - { label: "Size (sqm)", name: "sqm", widget: "string" }
+      - { label: "Max Guests", name: "maxGuests", widget: "number" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Order", name: "order", widget: "number" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "experiences"
+    label: "Experiences"
+    folder: "src/content/experiences"
+    create: true
+    extension: md
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Label", name: "label", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Order", name: "order", widget: "number" }
+      - { label: "Body", name: "body", widget: "markdown" }
+
+  - name: "journal"
+    label: "Journal"
+    folder: "src/content/journal"
+    create: true
+    extension: md
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Category", name: "category", widget: "string" }
+      - { label: "Description", name: "description", widget: "text" }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "Body", name: "body", widget: "markdown" }

@@ -1,0 +1,240 @@
+---
+import Base from '../layouts/Base.astro';
+import { getCollection, getEntry } from 'astro:content';
+import '../styles/global.css';
+
+// Load CMS content
+const page = await getEntry('homepage', 'sections');
+const { hero, intro, riverUsp, migration, dining, planVisit, stay, experiencesSection, journalSection } = page.data;
+
+const allAccommodation = await getCollection('accommodation');
+const rooms = allAccommodation.sort((a, b) => a.data.order - b.data.order);
+
+const allExperiences = await getCollection('experiences');
+const exps = allExperiences.sort((a, b) => a.data.order - b.data.order);
+
+const allJournal = await getCollection('journal', ({ data }) => !data.draft);
+const posts = allJournal.sort((a, b) => b.data.date.getTime() - a.data.date.getTime()).slice(0, 3);
+
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+---
+
+<Base>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <div class="hero-bg">
+      {hero.image
+        ? <img src={hero.image} alt={hero.headline} />
+        : <div class="img-placeholder" style="height:100%;aspect-ratio:auto;">Hero image — upload via CMS</div>
+      }
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-tagline">{hero.tagline}</p>
+      <h1 set:html={hero.headline} />
+    </div>
+  </section>
+
+
+  <!-- ═══ THE CAMP ═══ -->
+  <section class="section" id="camp">
+    <div class="container">
+      <div class="grid-2col">
+        <div>
+          <p class="section-label">{intro.label}</p>
+          <h2 set:html={intro.headline} />
+          <p class="lead-text">{intro.leadText}</p>
+          <p class="body-text">{intro.bodyText}</p>
+        </div>
+        {intro.image
+          ? <img src={intro.image} alt={intro.headline} style="aspect-ratio:4/5;object-fit:cover;" />
+          : <div class="img-placeholder ratio-4-5">Camp overview — upload via CMS</div>
+        }
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ RIVER USP ═══ -->
+  <section class="section-dark">
+    <div class="container">
+      <p class="section-label">{riverUsp.label}</p>
+      <h2 style="max-width:650px;" set:html={riverUsp.headline} />
+      <p class="body-text" style="max-width:560px;">{riverUsp.bodyText}</p>
+
+      {riverUsp.image
+        ? <img src={riverUsp.image} alt="River panoramic" style="width:calc(100% + 96px);margin:48px -48px;height:480px;object-fit:cover;" />
+        : <div class="img-placeholder wide" style="margin:48px -48px;width:calc(100% + 96px);">Panoramic — upload via CMS</div>
+      }
+
+      <div class="stat-grid">
+        {riverUsp.stats.map((stat) => (
+          <div>
+            <div class="stat-number">{stat.number}</div>
+            <div class="stat-label" set:html={stat.label} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ ACCOMMODATION ═══ -->
+  <section class="section" id="stay">
+    <div class="container">
+      <div style="text-align:center;max-width:600px;margin:0 auto 64px;">
+        <p class="section-label center">{stay.label}</p>
+        <h2 set:html={stay.headline} />
+        <p class="body-text">{stay.subtitle}</p>
+      </div>
+
+      <div class="grid-3col">
+        {rooms.map((room) => (
+          <div class="accom-card">
+            {room.data.image
+              ? <img src={room.data.image} alt={room.data.title} style="aspect-ratio:3/2;object-fit:cover;" />
+              : <div class="img-placeholder ratio-3-2">{room.data.title} — upload via CMS</div>
+            }
+            <div class="card-body">
+              <div class="card-category">{room.data.category}</div>
+              <h3>{room.data.title}</h3>
+              <p class="body-text">{room.data.description}</p>
+              <div class="card-meta">
+                <span>{room.data.sqm}</span>
+                <span>Up to {room.data.maxGuests} guests</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ WHEN TO VISIT ═══ -->
+  <section class="section-parchment" id="when-to-visit" style="overflow:hidden;">
+    <div class="container">
+      <div class="grid-2col" style="align-items:start;">
+        <div style="padding-bottom:64px;">
+          <p class="section-label">{migration.label}</p>
+          <h2 set:html={migration.headline} />
+          <p class="lead-text">{migration.leadText}</p>
+          <p class="body-text">{migration.bodyText}</p>
+
+          <div class="month-grid">
+            {months.map((m) => (
+              <div class={`month-pill${migration.activeMonths.includes(m) ? ' active' : ''}`}>{m}</div>
+            ))}
+          </div>
+
+          <p class="body-text" style="font-size:13px;">{migration.disclaimer}</p>
+        </div>
+
+        {migration.image
+          ? <img src={migration.image} alt="Great Migration crossing" style="min-height:600px;object-fit:cover;margin-right:-48px;" />
+          : <div class="img-placeholder tall" style="margin-right:-48px;min-height:600px;">Migration crossing — upload via CMS</div>
+        }
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ EXPERIENCES ═══ -->
+  <section class="section" id="experiences">
+    <div class="container">
+      <div style="margin-bottom:64px;">
+        <p class="section-label">{experiencesSection.label}</p>
+        <h2 set:html={experiencesSection.headline} />
+      </div>
+
+      <div class="grid-3col">
+        {exps.map((exp) => (
+          <div class="exp-card">
+            {exp.data.image
+              ? <img src={exp.data.image} alt={exp.data.title} style="aspect-ratio:16/10;object-fit:cover;" />
+              : <div class="img-placeholder ratio-16-10">{exp.data.title} — upload via CMS</div>
+            }
+            <div class="card-overlay">
+              <div class="exp-label">{exp.data.label}</div>
+              <h3>{exp.data.title}</h3>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ DINING ═══ -->
+  <section class="section-white">
+    <div class="container">
+      <div class="grid-2col">
+        {dining.image
+          ? <img src={dining.image} alt="Dining" style="min-height:500px;object-fit:cover;" />
+          : <div class="img-placeholder tall">Dining — upload via CMS</div>
+        }
+        <div>
+          <p class="section-label">{dining.label}</p>
+          <h2 set:html={dining.headline} />
+          <p class="body-text">{dining.bodyText}</p>
+          <p class="body-text">{dining.secondaryText}</p>
+
+          <div class="dining-list">
+            {dining.bushExperiences.map((item) => (
+              <div class="dining-item"><span class="dot"></span> {item}</div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ JOURNAL ═══ -->
+  <section class="section-parchment" id="journal">
+    <div class="container">
+      <div style="margin-bottom:48px;">
+        <p class="section-label">{journalSection.label}</p>
+        <h2>{journalSection.headline}</h2>
+      </div>
+
+      <div class="grid-3col">
+        {posts.map((post) => (
+          <div class="accom-card">
+            {post.data.image
+              ? <img src={post.data.image} alt={post.data.title} style="aspect-ratio:16/10;object-fit:cover;" />
+              : <div class="img-placeholder ratio-16-10">{post.data.title}</div>
+            }
+            <div class="card-body">
+              <div class="card-category">{post.data.category}</div>
+              <h3>{post.data.title}</h3>
+              <p class="body-text">{post.data.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ═══ PLAN YOUR VISIT ═══ -->
+  <section class="section-green" id="plan">
+    <div class="container">
+      <p class="section-label center">{planVisit.label}</p>
+      <h2>{planVisit.headline}</h2>
+      <p class="lead-text" style="max-width:520px;margin:0 auto 36px;">{planVisit.bodyText}</p>
+      <a href={planVisit.ctaUrl} class="btn-primary">{planVisit.ctaText}</a>
+
+      <div class="plan-info">
+        {planVisit.infoItems.map((item) => (
+          <div class="plan-info-item">
+            <div class="plan-info-label">{item.label}</div>
+            <div class="plan-info-value">{item.value}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Base>

@@ -1,0 +1,91 @@
+---
+import { getEntry } from 'astro:content';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const settings = await getEntry('settings', 'global');
+const site = settings.data;
+
+const {
+  title = `${site.siteName} ${site.propertyName} — Maasai Mara, Kenya`,
+  description = 'Perched on a graceful bend of the Mara River at the foot of the Oloololo Escarpment. Authentic safari experiences where nature leads.',
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <meta name="description" content={description}>
+  <link rel="stylesheet" href="/src/styles/global.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="nav" id="mainNav">
+    <a href="/" class="nav-brand">{site.siteName}</a>
+    <ul class="nav-links">
+      <li><a href="#camp">The Camp</a></li>
+      <li><a href="#stay">Stay</a></li>
+      <li><a href="#when-to-visit">When to Visit</a></li>
+      <li><a href="#experiences">Experiences</a></li>
+      <li><a href="#journal">Journal</a></li>
+      <li><a href="#plan" class="nav-cta">Book Now</a></li>
+    </ul>
+  </nav>
+
+  <slot />
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">{site.siteName}</div>
+        <div class="footer-subtitle">{site.propertyName} · Kenya</div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>The Camp</h4>
+          <a href="#camp">Our Story</a>
+          <a href="#camp">Location</a>
+        </div>
+        <div class="footer-col">
+          <h4>Stay</h4>
+          <a href="#stay">River Tents</a>
+          <a href="#stay">Bush Tents</a>
+          <a href="#stay">Simba's Den</a>
+        </div>
+        <div class="footer-col">
+          <h4>Explore</h4>
+          <a href="#when-to-visit">When to Visit</a>
+          <a href="#experiences">Game Drives</a>
+          <a href="#journal">Journal</a>
+        </div>
+      </div>
+      <div class="footer-managed">
+        <div class="footer-managed-label">Managed by</div>
+        <div class="footer-managed-name">Planhotel<br>Hospitality Group</div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 {site.siteName} · Planhotel Hospitality Group</span>
+      <div class="lang-switcher">
+        <a href="#"><strong>EN</strong></a>
+        <a href="#">DE</a>
+        <a href="#">IT</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav?.classList.toggle('scrolled', window.scrollY > 80);
+    });
+  </script>
+</body>
+</html>
