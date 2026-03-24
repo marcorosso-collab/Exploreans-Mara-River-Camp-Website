@@ -1,8 +1,6 @@
 backend:
-  name: github
-  repo: marcorosso-collab/Exploreans-Mara-River-Camp-Website
-  branch: main
-  auth_scope: repo
+  name: proxy
+  proxy_url: https://api.netlify.com/api/v1/sites/exloreansmararivercamp.netlify.app/git/github
 
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
