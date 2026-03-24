@@ -93,26 +93,40 @@ const {
   </footer>
 
   <script>
-    const nav = document.getElementById('mainNav');
-    const navToggle = document.getElementById('navToggle');
-    const navLinks = document.getElementById('navLinks');
-    
-    window.addEventListener('scroll', () => {
-      nav?.classList.toggle('scrolled', window.scrollY > 80);
-    });
-    
-    navToggle?.addEventListener('click', () => {
-      navToggle.classList.toggle('active');
-      navLinks?.classList.toggle('active');
-    });
-    
-    // Close menu when clicking a link
-    navLinks?.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navToggle?.classList.remove('active');
-        navLinks.classList.remove('active');
+    (function() {
+      const nav = document.getElementById('mainNav');
+      const navToggle = document.getElementById('navToggle');
+      const navLinks = document.getElementById('navLinks');
+      
+      if (!navToggle || !navLinks) return;
+      
+      window.addEventListener('scroll', () => {
+        nav?.classList.toggle('scrolled', window.scrollY > 80);
       });
-    });
+      
+      navToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.classList.toggle('active');
+        navLinks.classList.toggle('active');
+      });
+      
+      // Close menu when clicking a link
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          navToggle.classList.remove('active');
+          navLinks.classList.remove('active');
+        });
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!nav.contains(e.target) && navLinks.classList.contains('active')) {
+          navToggle.classList.remove('active');
+          navLinks.classList.remove('active');
+        }
+      });
+    })();
   </script>
 </body>
 </html>
