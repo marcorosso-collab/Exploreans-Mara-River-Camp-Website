@@ -1,11 +1,11 @@
 ---
-title: "River Tents"
-category: "19 Tents"
+title: River Tents
+category: 19 Tents
 quantity: 19
-sqm: "17 sqm + 7 sqm terrace"
+sqm: 17 sqm + 7 sqm terrace
 maxGuests: 3
-description: "Canvas and wood on the river's edge. Fall asleep to the sound of hippos, wake to birdsong."
-image: "/images/river-tent.jpg"
+description: Canvas and wood on the river's edge. Fall asleep to the sound of hippos, wake to birdsong.
+image: /images/uploads/Room_River Tent.jpg
 order: 1
 ---
 
