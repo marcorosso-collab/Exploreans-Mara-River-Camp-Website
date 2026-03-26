@@ -270,11 +270,24 @@ h3, .h3-card {
     border-bottom: 1px solid rgba(255,255,255,0.1);
   }
   .nav-links a:last-child { border-bottom: none; }
-  .nav-cta { 
-    border-color: rgba(255,255,255,0.4) !important;
+  /* Hide nav-cta inside nav-links on mobile (it's now outside) */
+  .nav-links .nav-cta { display: none !important; }
+}
+
+/* Mobile: Book Now button stays in nav bar */
+@media (max-width: 768px) {
+  .nav-cta-mobile {
     display: inline-block !important;
-    margin-top: 16px;
-    text-align: center;
+    margin-left: auto;
+    margin-right: 12px;
+    padding: 8px 16px !important;
+    font-size: 11px !important;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: rgba(255,255,255,0.85) !important;
+  }
+  .nav.scrolled .nav-cta-mobile {
+    border-color: var(--mara-charcoal);
+    color: var(--mara-charcoal) !important;
   }
 }
 
