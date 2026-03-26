@@ -201,6 +201,7 @@ h3, .h3-card {
   object-fit: contain;
 }
 .nav.scrolled .nav-brand { color: var(--mara-black); }
+.nav-left { display: flex; align-items: center; gap: 12px; }
 .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
 .nav-links a {
   font-size: 13px;
@@ -274,12 +275,28 @@ h3, .h3-card {
   .nav-links .nav-cta { display: none !important; }
 }
 
-/* Mobile: Book Now button stays in nav bar */
+/* Mobile: Layout - hamburger left, Book Now right, logo center */
 @media (max-width: 768px) {
+  .nav {
+    justify-content: space-between;
+  }
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    order: 1;
+  }
+  .nav-brand {
+    order: 2;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .nav-links {
+    order: 3;
+  }
   .nav-cta-mobile {
     display: inline-block !important;
-    margin-left: auto;
-    margin-right: 12px;
     padding: 8px 16px !important;
     font-size: 11px !important;
     border: 1px solid rgba(255,255,255,0.4);

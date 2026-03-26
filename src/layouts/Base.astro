@@ -27,6 +27,14 @@ const {
 
   <!-- Navigation -->
   <nav class="nav" id="mainNav">
+    <div class="nav-left">
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <a href={site.bookingUrl} class="nav-cta nav-cta-mobile" target="_blank" rel="noopener">Book Now</a>
+    </div>
     <a href="/" class="nav-brand">
       {site.logo ? (
         <img src={site.logo} alt={site.siteName} class="nav-logo-img" />
@@ -34,11 +42,6 @@ const {
         site.siteName
       )}
     </a>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
     <ul class="nav-links" id="navLinks">
       <li><a href="#camp">The Camp</a></li>
       <li><a href="#stay">Stay</a></li>
@@ -46,7 +49,6 @@ const {
       <li><a href="#experiences">Experiences</a></li>
       <li><a href="#journal">Journal</a></li>
     </ul>
-    <a href={site.bookingUrl} class="nav-cta nav-cta-mobile" target="_blank" rel="noopener">Book Now</a>
   </nav>
 
   <slot />
