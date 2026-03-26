@@ -207,7 +207,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 
       <div class="grid-3col">
         {posts.map((post) => (
-          <div class="accom-card">
+          <a href={`/journal/${post.slug}`} class="accom-card journal-card">
             {post.data.image
               ? <img src={post.data.image} alt={post.data.title} style="aspect-ratio:16/10;object-fit:cover;" />
               : <div class="img-placeholder ratio-16-10">{post.data.title}</div>
@@ -216,8 +216,9 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
               <div class="card-category">{post.data.category}</div>
               <h3>{post.data.title}</h3>
               <p class="body-text">{post.data.description}</p>
+              <span class="read-more">Read more →</span>
             </div>
-          </div>
+          </a>
         ))}
       </div>
     </div>

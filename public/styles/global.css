@@ -588,3 +588,26 @@ h3, .h3-card {
   .month-grid { grid-template-columns: repeat(3, 1fr); }
   .hero-content { padding: 0 24px 48px; }
 }
+
+/* ─── Journal Cards ─── */
+.journal-card {
+  display: block;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.journal-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.08);
+}
+.journal-card .read-more {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ochre);
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.journal-card:hover .read-more {
+  color: var(--ochre-deep);
+}
