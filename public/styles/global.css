@@ -276,18 +276,26 @@ h3, .h3-card {
 
 /* Mobile: Book Now button stays in nav bar to the left of hamburger */
 @media (max-width: 768px) {
+  .nav {
+    justify-content: flex-start;
+  }
+  .nav-brand {
+    margin-right: auto;
+  }
   .nav-cta-mobile {
     display: inline-block !important;
-    margin-left: auto;
-    margin-right: 12px;
     padding: 8px 16px !important;
     font-size: 11px !important;
     border: 1px solid rgba(255,255,255,0.4);
     color: rgba(255,255,255,0.85) !important;
+    margin-right: 8px;
   }
   .nav.scrolled .nav-cta-mobile {
     border-color: var(--mara-charcoal);
     color: var(--mara-charcoal) !important;
+  }
+  .nav-toggle {
+    margin-left: 0;
   }
 }
 
