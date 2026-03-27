@@ -70,8 +70,8 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
       <p class="body-text" style="max-width:560px;">{riverUsp.bodyText}</p>
 
       {riverUsp.image
-        ? <img src={riverUsp.image} alt="River panoramic" style="width:calc(100% + 96px);margin:48px -48px;height:480px;object-fit:cover;" />
-        : <div class="img-placeholder wide" style="margin:48px -48px;width:calc(100% + 96px);">Panoramic — upload via CMS</div>
+        ? <img src={riverUsp.image} alt="River panoramic" style="display:block;width:100%;margin:48px auto;height:480px;object-fit:cover;" />
+        : <div class="img-placeholder wide" style="margin:48px auto;width:100%;">Panoramic — upload via CMS</div>
       }
 
       <div class="stat-grid">
