@@ -302,7 +302,7 @@ h3, .h3-card {
     margin-right: 8px;
   }
   .nav.scrolled .nav-cta-mobile {
-    border-color: var(--mara-charcoal);
+    border: 1px solid var(--mara-charcoal) !important;
     color: var(--mara-charcoal) !important;
   }
   .nav-toggle {
