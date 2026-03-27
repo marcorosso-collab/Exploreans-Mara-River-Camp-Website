@@ -2,35 +2,34 @@
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 
-// Generate static paths for all accommodations
+// Generate static paths for all experiences
 export async function getStaticPaths() {
-  const rooms = await getCollection('accommodation');
-  return rooms.map((room) => ({
-    params: { slug: room.slug },
-    props: { room },
+  const experiences = await getCollection('experiences');
+  return experiences.map((exp) => ({
+    params: { slug: exp.slug },
+    props: { exp },
   }));
 }
 
-const { room } = Astro.props;
-const { Content } = await room.render();
+const { exp } = Astro.props;
+const { Content } = await exp.render();
 
 // Support up to 4 images (image, image2, image3, image4)
 const images = [
-  room.data.image,
-  room.data.image2,
-  room.data.image3,
-  room.data.image4,
+  exp.data.image,
+  exp.data.image2,
+  exp.data.image3,
+  exp.data.image4,
 ].filter(Boolean);
 
-// Default to single image if no additional images
 const hasCarousel = images.length > 1;
 ---
 
-<Base title={`${room.data.title} — Accommodation`} description={room.data.description} navDark={true}>
-  <article class="accommodation-detail">
+<Base title={`${exp.data.title} — Experiences`} description={exp.data.description} navDark={true}>
+  <article class="experience-detail">
     <div class="container">
       <!-- Back Link -->
-      <a href="/#stay" class="back-link">← Back to Accommodation</a>
+      <a href="/#experiences" class="back-link">← Back to Experiences</a>
       
       <!-- Image Carousel / Gallery -->
       <div class="image-gallery" data-carousel={hasCarousel}>
@@ -39,7 +38,7 @@ const hasCarousel = images.length > 1;
             <div class="carousel-container">
               {images.map((img, index) => (
                 <div class={`carousel-slide ${index === 0 ? 'active' : ''}`} data-slide={index}>
-                  <img src={img} alt={`${room.data.title} - Image ${index + 1}`} />
+                  <img src={img} alt={`${exp.data.title} - Image ${index + 1}`} />
                 </div>
               ))}
             </div>
@@ -54,48 +53,37 @@ const hasCarousel = images.length > 1;
         ) : (
           <div class="single-image">
             {images[0] ? (
-              <img src={images[0]} alt={room.data.title} />
+              <img src={images[0]} alt={exp.data.title} />
             ) : (
-              <div class="img-placeholder">{room.data.title}</div>
+              <div class="img-placeholder">{exp.data.title}</div>
             )}
           </div>
         )}
       </div>
 
-      <!-- Room Header -->
-      <header class="room-header">
-        <div class="room-meta">
-          <span class="room-category">{room.data.category}</span>
-          <span class="room-specs">{room.data.sqm} • Up to {room.data.maxGuests} guests</span>
+      <!-- Experience Header -->
+      <header class="exp-header">
+        <div class="exp-meta">
+          <span class="exp-label">{exp.data.label}</span>
+          {exp.data.duration && <span class="exp-duration">{exp.data.duration}</span>}
         </div>
-        <h1 class="room-title">{room.data.title}</h1>
-        <p class="room-description">{room.data.description}</p>
+        <h1 class="exp-title">{exp.data.title}</h1>
+        <p class="exp-description">{exp.data.description}</p>
       </header>
 
-      <!-- Room Body Content -->
-      <div class="room-body">
+      <!-- Experience Body Content -->
+      <div class="exp-body">
         <Content />
       </div>
 
-      <!-- Facilities & Amenities -->
-      {room.data.facilities && room.data.facilities.length > 0 && (
-        <section class="facilities-section">
-          <h2>Facilities & Amenities</h2>
-          <ul class="facilities-list">
-            {room.data.facilities.map((facility) => (
-              <li class="facility-item">
-                <span class="facility-icon">✓</span>
-                <span>{facility}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
+      <!-- CTA Button - Linked to CMS URL -->
+      {exp.data.ctaUrl && (
+        <div class="exp-cta">
+          <a href={exp.data.ctaUrl} class="btn-primary" target="_blank" rel="noopener">
+            {exp.data.ctaText || 'Book This Experience'}
+          </a>
+        </div>
       )}
-
-      <!-- CTA -->
-      <div class="room-cta">
-        <a href="/#plan" class="btn-primary">Book This Room</a>
-      </div>
     </div>
   </article>
 </Base>
@@ -139,7 +127,7 @@ const hasCarousel = images.length > 1;
 </script>
 
 <style>
-  .accommodation-detail {
+  .experience-detail {
     padding: 100px 0 80px;
     background: var(--cream);
     min-height: 100vh;
@@ -243,12 +231,12 @@ const hasCarousel = images.length > 1;
     transform: scale(1.2);
   }
 
-  /* Room Header */
-  .room-header {
+  /* Experience Header */
+  .exp-header {
     margin-bottom: 48px;
   }
 
-  .room-meta {
+  .exp-meta {
     display: flex;
     gap: 16px;
     margin-bottom: 16px;
@@ -257,16 +245,16 @@ const hasCarousel = images.length > 1;
     text-transform: uppercase;
   }
 
-  .room-category {
+  .exp-label {
     color: var(--ochre);
     font-weight: 500;
   }
 
-  .room-specs {
+  .exp-duration {
     color: var(--warm-stone);
   }
 
-  .room-title {
+  .exp-title {
     font-family: var(--font-display);
     font-size: clamp(32px, 4vw, 48px);
     font-weight: 400;
@@ -274,15 +262,15 @@ const hasCarousel = images.length > 1;
     margin-bottom: 16px;
   }
 
-  .room-description {
+  .exp-description {
     font-size: 18px;
     line-height: 1.6;
     color: var(--mara-charcoal);
     max-width: 600px;
   }
 
-  /* Room Body */
-  .room-body {
+  /* Experience Body */
+  .exp-body {
     max-width: 720px;
     margin-bottom: 64px;
     font-size: 16px;
@@ -290,61 +278,33 @@ const hasCarousel = images.length > 1;
     color: var(--mara-charcoal);
   }
 
-  .room-body :global(p) {
-    margin-bottom: 20px;
-  }
-
-  .room-body :global(strong) {
-    color: var(--mara-black);
-    font-weight: 500;
-  }
-
-  /* Facilities Section */
-  .facilities-section {
-    margin-bottom: 64px;
-    padding: 48px;
-    background: var(--white);
-    border-radius: 4px;
-  }
-
-  .facilities-section h2 {
+  .exp-body :global(h2) {
     font-family: var(--font-display);
     font-size: 28px;
     font-weight: 400;
     color: var(--mara-black);
-    margin-bottom: 32px;
+    margin: 48px 0 24px;
   }
 
-  .facilities-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 16px;
-    list-style: none;
+  .exp-body :global(h3) {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--mara-black);
+    margin: 36px 0 16px;
   }
 
-  .facility-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 15px;
-    color: var(--mara-charcoal);
+  .exp-body :global(p) {
+    margin-bottom: 20px;
   }
 
-  .facility-icon {
-    width: 24px;
-    height: 24px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--ochre);
-    color: var(--white);
-    border-radius: 50%;
-    font-size: 12px;
-    flex-shrink: 0;
+  .exp-body :global(strong) {
+    color: var(--mara-black);
+    font-weight: 500;
   }
 
   /* CTA */
-  .room-cta {
+  .exp-cta {
     text-align: center;
     padding-top: 32px;
     border-top: 1px solid rgba(0,0,0,0.08);
@@ -367,7 +327,7 @@ const hasCarousel = images.length > 1;
 
   /* Responsive */
   @media (max-width: 768px) {
-    .accommodation-detail {
+    .experience-detail {
       padding: 80px 0 60px;
     }
 
@@ -381,14 +341,6 @@ const hasCarousel = images.length > 1;
       width: 40px;
       height: 40px;
       font-size: 16px;
-    }
-
-    .facilities-section {
-      padding: 32px 24px;
-    }
-
-    .facilities-list {
-      grid-template-columns: 1fr;
     }
   }
 </style>

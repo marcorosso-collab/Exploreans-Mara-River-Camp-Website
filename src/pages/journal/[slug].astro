@@ -15,7 +15,7 @@ const { post } = Astro.props;
 const { Content } = await post.render();
 ---
 
-<Base title={`${post.data.title} — Journal`} description={post.data.description}>
+<Base title={`${post.data.title} — Journal`} description={post.data.description} navDark={true}>
   <article class="journal-article">
     <div class="container">
       <!-- Article Header -->

@@ -4,6 +4,7 @@ import { getEntry } from 'astro:content';
 interface Props {
   title?: string;
   description?: string;
+  navDark?: boolean;
 }
 
 const settings = await getEntry('settings', 'global');
@@ -12,6 +13,7 @@ const site = settings.data;
 const {
   title = `${site.siteName} ${site.propertyName} — Maasai Mara, Kenya`,
   description = 'Perched on a graceful bend of the Mara River at the foot of the Oloololo Escarpment. Authentic safari experiences where nature leads.',
+  navDark = false,
 } = Astro.props;
 ---
 <!DOCTYPE html>
@@ -26,7 +28,7 @@ const {
 <body>
 
   <!-- Navigation -->
-  <nav class="nav" id="mainNav">
+  <nav class={`nav ${navDark ? 'nav-dark' : ''}`} id="mainNav">
     <a href="/" class="nav-brand">
       {site.logo ? (
         <img src={site.logo} alt={site.siteName} class="nav-logo-img" />

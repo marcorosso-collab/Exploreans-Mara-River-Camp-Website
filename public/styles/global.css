@@ -55,6 +55,8 @@ a { color: inherit; text-decoration: none; }
 
 /* ─── Grid ─── */
 .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.grid-2col-reverse { direction: rtl; }
+.grid-2col-reverse > * { direction: ltr; }
 .grid-3col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 .grid-4col { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 
@@ -304,8 +306,18 @@ h3, .h3-card {
   border: 1px solid rgba(255,255,255,0.4);
   font-size: 12px !important;
   letter-spacing: 0.1em !important;
+  color: rgba(255,255,255,0.85);
+  transition: color 0.3s, border-color 0.3s;
 }
 .nav.scrolled .nav-cta { border-color: var(--mara-charcoal); color: var(--mara-charcoal); }
+
+/* Nav dark mode - for pages with light backgrounds (detail pages) */
+.nav.nav-dark { background: rgba(250,247,242,0.97); backdrop-filter: blur(12px); box-shadow: 0 1px 0 rgba(0,0,0,0.06); }
+.nav.nav-dark .nav-brand { color: var(--mara-black); }
+.nav.nav-dark .nav-links a { color: var(--mara-charcoal); }
+.nav.nav-dark .nav-toggle span { background: var(--mara-black); }
+.nav.nav-dark .nav-cta { border-color: var(--mara-charcoal); color: var(--mara-charcoal); }
+.nav.nav-dark .nav-cta:hover { background: var(--mara-charcoal); color: var(--white); }
 
 /* ─── Hero ─── */
 .hero {
@@ -627,4 +639,27 @@ h3, .h3-card {
 .btn-more-info:hover {
   background: var(--ochre);
   color: var(--white);
+}
+
+/* ─── Experience Cards ─── */
+.experience-card-link {
+  display: block;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.experience-card-link:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.12);
+}
+.experience-card-link .read-more {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ochre);
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.experience-card-link:hover .read-more {
+  color: var(--ochre-deep);
 }
