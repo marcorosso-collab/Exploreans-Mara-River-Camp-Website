@@ -27,10 +27,10 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
       {hero.video ? (
         <video autoplay muted loop playsinline poster={hero.image || undefined}>
           <source src={hero.video} type="video/mp4" />
-          {hero.image && <img src={hero.image} alt={hero.imageAlt || hero.headline} />}
+          {hero.image && <img src={hero.image} alt={hero.imageAlt || ''} />}
         </video>
       ) : hero.image ? (
-        <img src={hero.image} alt={hero.imageAlt || hero.headline} />
+        <img src={hero.image} alt={hero.imageAlt || ''} />
       ) : (
         <div class="img-placeholder" style="height:100%;aspect-ratio:auto;">Hero image — upload via CMS</div>
       )}
@@ -54,7 +54,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
           <p class="body-text">{intro.bodyText}</p>
         </div>
         {intro.image
-          ? <img src={intro.image} alt={intro.imageAlt || intro.headline} style="aspect-ratio:4/5;object-fit:cover;" />
+          ? <img src={intro.image} alt={intro.imageAlt || ''} style="aspect-ratio:4/5;object-fit:cover;" />
           : <div class="img-placeholder ratio-4-5">Camp overview — upload via CMS</div>
         }
       </div>
@@ -70,7 +70,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
       <p class="body-text" style="max-width:560px;">{riverUsp.bodyText}</p>
 
       {riverUsp.image
-        ? <img src={riverUsp.image} alt={riverUsp.imageAlt || "River panoramic"} style="display:block;width:100%;margin:48px auto;height:480px;object-fit:cover;" />
+        ? <img src={riverUsp.image} alt={riverUsp.imageAlt || ''} style="display:block;width:100%;margin:48px auto;height:480px;object-fit:cover;" />
         : <div class="img-placeholder wide" style="margin:48px auto;width:100%;">Panoramic — upload via CMS</div>
       }
 
@@ -99,7 +99,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
         {rooms.map((room) => (
           <div class="accom-card">
             {room.data.image
-              ? <img src={room.data.image} alt={room.data.imageAlt || room.data.title} style="aspect-ratio:3/2;object-fit:cover;" />
+              ? <img src={room.data.image} alt={room.data.imageAlt || ''} style="aspect-ratio:3/2;object-fit:cover;" />
               : <div class="img-placeholder ratio-3-2">{room.data.title} — upload via CMS</div>
             }
             <div class="card-body">
@@ -139,7 +139,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
         </div>
 
         {migration.image
-          ? <img src={migration.image} alt={migration.imageAlt || "Great Migration crossing"} style="min-height:600px;object-fit:cover;margin-right:-48px;" />
+          ? <img src={migration.image} alt={migration.imageAlt || ''} style="min-height:600px;object-fit:cover;margin-right:-48px;" />
           : <div class="img-placeholder tall" style="margin-right:-48px;min-height:600px;">Migration crossing — upload via CMS</div>
         }
       </div>
@@ -159,7 +159,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
         {exps.map((exp) => (
           <a href={`/experiences/${exp.slug}`} class="exp-card experience-card-link">
             {exp.data.image
-              ? <img src={exp.data.image} alt={exp.data.imageAlt || exp.data.title} style="aspect-ratio:16/10;object-fit:cover;" />
+              ? <img src={exp.data.image} alt={exp.data.imageAlt || ''} style="aspect-ratio:16/10;object-fit:cover;" />
               : <div class="img-placeholder ratio-16-10">{exp.data.title} — upload via CMS</div>
             }
             <div class="card-overlay">
@@ -191,7 +191,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
           </div>
         </div>
         {dining.image
-          ? <img src={dining.image} alt={dining.imageAlt || "Dining"} style="min-height:500px;object-fit:cover;" />
+          ? <img src={dining.image} alt={dining.imageAlt || ''} style="min-height:500px;object-fit:cover;" />
           : <div class="img-placeholder tall">Dining — upload via CMS</div>
         }
       </div>
@@ -211,7 +211,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
         {posts.map((post) => (
           <a href={`/journal/${post.slug}`} class="accom-card journal-card">
             {post.data.image
-              ? <img src={post.data.image} alt={post.data.title} style="aspect-ratio:16/10;object-fit:cover;" />
+              ? <img src={post.data.image} alt={post.data.imageAlt || ''} style="aspect-ratio:16/10;object-fit:cover;" />
               : <div class="img-placeholder ratio-16-10">{post.data.title}</div>
             }
             <div class="card-body">

@@ -14,9 +14,9 @@ export async function getStaticPaths() {
 const { room } = Astro.props;
 const { Content } = await room.render();
 
-// SEO fields with fallbacks
-const seoTitle = room.data.seo_title || `${room.data.title} — Accommodation`;
-const seoDescription = room.data.seo_description || room.data.description;
+// SEO fields - use CMS values only
+const seoTitle = room.data.seo_title || '';
+const seoDescription = room.data.seo_description || '';
 
 // Support up to 4 images (image, image2, image3, image4)
 const images = [
@@ -43,7 +43,7 @@ const hasCarousel = images.length > 1;
             <div class="carousel-container">
               {images.map((img, index) => (
                 <div class={`carousel-slide ${index === 0 ? 'active' : ''}`} data-slide={index}>
-                  <img src={img} alt={index === 0 && room.data.imageAlt ? room.data.imageAlt : `${room.data.title} - Image ${index + 1}`} />
+                  <img src={img} alt={room.data.imageAlt || ''} />
                 </div>
               ))}
             </div>
@@ -58,7 +58,7 @@ const hasCarousel = images.length > 1;
         ) : (
           <div class="single-image">
             {images[0] ? (
-              <img src={images[0]} alt={room.data.imageAlt || room.data.title} />
+              <img src={images[0]} alt={room.data.imageAlt || ''} />
             ) : (
               <div class="img-placeholder">{room.data.title}</div>
             )}

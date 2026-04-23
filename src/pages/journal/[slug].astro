@@ -14,9 +14,9 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 
-// SEO fields with fallbacks
-const seoTitle = post.data.seo_title || `${post.data.title} — Journal`;
-const seoDescription = post.data.seo_description || post.data.description;
+// SEO fields - use CMS values only
+const seoTitle = post.data.seo_title || '';
+const seoDescription = post.data.seo_description || '';
 ---
 
 <Base title={seoTitle} description={seoDescription} ogImage={post.data.og_image} navDark={true}>
@@ -35,7 +35,7 @@ const seoDescription = post.data.seo_description || post.data.description;
       <!-- Article Image -->
       {post.data.image && (
         <div class="article-image">
-          <img src={post.data.image} alt={post.data.imageAlt || post.data.title} />
+          <img src={post.data.image} alt={post.data.imageAlt || ''} />
         </div>
       )}
 

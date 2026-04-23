@@ -8,9 +8,9 @@ const site = settings.data;
 const contactData = await getEntry('contact', 'contact');
 const content = contactData.data;
 
-// SEO fields with fallbacks
-const seoTitle = content.seo_title || `${content.pageTitle} — ${site.siteName} ${site.propertyName}`;
-const seoDescription = content.seo_description || "Get in touch with Exploreans Mara River Camp. Our team is ready to help plan your authentic safari experience.";
+// SEO fields - use CMS values only
+const seoTitle = content.seo_title || '';
+const seoDescription = content.seo_description || '';
 ---
 
 <Base title={seoTitle} description={seoDescription} ogImage={content.og_image}>
