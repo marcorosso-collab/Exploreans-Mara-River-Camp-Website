@@ -14,6 +14,10 @@ export async function getStaticPaths() {
 const { room } = Astro.props;
 const { Content } = await room.render();
 
+// SEO fields with fallbacks
+const seoTitle = room.data.seo_title || `${room.data.title} — Accommodation`;
+const seoDescription = room.data.seo_description || room.data.description;
+
 // Support up to 4 images (image, image2, image3, image4)
 const images = [
   room.data.image,
@@ -26,7 +30,7 @@ const images = [
 const hasCarousel = images.length > 1;
 ---
 
-<Base title={`${room.data.title} — Accommodation`} description={room.data.description} navDark={true}>
+<Base title={seoTitle} description={seoDescription} navDark={true}>
   <article class="accommodation-detail">
     <div class="container">
       <!-- Back Link -->

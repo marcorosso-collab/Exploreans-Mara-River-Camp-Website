@@ -108,6 +108,9 @@ const accommodation = defineCollection({
     image: z.string().optional(),
     imageAlt: z.string().optional(),
     order: z.number(),
+    seo_title: z.string().optional(),
+    seo_description: z.string().optional(),
+    og_image: z.string().optional(),
   }),
 });
 
@@ -122,6 +125,9 @@ const experiences = defineCollection({
     imageAlt: z.string().optional(),
     featured: z.boolean().default(false),
     order: z.number(),
+    seo_title: z.string().optional(),
+    seo_description: z.string().optional(),
+    og_image: z.string().optional(),
   }),
 });
 
@@ -136,6 +142,9 @@ const journal = defineCollection({
     imageAlt: z.string().optional(),
     date: z.date(),
     draft: z.boolean().default(false),
+    seo_title: z.string().optional(),
+    seo_description: z.string().optional(),
+    og_image: z.string().optional(),
   }),
 });
 
@@ -171,6 +180,9 @@ const contact = defineCollection({
       description: z.string(),
       mapsUrl: z.string(),
     }),
+    seo_title: z.string().optional(),
+    seo_description: z.string().optional(),
+    og_image: z.string().optional(),
   }),
 });
 
