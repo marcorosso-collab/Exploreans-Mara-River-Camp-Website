@@ -44,12 +44,14 @@ const {
       <li><a href="#journal">Journal</a></li>
       <li><a href="/contact">Contact Us</a></li>
     </ul>
-    <a href={site.bookingUrl} class="nav-cta nav-cta-mobile" target="_blank" rel="noopener">Book Now</a>
-    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </button>
+    <div class="nav-actions">
+      <a href={site.bookingUrl} class="nav-cta" target="_blank" rel="noopener">Book Now</a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
   </nav>
 
   <slot />
