@@ -2,9 +2,12 @@
 title: Walking Tours
 label: On Foot
 description: Leave the vehicle behind. Walk the Mara with our guides — slower, quieter, closer to the ground and everything on it.
-image: /images/uploads/Activity_Walking Safari.png
+image: /images/uploads/walking-safari-guide-maasai-mara-mara-river-camp-kenya.jpg
+imageAlt: Armed ranger leading a guided walking safari through the Maasai Mara bush, Exploreans Kenya
 featured: false
 order: 5
+seo_title: Walking Safari Maasai Mara | Mara River Camp Kenya | Exploreans
+seo_description: Discover the bush and the wild on foot. Guided walking safaris from Mara River Camp with expert rangers — tracking, flora, and the Mara at human pace.
 ---
 
 A walking safari is a different kind of encounter. Without the engine noise and the elevation of a vehicle, you notice things you would otherwise miss — tracks in the dust, the behaviour of birds, the smell of wild sage crushed underfoot.
