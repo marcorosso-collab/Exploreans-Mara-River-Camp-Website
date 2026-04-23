@@ -2,9 +2,12 @@
 title: 'When to visit: a month-by-month guide to the Mara'
 category: Seasonal Guide
 description: What to expect through the year — from calving season to the great crossing.
-image: /images/uploads/Gemini_Generated_Image_pcet4dpcet4dpcet (1).png
+image: /images/uploads/maasai-mara-seasonal-guide-great-migration-calendar-kenya.jpg
+imageAlt: Month-by-month seasonal calendar for visiting the Maasai Mara, showing Great Migration timing July to October, Kenya
 date: 2026-01-15
 draft: false
+seo_title: When to Visit the Maasai Mara | Month-by-Month Safari Guide
+seo_description: Plan your Maasai Mara safari by season. Calving January–March, Great Migration July–October. Expert guide from Exploreans Mara River Camp, Kenya.
 ---
 
 The Maasai Mara is a year-round destination, but each season brings a different character.
