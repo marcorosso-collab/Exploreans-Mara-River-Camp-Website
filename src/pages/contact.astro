@@ -1,0 +1,472 @@
+---
+import Base from '../layouts/Base.astro';
+import { getEntry } from 'astro:content';
+
+const settings = await getEntry('settings', 'global');
+const site = settings.data;
+---
+
+<Base title={`Contact Us — ${site.siteName} ${site.propertyName}`} description="Get in touch with Exploreans Mara River Camp. Our team is ready to help plan your authentic safari experience.">
+
+  <!-- ═══ PAGE HEADER ═══ -->
+  <section class="page-header">
+    <div class="container">
+      <p class="section-label center">Get in Touch</p>
+      <h1>Contact Us</h1>
+      <p class="lead-text">We are here to help you plan your authentic safari experience. Fill out the form below and a member of our team will be in touch shortly.</p>
+    </div>
+  </section>
+
+  <!-- ═══ CONTACT SECTION ═══ -->
+  <section class="section-parchment contact-section">
+    <div class="container">
+      <div class="contact-grid">
+        
+        <!-- Contact Form -->
+        <div class="contact-form-wrapper">
+          <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+            <input type="hidden" name="form-name" value="contact" />
+            <p class="hidden">
+              <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+            </p>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="firstName">First Name *</label>
+                <input type="text" id="firstName" name="firstName" required />
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name *</label>
+                <input type="text" id="lastName" name="lastName" required />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" required />
+            </div>
+            
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="tel" id="phone" name="phone" />
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label for="country">Country</label>
+                <input type="text" id="country" name="country" />
+              </div>
+              <div class="form-group">
+                <label for="travelDate">Preferred Travel Date</label>
+                <input type="text" id="travelDate" name="travelDate" placeholder="e.g., June 2026" />
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="subject">Subject *</label>
+              <select id="subject" name="subject" required>
+                <option value="">Select a subject</option>
+                <option value="reservation">Reservation Inquiry</option>
+                <option value="availability">Check Availability</option>
+                <option value="rates">Rates & Packages</option>
+                <option value="experiences">Safari Experiences</option>
+                <option value="group">Group Booking</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="message">Your Message *</label>
+              <textarea id="message" name="message" rows="6" required placeholder="Tell us about your travel plans, questions, or special requests..."></textarea>
+            </div>
+            
+            <div class="form-group checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" name="newsletter" />
+                <span class="checkmark"></span>
+                <span class="checkbox-text">I would like to receive news and special offers from Exploreans Mara River Camp</span>
+              </label>
+            </div>
+            
+            <button type="submit" class="btn-primary btn-submit">Send Message</button>
+          </form>
+        </div>
+        
+        <!-- Contact Information -->
+        <div class="contact-info">
+          <div class="info-card">
+            <h3>Reservations</h3>
+            <p class="body-text">Our reservations team is available to assist you with bookings and inquiries.</p>
+            <div class="info-item">
+              <span class="info-label">Email</span>
+              <a href="mailto:reservations@maraexploreans.com" class="info-value">reservations@maraexploreans.com</a>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Phone</span>
+              <a href="tel:+254123456789" class="info-value">+254 123 456 789</a>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Hours</span>
+              <span class="info-value">Mon–Fri: 8am–6pm EAT</span>
+            </div>
+          </div>
+          
+          <div class="info-card">
+            <h3>Location</h3>
+            <p class="body-text">Exploreans Mara River Camp is located in the heart of the Maasai Mara.</p>
+            <div class="info-item">
+              <span class="info-label">Address</span>
+              <span class="info-value">Maasai Mara National Reserve<br/>Narok County, Kenya</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Nearest Airstrip</span>
+              <span class="info-value">Mara North Airstrip (5 min)</span>
+            </div>
+          </div>
+          
+          <div class="info-card">
+            <h3>Connect With Us</h3>
+            <p class="body-text">Follow us for the latest updates and safari inspiration.</p>
+            <div class="social-links">
+              <a href="#" class="social-link" aria-label="Instagram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                </svg>
+              </a>
+              <a href="#" class="social-link" aria-label="Facebook">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ MAP SECTION ═══ -->
+  <section class="map-section">
+    <div class="map-placeholder">
+      <div class="map-content">
+        <p class="section-label center">Our Location</p>
+        <h2>Maasai Mara, Kenya</h2>
+        <p class="body-text">Perched on a graceful bend of the Mara River at the foot of the Oloololo Escarpment</p>
+        <a href="https://maps.google.com/?q=Maasai+Mara+Kenya" target="_blank" rel="noopener" class="text-link">
+          View on Google Maps
+          <span class="arrow"></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</Base>
+
+<style>
+  /* Page Header */
+  .page-header {
+    padding: 180px 0 80px;
+    background: var(--mara-black);
+    text-align: center;
+  }
+  .page-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 400;
+    color: var(--white);
+    margin-bottom: 24px;
+  }
+  .page-header .lead-text {
+    color: var(--sand);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .page-header .section-label {
+    color: var(--ochre);
+  }
+  .page-header .section-label::before {
+    background: var(--ochre);
+  }
+
+  /* Contact Section */
+  .contact-section {
+    padding: 80px 0;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 64px;
+    align-items: start;
+  }
+
+  /* Form Styles */
+  .contact-form-wrapper {
+    background: var(--white);
+    padding: 48px;
+  }
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .form-group label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--mara-charcoal);
+  }
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-family: var(--font-body);
+    font-size: 15px;
+    padding: 14px 16px;
+    border: 1px solid var(--sand-light);
+    background: var(--cream);
+    color: var(--mara-charcoal);
+    transition: border-color 0.3s ease;
+  }
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    outline: none;
+    border-color: var(--ochre);
+  }
+  .form-group input::placeholder,
+  .form-group textarea::placeholder {
+    color: var(--warm-stone);
+  }
+  .form-group select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b6560' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    padding-right: 40px;
+  }
+  .form-group textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  /* Checkbox */
+  .checkbox-group {
+    margin-top: 8px;
+  }
+  .checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+  }
+  .checkbox-label input {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .checkmark {
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--sand);
+    background: var(--cream);
+    flex-shrink: 0;
+    margin-top: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+  }
+  .checkbox-label input:checked + .checkmark {
+    background: var(--ochre);
+    border-color: var(--ochre);
+  }
+  .checkmark::after {
+    content: '';
+    width: 6px;
+    height: 10px;
+    border: solid var(--white);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) translate(-1px, -1px);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .checkbox-label input:checked + .checkmark::after {
+    opacity: 1;
+  }
+  .checkbox-text {
+    font-size: 13px;
+    color: var(--river-grey);
+    line-height: 1.5;
+  }
+
+  /* Submit Button */
+  .btn-submit {
+    width: 100%;
+    margin-top: 16px;
+    padding: 18px 40px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--ochre);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .btn-submit:hover {
+    background: var(--ochre-deep);
+  }
+
+  /* Hidden honeypot field */
+  .hidden {
+    display: none;
+  }
+
+  /* Contact Info Sidebar */
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+  .info-card {
+    background: var(--white);
+    padding: 32px;
+  }
+  .info-card h3 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--mara-black);
+    margin-bottom: 16px;
+  }
+  .info-card .body-text {
+    margin-bottom: 24px;
+    font-size: 14px;
+  }
+  .info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 16px;
+  }
+  .info-item:last-child {
+    margin-bottom: 0;
+  }
+  .info-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ochre);
+  }
+  .info-value {
+    font-size: 14px;
+    color: var(--mara-charcoal);
+    line-height: 1.6;
+  }
+  .info-value a {
+    color: var(--ochre-deep);
+    transition: color 0.2s;
+  }
+  .info-value a:hover {
+    color: var(--ochre);
+  }
+
+  /* Social Links */
+  .social-links {
+    display: flex;
+    gap: 16px;
+  }
+  .social-link {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--sand);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mara-charcoal);
+    transition: all 0.3s ease;
+  }
+  .social-link:hover {
+    background: var(--ochre);
+    border-color: var(--ochre);
+    color: var(--white);
+  }
+  .social-link svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Map Section */
+  .map-section {
+    padding: 0;
+  }
+  .map-placeholder {
+    height: 400px;
+    background: linear-gradient(135deg, var(--deep-green) 0%, var(--forest) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .map-content {
+    color: var(--parchment);
+    max-width: 500px;
+    padding: 48px;
+  }
+  .map-content h2 {
+    color: var(--white);
+    margin-bottom: 16px;
+  }
+  .map-content .body-text {
+    color: var(--sand);
+    margin-bottom: 24px;
+  }
+  .map-content .section-label {
+    color: var(--ochre);
+  }
+  .map-content .section-label::before {
+    background: var(--ochre);
+  }
+  .map-content .text-link {
+    color: var(--ochre);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    .contact-form-wrapper {
+      padding: 32px;
+    }
+  }
+  @media (max-width: 640px) {
+    .form-row {
+      grid-template-columns: 1fr;
+    }
+    .page-header {
+      padding: 140px 24px 60px;
+    }
+    .contact-form-wrapper {
+      padding: 24px;
+    }
+  }
+</style>

@@ -208,9 +208,17 @@ h3, .h3-card {
   text-transform: uppercase;
   color: rgba(255,255,255,0.85);
   transition: color 0.3s;
+  white-space: nowrap;
 }
 .nav.scrolled .nav-links a { color: var(--mara-charcoal); }
 .nav-links a:hover { color: var(--ochre); }
+
+/* Nav Actions (Book Now + Hamburger) */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
 
 /* Mobile Menu Toggle */
 .nav-toggle {
@@ -235,8 +243,8 @@ h3, .h3-card {
 .nav-toggle.active span:nth-child(2) { opacity: 0; }
 .nav-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-/* Mobile Responsive */
-@media (max-width: 768px) {
+/* Tablet - Switch to mobile menu before nav items wrap */
+@media (max-width: 1024px) {
   .nav-toggle { display: flex; }
   .nav-links {
     position: fixed;
@@ -249,9 +257,8 @@ h3, .h3-card {
     flex-direction: column;
     padding: 80px 40px 40px;
     gap: 24px;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease;
     z-index: 100;
-    display: flex !important;
     transform: translateX(100%);
     opacity: 0;
     pointer-events: none;
@@ -261,30 +268,35 @@ h3, .h3-card {
     opacity: 1;
     pointer-events: auto;
   }
-  .nav-links li { display: block !important; width: 100%; }
+  .nav-links li { width: 100%; }
   .nav-links a { 
     color: var(--white) !important; 
     font-size: 14px;
-    display: block !important;
+    display: block;
     padding: 12px 0;
     border-bottom: 1px solid rgba(255,255,255,0.1);
+    white-space: normal;
   }
   .nav-links a:last-child { border-bottom: none; }
-  .nav-cta { 
-    border-color: rgba(255,255,255,0.4) !important;
-    display: inline-block !important;
-    margin-top: 16px;
-    text-align: center;
-  }
+  /* Keep nav-cta (Book Now) button styling consistent - don't override */
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  /* Nav is already handled at 1024px breakpoint above */
 }
 
 .nav-cta {
   padding: 10px 22px;
   border: 1px solid rgba(255,255,255,0.4);
-  font-size: 12px !important;
-  letter-spacing: 0.1em !important;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+  transition: all 0.3s ease;
 }
 .nav.scrolled .nav-cta { border-color: var(--mara-charcoal); color: var(--mara-charcoal); }
+.nav-cta:hover { color: var(--ochre); border-color: var(--ochre); }
 
 /* ─── Hero ─── */
 .hero {
