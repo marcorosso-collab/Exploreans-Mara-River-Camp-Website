@@ -28,6 +28,7 @@ const homepage = defineCollection({
       tagline: z.string(),
       headline: z.string(),
       image: z.string().optional(),
+      imageAlt: z.string().optional(),
     }),
     intro: z.object({
       label: z.string(),
@@ -35,12 +36,14 @@ const homepage = defineCollection({
       leadText: z.string(),
       bodyText: z.string(),
       image: z.string().optional(),
+      imageAlt: z.string().optional(),
     }),
     riverUsp: z.object({
       label: z.string(),
       headline: z.string(),
       bodyText: z.string(),
       image: z.string().optional(),
+      imageAlt: z.string().optional(),
       stats: z.array(z.object({
         number: z.string(),
         label: z.string(),
@@ -53,6 +56,7 @@ const homepage = defineCollection({
       bodyText: z.string(),
       disclaimer: z.string(),
       image: z.string().optional(),
+      imageAlt: z.string().optional(),
       activeMonths: z.array(z.string()),
     }),
     dining: z.object({
@@ -62,6 +66,7 @@ const homepage = defineCollection({
       secondaryText: z.string(),
       bushExperiences: z.array(z.string()),
       image: z.string().optional(),
+      imageAlt: z.string().optional(),
     }),
     planVisit: z.object({
       label: z.string(),
@@ -101,6 +106,7 @@ const accommodation = defineCollection({
     maxGuests: z.number(),
     description: z.string(),
     image: z.string().optional(),
+    imageAlt: z.string().optional(),
     order: z.number(),
   }),
 });
@@ -113,6 +119,7 @@ const experiences = defineCollection({
     label: z.string(),
     description: z.string(),
     image: z.string().optional(),
+    imageAlt: z.string().optional(),
     featured: z.boolean().default(false),
     order: z.number(),
   }),
@@ -126,6 +133,7 @@ const journal = defineCollection({
     category: z.string(),
     description: z.string(),
     image: z.string().optional(),
+    imageAlt: z.string().optional(),
     date: z.date(),
     draft: z.boolean().default(false),
   }),

@@ -47,6 +47,7 @@ collections:
           - { label: "Tagline", name: "tagline", widget: "string" }
           - { label: "Headline", name: "headline", widget: "string" }
           - { label: "Image", name: "image", widget: "image", required: false }
+          - { label: "Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
           - { label: "Video", name: "video", widget: "file", required: false }
       - label: "Intro"
         name: "intro"
@@ -57,6 +58,7 @@ collections:
           - { label: "Lead Text", name: "leadText", widget: "text" }
           - { label: "Body Text", name: "bodyText", widget: "text" }
           - { label: "Image", name: "image", widget: "image", required: false }
+          - { label: "Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
       - label: "River USP"
         name: "riverUsp"
         widget: "object"
@@ -65,6 +67,7 @@ collections:
           - { label: "Headline", name: "headline", widget: "string" }
           - { label: "Body Text", name: "bodyText", widget: "text" }
           - { label: "Image", name: "image", widget: "image", required: false }
+          - { label: "Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
           - label: "Stats"
             name: "stats"
             widget: "list"
@@ -81,6 +84,7 @@ collections:
           - { label: "Body Text", name: "bodyText", widget: "text" }
           - { label: "Disclaimer", name: "disclaimer", widget: "text" }
           - { label: "Image", name: "image", widget: "image", required: false }
+          - { label: "Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
           - { label: "Active Months", name: "activeMonths", widget: "list" }
       - label: "Dining"
         name: "dining"
@@ -92,6 +96,7 @@ collections:
           - { label: "Secondary Text", name: "secondaryText", widget: "text" }
           - { label: "Bush Experiences", name: "bushExperiences", widget: "list" }
           - { label: "Image", name: "image", widget: "image", required: false }
+          - { label: "Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
       - label: "Plan Visit"
         name: "planVisit"
         widget: "object"
@@ -140,6 +145,7 @@ collections:
       - { label: "Max Guests", name: "maxGuests", widget: "number" }
       - { label: "Description", name: "description", widget: "text" }
       - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
       - { label: "Order", name: "order", widget: "number" }
       - { label: "Body", name: "body", widget: "markdown" }
 
@@ -153,6 +159,7 @@ collections:
       - { label: "Label", name: "label", widget: "string" }
       - { label: "Description", name: "description", widget: "text" }
       - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
       - { label: "Featured", name: "featured", widget: "boolean", default: false }
       - { label: "Order", name: "order", widget: "number" }
       - { label: "Body", name: "body", widget: "markdown" }
@@ -167,6 +174,7 @@ collections:
       - { label: "Category", name: "category", widget: "string" }
       - { label: "Description", name: "description", widget: "text" }
       - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Draft", name: "draft", widget: "boolean", default: false }
       - { label: "Body", name: "body", widget: "markdown" }
