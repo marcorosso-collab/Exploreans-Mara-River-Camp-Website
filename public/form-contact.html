@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Contact Form</title>
+</head>
+<body>
+  <!-- This is a hidden form for Netlify detection -->
+  <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+    <input type="text" name="firstName" />
+    <input type="text" name="lastName" />
+    <input type="email" name="email" />
+    <input type="tel" name="phone" />
+    <input type="text" name="country" />
+    <input type="text" name="travelDate" />
+    <select name="subject">
+      <option value="reservation">Reservation Inquiry</option>
+      <option value="availability">Check Availability</option>
+      <option value="rates">Rates & Packages</option>
+      <option value="experiences">Safari Experiences</option>
+      <option value="group">Group Booking</option>
+      <option value="other">Other</option>
+    </select>
+    <textarea name="message"></textarea>
+    <input type="checkbox" name="newsletter" />
+    <input name="bot-field" />
+  </form>
+</body>
+</html>
