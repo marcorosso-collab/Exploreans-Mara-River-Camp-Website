@@ -17,9 +17,12 @@ const allJournal = await getCollection('journal', ({ data }) => !data.draft);
 const posts = allJournal.sort((a, b) => b.data.date.getTime() - a.data.date.getTime()).slice(0, 3);
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+// Default OG image for homepage
+const defaultOgImage = hero.image || '/images/og-default.jpg';
 ---
 
-<Base>
+<Base ogImage={defaultOgImage}>
 
   <!-- ═══ HERO ═══ -->
   <section class="hero">

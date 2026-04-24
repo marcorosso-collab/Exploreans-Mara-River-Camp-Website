@@ -49,6 +49,43 @@ const fullOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl
   <meta property="twitter:description" content={description} />
   {fullOgImage && <meta property="twitter:image" content={fullOgImage} />}
   
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "LodgingBusiness",
+    "name": site.siteName + ' ' + site.propertyName,
+    "description": description,
+    "url": fullCanonicalUrl,
+    "image": fullOgImage || `${siteUrl}/images/og-default.jpg`,
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Maasai Mara",
+      "addressRegion": "Narok County",
+      "addressCountry": "KE"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": -1.5065,
+      "longitude": 35.1430
+    },
+    "telephone": site.contactEmail,
+    "email": site.contactEmail,
+    "priceRange": "$$$$",
+    "starRating": {
+      "@type": "Rating",
+      "ratingValue": "5"
+    }
+  })} />}
+  
   <link rel="stylesheet" href="/styles/global.css">
 </head>
 <body>
