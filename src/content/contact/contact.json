@@ -4,15 +4,15 @@
   "reservations": {
     "title": "Reservations",
     "description": "Our reservations team is available to assist you with bookings and inquiries.",
-    "email": "reservations@maraexploreans.com",
-    "phone": "+254 123 456 789",
+    "email": "reservations.exploreansmara@planhotel.com",
+    "phone": "+254 071 590 9979",
     "hours": "Mon–Fri: 8am–6pm EAT"
   },
   "generalEnquiries": {
     "title": "General Enquiries",
     "description": "For general questions, feedback, or information about our camp and services.",
-    "email": "info@maraexploreans.com",
-    "phone": "",
+    "email": "info.exploreansmara@planhotel.com",
+    "phone": "+254 071 590 9979",
     "hours": "Mon–Fri: 9am–5pm EAT"
   },
   "location": {
@@ -32,6 +32,8 @@
     "title": "Maasai Mara, Kenya",
     "subtitle": "Our Location",
     "description": "Perched on a graceful bend of the Mara River at the foot of the Oloololo Escarpment",
-    "mapsUrl": "https://maps.google.com/?q=Maasai+Mara+Kenya"
-  }
+    "mapsUrl": "https://maps.app.goo.gl/gS3XVrnozeC9pVcS7"
+  },
+  "seo_title": "Contact Exploreans Mara River Camp | Maasai Mara Kenya",
+  "seo_description": "Plan your Maasai Mara safari with our team. Enquire about availability, rates and packages at Exploreans Mara River Camp, Kenya. We respond within 24 hours."
 }
