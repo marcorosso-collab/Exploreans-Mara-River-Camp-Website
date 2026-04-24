@@ -20,8 +20,9 @@ const {
   navDark = false,
 } = Astro.props;
 
-const fullCanonicalUrl = `https://exloreansmararivercamp.netlify.app${canonicalUrl}`;
-const fullOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `https://exloreansmararivercamp.netlify.app${ogImage}`) : null;
+const siteUrl = 'https://mara.exploreans.com';
+const fullCanonicalUrl = `${siteUrl}${canonicalUrl}`;
+const fullOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`) : null;
 ---
 <!DOCTYPE html>
 <html lang="en">
