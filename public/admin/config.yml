@@ -206,6 +206,15 @@ collections:
               - { label: "Email", name: "email", widget: "string" }
               - { label: "Phone", name: "phone", widget: "string" }
               - { label: "Hours", name: "hours", widget: "string" }
+          - label: "General Enquiries Section"
+            name: "generalEnquiries"
+            widget: "object"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Description", name: "description", widget: "text" }
+              - { label: "Email", name: "email", widget: "string" }
+              - { label: "Phone", name: "phone", widget: "string", required: false }
+              - { label: "Hours", name: "hours", widget: "string" }
           - label: "Location Section"
             name: "location"
             widget: "object"

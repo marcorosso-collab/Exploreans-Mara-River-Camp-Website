@@ -8,6 +8,13 @@
     "phone": "+254 123 456 789",
     "hours": "Mon–Fri: 8am–6pm EAT"
   },
+  "generalEnquiries": {
+    "title": "General Enquiries",
+    "description": "For general questions, feedback, or information about our camp and services.",
+    "email": "info@maraexploreans.com",
+    "phone": "",
+    "hours": "Mon–Fri: 9am–5pm EAT"
+  },
   "location": {
     "title": "Location",
     "description": "Exploreans Mara River Camp is located in the heart of the Maasai Mara.",

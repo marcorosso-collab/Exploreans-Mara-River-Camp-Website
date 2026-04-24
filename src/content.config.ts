@@ -161,6 +161,13 @@ const contact = defineCollection({
       phone: z.string(),
       hours: z.string(),
     }),
+    generalEnquiries: z.object({
+      title: z.string(),
+      description: z.string(),
+      email: z.string(),
+      phone: z.string().optional(),
+      hours: z.string(),
+    }),
     location: z.object({
       title: z.string(),
       description: z.string(),

@@ -119,6 +119,25 @@ const seoDescription = content.seo_description || '';
           </div>
           
           <div class="info-card">
+            <h3>{content.generalEnquiries.title}</h3>
+            <p class="body-text">{content.generalEnquiries.description}</p>
+            <div class="info-item">
+              <span class="info-label">Email</span>
+              <a href={`mailto:${content.generalEnquiries.email}`} class="info-value">{content.generalEnquiries.email}</a>
+            </div>
+            {content.generalEnquiries.phone && (
+              <div class="info-item">
+                <span class="info-label">Phone</span>
+                <a href={`tel:${content.generalEnquiries.phone.replace(/\s/g, '')}`} class="info-value">{content.generalEnquiries.phone}</a>
+              </div>
+            )}
+            <div class="info-item">
+              <span class="info-label">Hours</span>
+              <span class="info-value">{content.generalEnquiries.hours}</span>
+            </div>
+          </div>
+          
+          <div class="info-card">
             <h3>{content.location.title}</h3>
             <p class="body-text">{content.location.description}</p>
             <div class="info-item">
