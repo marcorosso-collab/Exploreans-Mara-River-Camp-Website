@@ -31,6 +31,7 @@ collections:
           - { label: "Instagram", name: "instagram", widget: "string", required: false }
           - { label: "Facebook", name: "facebook", widget: "string", required: false }
           - { label: "TripAdvisor", name: "tripadvisor", widget: "string", required: false }
+      - { label: "Favicon", name: "favicon", widget: "image", required: false, hint: "Upload a square PNG or ICO file (32x32 or 64x64 recommended). This appears in the browser tab." }
 
   - name: "homepage"
     label: "Homepage Sections"
