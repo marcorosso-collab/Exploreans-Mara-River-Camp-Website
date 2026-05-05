@@ -29,7 +29,18 @@ const fullOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Favicon for browser tabs -->
   {site.favicon && <link rel="icon" type="image/png" href={site.favicon} />}
+  
+  <!-- Shortcut icon (for older browsers and some search engines) -->
+  {site.favicon && <link rel="shortcut icon" type="image/png" href={site.favicon} />}
+  
+  <!-- Apple Touch Icon (used by Google for search results and mobile) -->
+  {site.favicon && <link rel="apple-touch-icon" sizes="180x180" href={site.favicon} />}
+  
+  <!-- Additional icon sizes for better compatibility -->
+  {site.favicon && <link rel="icon" type="image/png" sizes="32x32" href={site.favicon} />}
+  {site.favicon && <link rel="icon" type="image/png" sizes="16x16" href={site.favicon} />}
   <title>{title}</title>
   <meta name="description" content={description}>
   
