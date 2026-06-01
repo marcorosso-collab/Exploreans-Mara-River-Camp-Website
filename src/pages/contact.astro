@@ -199,26 +199,26 @@ const seoDescription = content.seo_description || `Contact Exploreans Mara River
   /* Page Header */
   .page-header {
     padding: 180px 0 80px;
-    background: var(--mara-black);
+    background: var(--deep-moss);
     text-align: center;
   }
   .page-header h1 {
     font-family: var(--font-display);
     font-size: clamp(36px, 5vw, 56px);
-    font-weight: 400;
-    color: var(--white);
+    font-weight: 700;
+    color: var(--natural-white);
     margin-bottom: 24px;
   }
   .page-header .lead-text {
-    color: var(--sand);
+    color: var(--warm-ochre);
     max-width: 600px;
     margin: 0 auto;
   }
   .page-header .section-label {
-    color: var(--ochre);
+    color: var(--sage);
   }
   .page-header .section-label::before {
-    background: var(--ochre);
+    background: var(--sage);
   }
 
   /* Contact Section */
@@ -234,7 +234,7 @@ const seoDescription = content.seo_description || `Contact Exploreans Mara River
 
   /* Form Styles */
   .contact-form-wrapper {
-    background: var(--white);
+    background: var(--natural-white);
     padding: 48px;
   }
   .contact-form {
@@ -253,28 +253,29 @@ const seoDescription = content.seo_description || `Contact Exploreans Mara River
     gap: 8px;
   }
   .form-group label {
-    font-size: 12px;
+    font-family: var(--font-functional);
+    font-size: 11px;
     font-weight: 500;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--mara-charcoal);
+    color: var(--bush-shadow);
   }
   .form-group input,
   .form-group select,
   .form-group textarea {
     font-family: var(--font-body);
-    font-size: 15px;
+    font-size: 16px;
     padding: 14px 16px;
-    border: 1px solid var(--sand-light);
-    background: var(--cream);
-    color: var(--mara-charcoal);
+    border: 1px solid var(--pale-leaf);
+    background: var(--natural-white);
+    color: var(--bush-shadow);
     transition: border-color 0.3s ease;
   }
   .form-group input:focus,
   .form-group select:focus,
   .form-group textarea:focus {
     outline: none;
-    border-color: var(--ochre);
+    border-color: var(--forest-green);
   }
   .form-group input::placeholder,
   .form-group textarea::placeholder {
@@ -339,28 +340,29 @@ const seoDescription = content.seo_description || `Contact Exploreans Mara River
     opacity: 1;
   }
   .checkbox-text {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--river-grey);
     line-height: 1.5;
   }
 
   /* Submit Button */
   .btn-submit {
+    font-family: var(--font-functional);
     width: 100%;
     margin-top: 16px;
     padding: 18px 40px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--white);
-    background: var(--ochre);
+    color: var(--natural-white);
+    background: var(--forest-green);
     border: none;
     cursor: pointer;
     transition: all 0.3s ease;
   }
   .btn-submit:hover {
-    background: var(--ochre-deep);
+    background: var(--deep-moss);
   }
 
   /* Hidden honeypot field */
@@ -375,19 +377,19 @@ const seoDescription = content.seo_description || `Contact Exploreans Mara River
     gap: 32px;
   }
   .info-card {
-    background: var(--white);
+    background: var(--natural-white);
     padding: 32px;
   }
   .info-card h3 {
     font-family: var(--font-display);
     font-size: 22px;
-    font-weight: 400;
-    color: var(--mara-black);
+    font-weight: 700;
+    color: var(--deep-moss);
     margin-bottom: 16px;
   }
   .info-card .body-text {
     margin-bottom: 24px;
-    font-size: 14px;
+    font-size: 15px;
   }
   .info-item {
     display: flex;
@@ -399,23 +401,24 @@ const seoDescription = content.seo_description || `Contact Exploreans Mara River
     margin-bottom: 0;
   }
   .info-label {
+    font-family: var(--font-functional);
     font-size: 10px;
     font-weight: 500;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--ochre);
+    color: var(--sage);
   }
   .info-value {
-    font-size: 14px;
-    color: var(--mara-charcoal);
+    font-size: 15px;
+    color: var(--bush-shadow);
     line-height: 1.6;
   }
   .info-value a {
-    color: var(--ochre-deep);
+    color: var(--forest-green);
     transition: color 0.2s;
   }
   .info-value a:hover {
-    color: var(--ochre);
+    color: var(--deep-moss);
   }
 
   /* Social Links */
@@ -426,17 +429,17 @@ const seoDescription = content.seo_description || `Contact Exploreans Mara River
   .social-link {
     width: 44px;
     height: 44px;
-    border: 1px solid var(--sand);
+    border: 1px solid var(--warm-ochre);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--mara-charcoal);
+    color: var(--bush-shadow);
     transition: all 0.3s ease;
   }
   .social-link:hover {
-    background: var(--ochre);
-    border-color: var(--ochre);
-    color: var(--white);
+    background: var(--forest-green);
+    border-color: var(--forest-green);
+    color: var(--natural-white);
   }
   .social-link svg {
     width: 20px;
@@ -456,26 +459,26 @@ const seoDescription = content.seo_description || `Contact Exploreans Mara River
     text-align: center;
   }
   .map-content {
-    color: var(--parchment);
+    color: var(--pale-leaf);
     max-width: 500px;
     padding: 48px;
   }
   .map-content h2 {
-    color: var(--white);
+    color: var(--natural-white);
     margin-bottom: 16px;
   }
   .map-content .body-text {
-    color: var(--sand);
+    color: var(--warm-ochre);
     margin-bottom: 24px;
   }
   .map-content .section-label {
-    color: var(--ochre);
+    color: var(--sage);
   }
   .map-content .section-label::before {
-    background: var(--ochre);
+    background: var(--sage);
   }
   .map-content .text-link {
-    color: var(--ochre);
+    color: var(--dry-savanna);
   }
 
   /* Responsive */

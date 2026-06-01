@@ -3,27 +3,39 @@
    Authentic by Nature
    ═══════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
 
 /* ─── Variables ─── */
 :root {
-  --mara-black: #1a1712;
-  --mara-charcoal: #2d2a24;
+  /* ─── Exploreans Brand Colours ─── */
+  --forest-green: #2E5E3F;
+  --sage: #7A9A6D;
+  --deep-moss: #1A2E20;
+  --pale-leaf: #EAF0E6;
+  --warm-ochre: #D6C8A8;
+  --dry-savanna: #C4A87A;
+  --bush-shadow: #3D3D35;
+  --natural-white: #FAFAF5;
+  /* ─── Legacy aliases for compatibility ─── */
+  --mara-black: #1A2E20;
+  --mara-charcoal: #3D3D35;
   --river-grey: #6b6560;
   --warm-stone: #a39889;
-  --sand: #c8b9a5;
-  --sand-light: #e8dfd3;
-  --parchment: #f4efe8;
-  --cream: #faf7f2;
-  --white: #fdfcfa;
-  --ochre: #c4913a;
+  --sand: #D6C8A8;
+  --sand-light: #EAF0E6;
+  --parchment: #EAF0E6;
+  --cream: #FAFAF5;
+  --white: #FAFAF5;
+  --ochre: #C4A87A;
   --ochre-deep: #a87830;
-  --deep-green: #2c4a2e;
-  --forest: #3d6340;
+  --deep-green: #2E5E3F;
+  --forest: #7A9A6D;
   --river-blue: #5a7a8a;
   --terracotta: #b5694d;
-  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  --font-body: 'DM Sans', 'Helvetica Neue', Helvetica, sans-serif;
+  /* ─── Exploreans Brand Fonts ─── */
+  --font-display: Georgia, 'Playfair Display', 'Times New Roman', serif;
+  --font-body: Georgia, Garamond, 'Adobe Garamond Pro', serif;
+  --font-functional: 'DIN 1451 Engschrift', 'DIN 1451 Mittelschrift', DIN, Calibri, 'Helvetica Neue', Helvetica, sans-serif;
   --max-width: 1440px;
   --content-width: 1200px;
 }
@@ -33,9 +45,9 @@
 html { scroll-behavior: smooth; }
 body {
   font-family: var(--font-body);
-  color: var(--mara-charcoal);
-  background: var(--cream);
-  line-height: 1.7;
+  color: var(--bush-shadow);
+  background: var(--natural-white);
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
 }
 img { display: block; max-width: 100%; height: auto; }
@@ -60,12 +72,12 @@ a { color: inherit; text-decoration: none; }
 
 /* ─── Typography ─── */
 .section-label {
-  font-family: var(--font-body);
-  font-size: 10px;
+  font-family: var(--font-functional);
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.25em;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--ochre);
+  color: var(--sage);
   margin-bottom: 20px;
   display: flex;
   align-items: center;
@@ -75,41 +87,41 @@ a { color: inherit; text-decoration: none; }
   content: '';
   width: 32px;
   height: 1px;
-  background: var(--ochre);
+  background: var(--sage);
 }
 .section-label.center { justify-content: center; }
 .section-label.center::before { display: none; }
 
 h2, .h2-display {
   font-family: var(--font-display);
-  font-size: clamp(28px, 3.5vw, 44px);
-  font-weight: 400;
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 700;
   line-height: 1.2;
-  color: var(--mara-black);
+  color: var(--deep-moss);
   margin-bottom: 24px;
 }
 h2 em { font-style: italic; }
 
 h3, .h3-card {
   font-family: var(--font-display);
-  font-size: clamp(20px, 2vw, 24px);
+  font-size: clamp(18px, 2vw, 24px);
   font-weight: 400;
   line-height: 1.3;
-  color: var(--mara-black);
+  color: var(--deep-moss);
   margin-bottom: 12px;
 }
 
 .lead-text {
   font-size: 18px;
-  line-height: 1.8;
-  color: var(--mara-charcoal);
-  font-weight: 300;
+  line-height: 1.7;
+  color: var(--bush-shadow);
+  font-weight: 400;
 }
 
 .body-text {
-  font-size: 15px;
-  line-height: 1.8;
-  color: var(--river-grey);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--bush-shadow);
 }
 
 .body-text + .body-text { margin-top: 16px; }
@@ -121,12 +133,12 @@ h3, .h3-card {
 
 /* ─── Links & Buttons ─── */
 .text-link {
-  font-family: var(--font-body);
-  font-size: 13px;
+  font-family: var(--font-functional);
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--ochre-deep);
+  color: var(--deep-moss);
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -154,13 +166,13 @@ h3, .h3-card {
 
 .btn-primary {
   display: inline-block;
-  font-family: var(--font-body);
-  font-size: 13px;
+  font-family: var(--font-functional);
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--deep-green);
-  background: var(--parchment);
+  color: var(--deep-moss);
+  background: var(--pale-leaf);
   padding: 16px 40px;
   border: none;
   cursor: pointer;
@@ -189,7 +201,7 @@ h3, .h3-card {
 .nav-brand {
   font-family: var(--font-display);
   font-size: 22px;
-  color: var(--white);
+  color: var(--natural-white);
   transition: color 0.4s;
   display: flex;
   align-items: center;
@@ -203,8 +215,10 @@ h3, .h3-card {
 .nav.scrolled .nav-brand { color: var(--mara-black); }
 .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
 .nav-links a {
-  font-size: 13px;
-  letter-spacing: 0.06em;
+  font-family: var(--font-functional);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.85);
   transition: color 0.3s;
@@ -287,10 +301,12 @@ h3, .h3-card {
 }
 
 .nav-cta {
+  font-family: var(--font-functional);
   padding: 10px 22px;
   border: 1px solid rgba(255,255,255,0.4);
-  font-size: 12px;
-  letter-spacing: 0.1em;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.85);
   transition: all 0.3s ease;
@@ -350,8 +366,10 @@ h3, .h3-card {
   width: 100%;
 }
 .hero-tagline {
-  font-size: 10px;
-  letter-spacing: 0.25em;
+  font-family: var(--font-functional);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: rgba(255,255,255,0.65);
   margin-bottom: 16px;
@@ -359,9 +377,9 @@ h3, .h3-card {
 .hero h1 {
   font-family: var(--font-display);
   font-size: clamp(36px, 5vw, 64px);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.15;
-  color: var(--white);
+  color: var(--natural-white);
   max-width: 700px;
 }
 .hero h1 em { font-style: italic; }
@@ -402,20 +420,24 @@ h3, .h3-card {
 .accom-card:hover { transform: translateY(-4px); }
 .card-body { padding: 28px 24px; }
 .card-category {
+  font-family: var(--font-functional);
   font-size: 10px;
   font-weight: 500;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--ochre);
+  color: var(--sage);
   margin-bottom: 10px;
 }
 .card-meta {
+  font-family: var(--font-functional);
   display: flex;
   gap: 20px;
   padding-top: 16px;
-  border-top: 1px solid var(--sand-light);
-  font-size: 12px;
-  color: var(--warm-stone);
+  border-top: 1px solid var(--pale-leaf);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  color: var(--bush-shadow);
   margin-top: 20px;
 }
 
@@ -431,12 +453,15 @@ h3, .h3-card {
 .stat-number {
   font-family: var(--font-display);
   font-size: 42px;
-  font-weight: 400;
-  color: var(--ochre);
+  font-weight: 700;
+  color: var(--dry-savanna);
   line-height: 1;
 }
 .stat-label {
-  font-size: 13px;
+  font-family: var(--font-functional);
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
   color: var(--warm-stone);
   margin-top: 8px;
   line-height: 1.5;
@@ -445,17 +470,18 @@ h3, .h3-card {
 /* ─── Month Calendar ─── */
 .month-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 40px 0; }
 .month-pill {
+  font-family: var(--font-functional);
   text-align: center;
   padding: 10px 4px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 500;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--warm-stone);
-  background: var(--cream);
+  color: var(--bush-shadow);
+  background: var(--natural-white);
   border-radius: 2px;
 }
-.month-pill.active { background: var(--deep-green); color: var(--parchment); }
+.month-pill.active { background: var(--forest-green); color: var(--pale-leaf); }
 
 /* ─── Experiences ─── */
 .exp-card {
@@ -470,10 +496,12 @@ h3, .h3-card {
   background: linear-gradient(transparent, rgba(26,23,18,0.75));
 }
 .exp-card .exp-label {
+  font-family: var(--font-functional);
   font-size: 10px;
-  letter-spacing: 0.2em;
+  font-weight: 500;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--ochre);
+  color: var(--dry-savanna);
   margin-bottom: 6px;
 }
 .exp-card h3 { color: var(--white); }
@@ -484,8 +512,8 @@ h3, .h3-card {
   display: flex;
   align-items: center;
   gap: 16px;
-  font-size: 14px;
-  color: var(--mara-charcoal);
+  font-size: 15px;
+  color: var(--bush-shadow);
 }
 .dining-item .dot {
   width: 6px;
@@ -506,16 +534,19 @@ h3, .h3-card {
 }
 .plan-info-item { text-align: center; }
 .plan-info-label {
+  font-family: var(--font-functional);
   font-size: 10px;
-  letter-spacing: 0.2em;
+  font-weight: 500;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--sand);
+  color: var(--warm-ochre);
   margin-bottom: 4px;
 }
 .plan-info-value {
   font-family: var(--font-display);
   font-size: 16px;
-  color: var(--parchment);
+  font-weight: 400;
+  color: var(--pale-leaf);
 }
 
 /* ─── Footer ─── */
@@ -529,10 +560,12 @@ h3, .h3-card {
 .footer-logo {
   font-family: var(--font-display);
   font-size: 20px;
-  color: var(--parchment);
+  color: var(--pale-leaf);
 }
 .footer-subtitle {
+  font-family: var(--font-functional);
   font-size: 9px;
+  font-weight: 400;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--river-grey);
@@ -540,16 +573,17 @@ h3, .h3-card {
 }
 .footer-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
 .footer-col h4 {
+  font-family: var(--font-functional);
   font-size: 10px;
   font-weight: 500;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--sand);
+  color: var(--warm-ochre);
   margin-bottom: 16px;
 }
 .footer-col a {
   display: block;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--river-grey);
   margin-bottom: 8px;
   transition: color 0.2s;
@@ -557,14 +591,18 @@ h3, .h3-card {
 .footer-col a:hover { color: var(--parchment); }
 .footer-managed { text-align: right; }
 .footer-managed-label {
+  font-family: var(--font-functional);
   font-size: 9px;
+  font-weight: 400;
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: var(--river-grey);
   margin-bottom: 6px;
 }
 .footer-managed-name {
-  font-size: 13px;
+  font-family: var(--font-functional);
+  font-size: 12px;
+  font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--warm-stone);
@@ -575,7 +613,7 @@ h3, .h3-card {
   border-top: 1px solid rgba(255,255,255,0.06);
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--river-grey);
 }
 .lang-switcher { display: flex; gap: 16px; }

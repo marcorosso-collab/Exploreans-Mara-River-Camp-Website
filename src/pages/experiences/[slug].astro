@@ -152,21 +152,24 @@ const hasCarousel = images.length > 1;
 <style>
   .experience-detail {
     padding: 160px 0 80px;
-    background: var(--cream);
+    background: var(--natural-white);
     min-height: 100vh;
   }
 
   .back-link {
+    font-family: var(--font-functional);
     display: inline-block;
     margin-top: 40px;
     margin-bottom: 32px;
-    font-size: 13px;
-    letter-spacing: 0.06em;
-    color: var(--mara-charcoal);
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bush-shadow);
     transition: color 0.2s;
   }
   .back-link:hover {
-    color: var(--ochre);
+    color: var(--forest-green);
   }
 
   /* Image Gallery / Carousel */
@@ -261,35 +264,37 @@ const hasCarousel = images.length > 1;
   }
 
   .exp-meta {
+    font-family: var(--font-functional);
     display: flex;
     gap: 16px;
     margin-bottom: 16px;
-    font-size: 13px;
-    letter-spacing: 0.06em;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
   }
 
   .exp-label {
-    color: var(--ochre);
+    color: var(--sage);
     font-weight: 500;
   }
 
   .exp-duration {
-    color: var(--warm-stone);
+    color: var(--bush-shadow);
   }
 
   .exp-title {
     font-family: var(--font-display);
     font-size: clamp(32px, 4vw, 48px);
-    font-weight: 400;
-    color: var(--mara-black);
+    font-weight: 700;
+    color: var(--deep-moss);
     margin-bottom: 16px;
   }
 
   .exp-description {
     font-size: 18px;
-    line-height: 1.6;
-    color: var(--mara-charcoal);
+    line-height: 1.65;
+    color: var(--bush-shadow);
     max-width: 600px;
   }
 
@@ -298,15 +303,15 @@ const hasCarousel = images.length > 1;
     max-width: 720px;
     margin-bottom: 64px;
     font-size: 16px;
-    line-height: 1.8;
-    color: var(--mara-charcoal);
+    line-height: 1.65;
+    color: var(--bush-shadow);
   }
 
   .exp-body :global(h2) {
     font-family: var(--font-display);
     font-size: 28px;
-    font-weight: 400;
-    color: var(--mara-black);
+    font-weight: 700;
+    color: var(--deep-moss);
     margin: 48px 0 24px;
   }
 
@@ -314,7 +319,7 @@ const hasCarousel = images.length > 1;
     font-family: var(--font-display);
     font-size: 22px;
     font-weight: 400;
-    color: var(--mara-black);
+    color: var(--deep-moss);
     margin: 36px 0 16px;
   }
 
@@ -323,8 +328,8 @@ const hasCarousel = images.length > 1;
   }
 
   .exp-body :global(strong) {
-    color: var(--mara-black);
-    font-weight: 500;
+    color: var(--deep-moss);
+    font-weight: 700;
   }
 
   /* CTA */
@@ -335,18 +340,20 @@ const hasCarousel = images.length > 1;
   }
 
   .btn-primary {
+    font-family: var(--font-functional);
     display: inline-block;
     padding: 16px 32px;
-    background: var(--ochre);
-    color: var(--white);
+    background: var(--forest-green);
+    color: var(--natural-white);
     font-size: 12px;
-    letter-spacing: 0.1em;
+    font-weight: 500;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     transition: background 0.3s ease;
   }
 
   .btn-primary:hover {
-    background: var(--ochre-deep);
+    background: var(--deep-moss);
   }
 
   /* Responsive */
