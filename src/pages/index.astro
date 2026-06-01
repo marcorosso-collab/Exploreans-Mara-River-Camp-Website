@@ -41,7 +41,7 @@ const defaultOgImage = hero.image || '/images/og-default.jpg';
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <p class="hero-tagline">{hero.tagline}</p>
-      <h1 set:html={hero.headline} />
+      <h1>Exploreans Mara River Camp — <span set:html={hero.headline} /></h1>
     </div>
   </section>
 
@@ -248,5 +248,53 @@ const defaultOgImage = hero.image || '/images/og-default.jpg';
       </div>
     </div>
   </section>
+
+  <!-- ═══ FAQ SCHEMA ═══ -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Where is Exploreans Mara River Camp located?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Exploreans Mara River Camp is located on a graceful bend of the Mara River at the foot of the Oloololo Escarpment in Kenya's Maasai Mara National Reserve. The camp is just 15 minutes from Kichwa Tembo Airstrip."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "When is the best time to visit Mara River Camp?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The best time to visit is during the Great Migration season from July to October, when millions of wildebeest and zebra cross the Mara River. However, the camp offers excellent wildlife viewing year-round."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What types of accommodation are available at Mara River Camp?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The camp offers 23 luxury tents and one cabin, including River Tents with direct river views, Bush Tents nestled in the wilderness, and Simba's Den — a private family cabin. All accommodations feature en-suite bathrooms and private verandas."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What safari experiences are offered at Exploreans Mara River Camp?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Guests can enjoy game drives, guided walking tours, hot air balloon safaris, Maasai cultural visits, bush dining experiences, and sundowner cocktails. The camp's location directly on the Mara River means wildlife often visits the grounds."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I get to Exploreans Mara River Camp?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The camp is approximately 15 minutes from Kichwa Tembo Airstrip, which has regular flights from Nairobi. Road transfers from Nairobi take approximately 5-6 hours. The camp can arrange transfers upon request."
+        }
+      }
+    ]
+  })} />
 
 </Base>

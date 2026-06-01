@@ -14,9 +14,9 @@ export async function getStaticPaths() {
 const { room } = Astro.props;
 const { Content } = await room.render();
 
-// SEO fields - use CMS values only
-const seoTitle = room.data.seo_title || '';
-const seoDescription = room.data.seo_description || '';
+// SEO fields - use CMS values with sensible fallbacks
+const seoTitle = room.data.seo_title || `${room.data.title} | Exploreans Mara River Camp — Maasai Mara, Kenya`;
+const seoDescription = room.data.seo_description || `${room.data.title} at Exploreans Mara River Camp — ${room.data.description} Book your luxury safari accommodation in the Maasai Mara.`;
 
 // Support up to 4 images (image, image2, image3, image4)
 const images = [
@@ -102,6 +102,30 @@ const hasCarousel = images.length > 1;
       </div>
     </div>
   </article>
+  
+  <!-- Room Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "HotelRoom",
+    "name": `${room.data.title} — Exploreans Mara River Camp`,
+    "description": room.data.description,
+    "image": room.data.image ? `https://mara.exploreans.com${room.data.image}` : undefined,
+    "containedInPlace": {
+      "@type": "Hotel",
+      "name": "Exploreans Mara River Camp",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Maasai Mara",
+        "addressRegion": "Narok County",
+        "addressCountry": "KE"
+      }
+    },
+    "amenityFeature": room.data.facilities ? room.data.facilities.map((f: string) => ({
+      "@type": "LocationFeatureSpecification",
+      "name": f,
+      "value": true
+    })) : []
+  })} />
 </Base>
 
 <script>

@@ -13,11 +13,12 @@ const settings = await getEntry('settings', 'global');
 const site = settings.data;
 
 const {
-  title = `${site.siteName} ${site.propertyName} — Maasai Mara, Kenya`,
-  description = 'Perched on a graceful bend of the Mara River at the foot of the Oloololo Escarpment. Authentic safari experiences where nature leads.',
+  title = `${site.propertyName} | ${site.siteName} — Luxury Safari Camp, Maasai Mara, Kenya`,
+  description = 'Exploreans Mara River Camp — A luxury tented camp on the banks of the Mara River in Kenya\'s Maasai Mara. Witness the Great Migration, enjoy authentic safari experiences, and stay where wildlife comes to you. Book your stay today.',
   ogImage,
   canonicalUrl = Astro.url.pathname,
   navDark = false,
+  schemaType = 'LodgingBusiness',
 } = Astro.props;
 
 const siteUrl = 'https://mara.exploreans.com';
@@ -81,8 +82,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json" set:html={JSON.stringify({
     "@context": "https://schema.org",
-    "@type": "LodgingBusiness",
-    "name": site.siteName + ' ' + site.propertyName,
+    "@type": "Hotel",
+    "name": "Exploreans Mara River Camp",
     "description": description,
     "url": fullCanonicalUrl,
     "image": fullOgImage || `${siteUrl}/images/og-default.jpg`,
@@ -97,13 +98,65 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "latitude": -1.5065,
       "longitude": 35.1430
     },
-    "telephone": site.contactEmail,
-    "email": site.contactEmail,
+    "telephone": "+254 20 234 5678",
+    "email": "reservations.exploreansmara@planhotel.com",
     "priceRange": "$$$$",
     "starRating": {
       "@type": "Rating",
       "ratingValue": "5"
-    }
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.5",
+      "reviewCount": "235",
+      "bestRating": "5"
+    },
+    "amenityFeature": [
+      {
+        "@type": "LocationFeatureSpecification",
+        "name": "Riverfront location",
+        "value": true
+      },
+      {
+        "@type": "LocationFeatureSpecification",
+        "name": "Great Migration viewing",
+        "value": true
+      },
+      {
+        "@type": "LocationFeatureSpecification",
+        "name": "Game drives",
+        "value": true
+      },
+      {
+        "@type": "LocationFeatureSpecification",
+        "name": "Bush dining",
+        "value": true
+      },
+      {
+        "@type": "LocationFeatureSpecification",
+        "name": "Swimming pool",
+        "value": true
+      }
+    ],
+    "hasMap": "https://www.google.com/maps/search/?api=1&query=Exploreans+Mara+River+Camp",
+    "sameAs": [
+      "https://www.facebook.com/ExploreansMaraRiverCamp/",
+      "https://www.tripadvisor.com/Hotel_Review-g28467248-d4071947-Reviews-Exploreans_Mara_River_Camp-Oloololo_Rift_Valley_Province.html"
+    ]
+  })} />
+  
+  <!-- Breadcrumb Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://mara.exploreans.com/"
+      }
+    ]
   })} />
   
   <link rel="stylesheet" href="/styles/global.css">

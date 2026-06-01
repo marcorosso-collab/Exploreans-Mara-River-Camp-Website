@@ -8,9 +8,9 @@ const site = settings.data;
 const contactData = await getEntry('contact', 'contact');
 const content = contactData.data;
 
-// SEO fields - use CMS values only
-const seoTitle = content.seo_title || '';
-const seoDescription = content.seo_description || '';
+// SEO fields - use CMS values with sensible fallbacks
+const seoTitle = content.seo_title || `Contact Us | Exploreans Mara River Camp — Maasai Mara, Kenya`;
+const seoDescription = content.seo_description || `Contact Exploreans Mara River Camp for reservations, enquiries, and safari planning. Email us at reservations.exploreansmara@planhotel.com or call us. We're here to help plan your perfect Maasai Mara experience.`;
 ---
 
 <Base title={seoTitle} description={seoDescription} ogImage={content.og_image}>
