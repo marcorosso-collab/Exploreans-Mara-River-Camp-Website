@@ -2,7 +2,7 @@
 title: Game Drives
 label: Signature
 description: Morning, afternoon, or full-day drives through the Maasai Mara with expert guides.
-image: /images/uploads/game-drive-maasai-mara-dawn-mara-river-camp-kenya.jpg
+image: /images/uploads/safari-experience-exploreans-mara-rivercamp.jpg
 imageAlt: Early morning game drive in the Maasai Mara with guide, Exploreans Mara River Camp Kenya
 featured: true
 order: 1
