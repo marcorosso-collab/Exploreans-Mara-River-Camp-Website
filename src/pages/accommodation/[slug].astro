@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 
 // Generate static paths for all accommodations
 export async function getStaticPaths() {
@@ -13,6 +13,10 @@ export async function getStaticPaths() {
 
 const { room } = Astro.props;
 const { Content } = await room.render();
+
+// Get booking URL from settings
+const settingsEntry = await getEntry('settings', 'global');
+const bookingUrl = settingsEntry?.data?.bookingUrl || 'https://www.simplebooking.it/ibe2/hotel/11535?lang=EN&cur=USD';
 
 // SEO fields - use CMS values with sensible fallbacks
 const seoTitle = room.data.seo_title || `${room.data.title} | Exploreans Mara River Camp — Maasai Mara, Kenya`;
@@ -98,7 +102,9 @@ const hasCarousel = images.length > 1;
 
       <!-- CTA -->
       <div class="room-cta">
-        <a href="/#plan" class="btn-primary">Book This Room</a>
+        <p class="room-cta-subtext">Ready to experience {room.data.title.toLowerCase()}?</p>
+        <a href={bookingUrl} class="btn-cta" target="_blank" rel="noopener">Book Your Safari</a>
+        <p class="room-cta-guarantee">Best rate guaranteed • Free cancellation available</p>
       </div>
     </div>
   </article>
@@ -380,25 +386,66 @@ const hasCarousel = images.length > 1;
   /* CTA */
   .room-cta {
     text-align: center;
-    padding-top: 32px;
-    border-top: 1px solid rgba(0,0,0,0.08);
+    padding: 56px 40px;
+    background: var(--deep-moss);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
   }
 
-  .btn-primary {
-    font-family: var(--font-functional);
+  .room-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'><g fill='none' stroke='%232E5E3F' stroke-width='0.7' opacity='0.5'><path d='M-50,120 Q80,80 200,120 T440,130 Q560,140 700,110 T900,120'/><path d='M-50,170 Q90,140 220,170 T460,180 Q580,185 720,160 T900,170'/><path d='M-50,220 Q110,200 240,225 T480,230 Q600,235 740,215 T900,225'/><path d='M-50,280 Q130,265 260,285 T500,290 Q620,295 760,280 T900,285'/><path d='M-50,345 Q150,335 280,350 T520,355 Q640,360 780,350 T900,350'/><path d='M-50,415 Q170,410 300,420 T540,420 Q660,420 800,415 T900,415'/><path d='M-50,480 Q180,480 300,488 T540,488 Q660,485 800,485 T900,483'/><path d='M-50,545 Q200,548 320,550 T560,548 Q680,545 820,548 T900,548'/></g></svg>");
+    background-size: 800px 600px;
+    background-repeat: repeat;
+    opacity: 0.18;
+    pointer-events: none;
+  }
+
+  .room-cta-subtext {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-style: italic;
+    color: var(--pale-leaf);
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .btn-cta {
+    position: relative;
+    z-index: 1;
     display: inline-block;
-    padding: 16px 32px;
-    background: var(--forest-green);
-    color: var(--natural-white);
-    font-size: 12px;
+    font-family: var(--font-functional);
+    font-size: 13px;
     font-weight: 500;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    transition: background 0.3s ease;
+    color: var(--deep-moss);
+    background: var(--ochre);
+    padding: 18px 48px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
   }
 
-  .btn-primary:hover {
-    background: var(--deep-moss);
+  .btn-cta:hover {
+    background: var(--ochre-deep);
+    color: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+
+  .room-cta-guarantee {
+    font-family: var(--font-functional);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--sage);
+    margin-top: 20px;
+    position: relative;
+    z-index: 1;
   }
 
   /* Responsive */
