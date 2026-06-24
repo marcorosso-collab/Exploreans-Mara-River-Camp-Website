@@ -129,12 +129,27 @@ a { color: inherit; text-decoration: none; }
   margin: 0 auto;
   padding: 0 48px;
 }
-.section { padding: 120px 0; }
-.section-dark { padding: 120px 0; background: var(--mara-black); color: var(--parchment); }
-.section-parchment { padding: 120px 0; background: var(--parchment); }
-.section-green { padding: 120px 0; background: var(--deep-green); color: var(--parchment); text-align: center; }
-.section-white { padding: 120px 0; background: var(--white); }
-.section-ochre { padding: 120px 0; background: var(--sand); color: var(--deep-moss); }
+.section,
+.section-dark,
+.section-parchment,
+.section-green,
+.section-white,
+.section-ochre {
+  padding: 120px 0;
+  position: relative;
+  overflow: hidden;
+}
+.section-dark { background: var(--mara-black); color: var(--parchment); }
+.section-parchment { background: var(--parchment); }
+.section-green { background: var(--deep-green); color: var(--parchment); text-align: center; }
+.section-white { background: var(--white); }
+.section-ochre { background: var(--sand); color: var(--deep-moss); }
+.section > .container,
+.section-dark > .container,
+.section-parchment > .container,
+.section-green > .container,
+.section-white > .container,
+.section-ochre > .container { position: relative; z-index: 1; }
 
 /* ─── Grid ─── */
 .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
@@ -577,11 +592,22 @@ h3, .h3-card {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'><g fill='none' stroke='%237A9A6D' stroke-width='0.7'><path d='M-50,120 Q80,80 200,120 T440,130 Q560,140 700,110 T900,120'/><path d='M-50,170 Q90,140 220,170 T460,180 Q580,185 720,160 T900,170'/><path d='M-50,220 Q110,200 240,225 T480,230 Q600,235 740,215 T900,225'/><path d='M-50,280 Q130,265 260,285 T500,290 Q620,295 760,280 T900,285'/><path d='M-50,345 Q150,335 280,350 T520,355 Q640,360 780,350 T900,350'/><path d='M-50,415 Q170,410 300,420 T540,420 Q660,420 800,415 T900,415'/></g></svg>");
 }
 
-/* ─── Sections with relative positioning for topo overlay ─── */
-.section-dark,
-.section-green { position: relative; overflow: hidden; }
-.section-dark > .container,
-.section-green > .container { position: relative; z-index: 1; }
+/* Light-background variants (subtler, using pale-leaf / warm-stone strokes) */
+.topo-bg--light {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'><g fill='none' stroke='%23D6C8A8' stroke-width='0.7' opacity='0.6'><path d='M-50,120 Q80,80 200,120 T440,130 Q560,140 700,110 T900,120'/><path d='M-50,170 Q90,140 220,170 T460,180 Q580,185 720,160 T900,170'/><path d='M-50,220 Q110,200 240,225 T480,230 Q600,235 740,215 T900,225'/><path d='M-50,280 Q130,265 260,285 T500,290 Q620,295 760,280 T900,285'/><path d='M-50,345 Q150,335 280,350 T520,355 Q640,360 780,350 T900,350'/><path d='M-50,415 Q170,410 300,420 T540,420 Q660,420 800,415 T900,415'/><path d='M-50,480 Q180,480 300,488 T540,488 Q660,485 800,485 T900,483'/><path d='M-50,545 Q200,548 320,550 T560,548 Q680,545 820,548 T900,548'/></g></svg>");
+  opacity: 0.35;
+}
+.topo-bg--stone {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600' viewBox='0 0 800 600'><g fill='none' stroke='%23a39889' stroke-width='0.7' opacity='0.5'><path d='M-50,120 Q80,80 200,120 T440,130 Q560,140 700,110 T900,120'/><path d='M-50,170 Q90,140 220,170 T460,180 Q580,185 720,160 T900,170'/><path d='M-50,220 Q110,200 240,225 T480,230 Q600,235 740,215 T900,225'/><path d='M-50,280 Q130,265 260,285 T500,290 Q620,295 760,280 T900,285'/><path d='M-50,345 Q150,335 280,350 T520,355 Q640,360 780,350 T900,350'/><path d='M-50,415 Q170,410 300,420 T540,420 Q660,420 800,415 T900,415'/></g></svg>");
+  opacity: 0.25;
+}
+
+/* Opacity modifiers */
+.topo-bg--opacity-10 { opacity: 0.10; }
+.topo-bg--opacity-15 { opacity: 0.15; }
+.topo-bg--opacity-20 { opacity: 0.20; }
+.topo-bg--opacity-25 { opacity: 0.25; }
+.topo-bg--opacity-30 { opacity: 0.30; }
 .img-placeholder {
   width: 100%;
   background: var(--sand-light);

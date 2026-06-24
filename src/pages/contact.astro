@@ -17,6 +17,7 @@ const seoDescription = content.seo_description || `Contact Exploreans Mara River
 
   <!-- ═══ PAGE HEADER ═══ -->
   <section class="page-header">
+    <div class="topo-bg topo-bg--opacity-20"></div>
     <div class="container">
       <p class="section-label center">Get in Touch</p>
       <h1>{content.pageTitle}</h1>
@@ -26,6 +27,7 @@ const seoDescription = content.seo_description || `Contact Exploreans Mara River
 
   <!-- ═══ CONTACT SECTION ═══ -->
   <section class="section-parchment contact-section">
+    <div class="topo-bg topo-bg--light topo-bg--opacity-15"></div>
     <div class="container">
       <div class="contact-grid">
         
@@ -201,6 +203,12 @@ const seoDescription = content.seo_description || `Contact Exploreans Mara River
     padding: 180px 0 80px;
     background: var(--deep-moss);
     text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-header > .container {
+    position: relative;
+    z-index: 1;
   }
   .page-header h1 {
     font-family: var(--font-display);
@@ -224,6 +232,12 @@ const seoDescription = content.seo_description || `Contact Exploreans Mara River
   /* Contact Section */
   .contact-section {
     padding: 80px 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-section > .container {
+    position: relative;
+    z-index: 1;
   }
   .contact-grid {
     display: grid;

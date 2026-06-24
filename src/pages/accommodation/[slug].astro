@@ -36,6 +36,7 @@ const hasCarousel = images.length > 1;
 
 <Base title={seoTitle} description={seoDescription} ogImage={room.data.og_image} navDark={true}>
   <article class="accommodation-detail">
+    <div class="topo-bg topo-bg--light topo-bg--opacity-10"></div>
     <div class="container">
       <!-- Back Link -->
       <a href="/#stay" class="back-link">← Back to Accommodation</a>
@@ -177,6 +178,12 @@ const hasCarousel = images.length > 1;
     padding: 160px 0 80px;
     background: var(--natural-white);
     min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+  .accommodation-detail > .container {
+    position: relative;
+    z-index: 1;
   }
 
   .back-link {
