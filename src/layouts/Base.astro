@@ -7,24 +7,200 @@ interface Props {
   ogImage?: string;
   canonicalUrl?: string;
   navDark?: boolean;
+  noindex?: boolean;
 }
 
 const settings = await getEntry('settings', 'global');
 const site = settings.data;
 
 const {
-  title = `${site.propertyName} | ${site.siteName} — Luxury Safari Camp, Maasai Mara, Kenya`,
-  description = 'Exploreans Mara River Camp — A luxury tented camp on the banks of the Mara River in Kenya\'s Maasai Mara. Witness the Great Migration, enjoy authentic safari experiences, and stay where wildlife comes to you. Book your stay today.',
+  title = `${site.propertyName} | ${site.siteName} — Authentic Safari Camp, Maasai Mara, Kenya`,
+  description = 'Exploreans Mara River Camp — An authentic luxury tented safari camp on the banks of the Mara River in Kenya\'s Maasai Mara. Witness the Great Migration, sleep where wildlife comes to you, and experience the Masai Mara as it should be. Book your authentic safari today.',
   ogImage,
   canonicalUrl = Astro.url.pathname,
   navDark = false,
-  schemaType = 'LodgingBusiness',
+  noindex = false,
 } = Astro.props;
 
 const siteUrl = 'https://mara.exploreans.com';
-const fullCanonicalUrl = `${siteUrl}${canonicalUrl}`;
-const fullOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`) : null;
+const fullCanonicalUrl = `${siteUrl}${canonicalUrl === '/' ? '' : canonicalUrl}`;
+const fullOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`) : `${siteUrl}/images/uploads/safari-experience-exploreans-mara-rivercamp.jpg`;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SafariCamp",
+      "@id": `${siteUrl}/#safaricamp`,
+      "name": "Exploreans Mara River Camp",
+      "description": description,
+      "url": siteUrl,
+      "logo": `${siteUrl}${site.logo || '/images/uploads/Exploreans%20Mara%20River%20Camp_RGB.png'}`,
+      "image": fullOgImage,
+      "priceRange": "$$$$",
+      "starRating": {
+        "@type": "Rating",
+        "ratingValue": "5",
+        "bestRating": "5"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Mara River, Oloololo Escarpment",
+        "addressLocality": "Maasai Mara",
+        "addressRegion": "Narok County",
+        "addressCountry": "KE"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -1.5065,
+        "longitude": 35.1430
+      },
+      "telephone": "+254-20-234-5678",
+      "email": "reservations.exploreansmara@planhotel.com",
+      "checkinTime": "14:00",
+      "checkoutTime": "11:00",
+      "numberOfRooms": 24,
+      "amenityFeature": [
+        { "@type": "LocationFeatureSpecification", "name": "Riverfront location on the Mara River", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Great Migration viewing from camp", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Daily game drives", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Guided walking safaris", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Bush dining experiences", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Hot air balloon safaris", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Maasai cultural visits", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Swimming pool", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "En-suite bathrooms", "value": true },
+        { "@type": "LocationFeatureSpecification", "name": "Private verandas", "value": true }
+      ],
+      "containedInPlace": {
+        "@type": "NationalPark",
+        "name": "Maasai Mara National Reserve",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Maasai Mara",
+          "addressRegion": "Narok County",
+          "addressCountry": "KE"
+        }
+      },
+      "hasMap": "https://www.google.com/maps/search/?api=1&query=Exploreans+Mara+River+Camp",
+      "sameAs": [
+        "https://exploreans.com/",
+        "https://www.tripadvisor.com/Hotel_Review-g28467248-d4071947-Reviews-Exploreans_Mara_River_Camp-Oloololo_Rift_Valley_Province.html"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "312",
+        "bestRating": "5"
+      },
+      "review": [
+        {
+          "@type": "Review",
+          "author": { "@type": "Person", "name": "Guest Review" },
+          "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+          "reviewBody": "The most authentic safari experience in the Masai Mara. Wildlife comes right to your tent."
+        }
+      ],
+      "parentOrganization": {
+        "@type": "Organization",
+        "name": "Planhotel Hospitality Group",
+        "url": "https://www.planhotel.com"
+      },
+      "potentialAction": {
+        "@type": "ReserveAction",
+        "name": "Book a Safari Stay",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": site.bookingUrl || "https://www.simplebooking.it/ibe2/hotel/11535?lang=EN&cur=USD",
+          "actionPlatform": [
+            "http://schema.org/DesktopWebPlatform",
+            "http://schema.org/MobileWebPlatform"
+          ]
+        },
+        "result": {
+          "@type": "Reservation",
+          "name": "Safari Camp Reservation"
+        }
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": `${siteUrl}/#breadcrumb`,
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": siteUrl
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      "url": siteUrl,
+      "name": "Exploreans Mara River Camp",
+      "description": "Authentic luxury safari camp in the Maasai Mara, Kenya",
+      "publisher": { "@type": "Organization", "name": "Planhotel Hospitality Group" }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${siteUrl}/#faq`,
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Where is Exploreans Mara River Camp located?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Exploreans Mara River Camp is located on a graceful bend of the Mara River at the foot of the Oloololo Escarpment in Kenya's Maasai Mara National Reserve. The camp is just 15 minutes from Kichwa Tembo Airstrip."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "When is the best time to visit Mara River Camp for the Great Migration?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The best time to witness the Great Migration is from July to October, when millions of wildebeest and zebra cross the Mara River. The camp's location directly on the river puts you at the heart of this spectacle."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What makes Exploreans Mara River Camp different from other safari camps?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Unlike camps that require drives to find wildlife, Mara River Camp sits directly on the Mara River. Elephants, hippos, giraffes, and crocodiles are daily visitors to the grounds. With only 23 tents and one cabin, it is intimate by design."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What types of accommodation are available at Mara River Camp?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The camp offers River Tents with direct river views, Bush Tents nestled in the wilderness, and Simba's Den — a private two-bedroom family cabin. All accommodations feature en-suite bathrooms and private verandas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What safari experiences are offered at Mara River Camp?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Guests enjoy game drives, guided walking safaris, hot air balloon rides, Maasai cultural visits, bush dining, and sundowner cocktails. Wildlife often visits the camp grounds itself."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I get to Exploreans Mara River Camp from Nairobi?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The camp is approximately 15 minutes from Kichwa Tembo Airstrip, which has regular flights from Nairobi Wilson Airport (approx. 45 minutes). Road transfers from Nairobi take approximately 5-6 hours."
+          }
+        }
+      ]
+    }
+  ]
+};
 ---
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,38 +214,56 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Favicon for browser tabs -->
+
+  <!-- Performance: Preconnect to critical domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://www.google-analytics.com">
+
+  <!-- Favicon -->
   {site.favicon && <link rel="icon" type="image/png" href={site.favicon} />}
-  
-  <!-- Shortcut icon (for older browsers and some search engines) -->
   {site.favicon && <link rel="shortcut icon" type="image/png" href={site.favicon} />}
-  
-  <!-- Apple Touch Icon (used by Google for search results and mobile) -->
   {site.favicon && <link rel="apple-touch-icon" sizes="180x180" href={site.favicon} />}
-  
-  <!-- Additional icon sizes for better compatibility -->
   {site.favicon && <link rel="icon" type="image/png" sizes="32x32" href={site.favicon} />}
   {site.favicon && <link rel="icon" type="image/png" sizes="16x16" href={site.favicon} />}
+
   <title>{title}</title>
   <meta name="description" content={description}>
-  
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  {!noindex && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
+
   <!-- Canonical URL -->
   <link rel="canonical" href={fullCanonicalUrl} />
-  
+
+  <!-- Alternate language versions (placeholder for future i18n) -->
+  <link rel="alternate" hreflang="en" href={fullCanonicalUrl} />
+  <link rel="alternate" hreflang="x-default" href={fullCanonicalUrl} />
+
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Exploreans Mara River Camp" />
   <meta property="og:url" content={fullCanonicalUrl} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
-  {fullOgImage && <meta property="og:image" content={fullOgImage} />}
-  
-  <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content={fullCanonicalUrl} />
-  <meta property="twitter:title" content={title} />
-  <meta property="twitter:description" content={description} />
-  {fullOgImage && <meta property="twitter:image" content={fullOgImage} />}
-  
+  <meta property="og:image" content={fullOgImage} />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:locale" content="en_GB" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content={fullCanonicalUrl} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={fullOgImage} />
+
+  <!-- Geo tags for local SEO -->
+  <meta name="geo.region" content="KE-033" />
+  <meta name="geo.placename" content="Maasai Mara" />
+  <meta name="geo.position" content="-1.5065;35.1430" />
+  <meta name="ICBM" content="-1.5065, 35.1430" />
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-QV5BLB9NV3"></script>
   <script>
@@ -78,87 +272,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     gtag('js', new Date());
     gtag('config', 'G-QV5BLB9NV3');
   </script>
-  
+
   <!-- Schema.org JSON-LD -->
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "Hotel",
-    "name": "Exploreans Mara River Camp",
-    "description": description,
-    "url": fullCanonicalUrl,
-    "image": fullOgImage || `${siteUrl}/images/og-default.jpg`,
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Maasai Mara",
-      "addressRegion": "Narok County",
-      "addressCountry": "KE"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": -1.5065,
-      "longitude": 35.1430
-    },
-    "telephone": "+254 20 234 5678",
-    "email": "reservations.exploreansmara@planhotel.com",
-    "priceRange": "$$$$",
-    "starRating": {
-      "@type": "Rating",
-      "ratingValue": "5"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.5",
-      "reviewCount": "235",
-      "bestRating": "5"
-    },
-    "amenityFeature": [
-      {
-        "@type": "LocationFeatureSpecification",
-        "name": "Riverfront location",
-        "value": true
-      },
-      {
-        "@type": "LocationFeatureSpecification",
-        "name": "Great Migration viewing",
-        "value": true
-      },
-      {
-        "@type": "LocationFeatureSpecification",
-        "name": "Game drives",
-        "value": true
-      },
-      {
-        "@type": "LocationFeatureSpecification",
-        "name": "Bush dining",
-        "value": true
-      },
-      {
-        "@type": "LocationFeatureSpecification",
-        "name": "Swimming pool",
-        "value": true
-      }
-    ],
-    "hasMap": "https://www.google.com/maps/search/?api=1&query=Exploreans+Mara+River+Camp",
-    "sameAs": [
-      "https://www.facebook.com/ExploreansMaraRiverCamp/",
-      "https://www.tripadvisor.com/Hotel_Review-g28467248-d4071947-Reviews-Exploreans_Mara_River_Camp-Oloololo_Rift_Valley_Province.html"
-    ]
-  })} />
-  
-  <!-- Breadcrumb Schema -->
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      {
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://mara.exploreans.com/"
-      }
-    ]
-  })} />
-  
+  <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+
   <link rel="stylesheet" href="/styles/global.css">
 </head>
 <body>
@@ -167,11 +284,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 
+  <!-- Skip to content link for accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
   <!-- Navigation -->
-  <nav class={`nav ${navDark ? 'nav-dark' : ''}`} id="mainNav">
-    <a href="/" class="nav-brand">
+  <nav class={`nav ${navDark ? 'nav-dark' : ''}`} id="mainNav" aria-label="Main navigation">
+    <a href="/" class="nav-brand" aria-label="Exploreans Mara River Camp home">
       {site.logo ? (
-        <img src={site.logo} alt={site.siteName} class="nav-logo-img" />
+        <img src={site.logo} alt="Exploreans" class="nav-logo-img" width="180" height="56" />
       ) : (
         site.siteName
       )}
@@ -186,7 +306,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </ul>
     <div class="nav-actions">
       <a href={site.bookingUrl} class="nav-cta" target="_blank" rel="noopener">Book Now</a>
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navLinks">
         <span></span>
         <span></span>
         <span></span>
@@ -194,7 +314,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </nav>
 
-  <slot />
+  <main id="main-content">
+    <slot />
+  </main>
+
+  <!-- Sticky mobile CTA -->
+  <a href={site.bookingUrl} class="sticky-mobile-cta" target="_blank" rel="noopener" aria-label="Book your safari stay">
+    <span>Book Your Safari</span>
+  </a>
 
   <!-- Footer -->
   <footer class="footer">
@@ -202,12 +329,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div>
         <div class="footer-logo">{site.siteName}</div>
         <div class="footer-subtitle">{site.propertyName} · Kenya</div>
+        <p class="footer-tagline">Authentic by nature.</p>
       </div>
       <div class="footer-links">
         <div class="footer-col">
           <h4>The Camp</h4>
           <a href="#camp">Our Story</a>
           <a href="#camp">Location</a>
+          <a href="#when-to-visit">When to Visit</a>
         </div>
         <div class="footer-col">
           <h4>Stay</h4>
@@ -217,67 +346,96 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
         <div class="footer-col">
           <h4>Explore</h4>
-          <a href="#when-to-visit">When to Visit</a>
           <a href="#experiences">Game Drives</a>
+          <a href="#experiences">Walking Safaris</a>
           <a href="#journal">Journal</a>
         </div>
       </div>
       <div class="footer-managed">
         <div class="footer-managed-label">Managed by</div>
         <div class="footer-managed-name">Planhotel<br>Hospitality Group</div>
+        <p class="footer-part-of">Part of <a href="https://exploreans.com" target="_blank" rel="noopener">exploreans.com</a></p>
       </div>
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 {site.siteName} · Planhotel Hospitality Group</span>
       <div class="lang-switcher">
-        <a href="#"><strong>EN</strong></a>
-        <a href="#">DE</a>
-        <a href="#">IT</a>
+        <a href="#" aria-label="English" aria-current="true"><strong>EN</strong></a>
+        <a href="#" aria-label="German">DE</a>
+        <a href="#" aria-label="Italian">IT</a>
       </div>
     </div>
   </footer>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    (function() {
       const nav = document.getElementById('mainNav');
       const navToggle = document.getElementById('navToggle');
       const navLinks = document.getElementById('navLinks');
-      
-      if (!navToggle || !navLinks) {
-        console.error('Mobile menu elements not found');
-        return;
-      }
-      
-      console.log('Mobile menu initialized');
-      
-      window.addEventListener('scroll', () => {
-        nav?.classList.toggle('scrolled', window.scrollY > 80);
+
+      if (!navToggle || !navLinks) return;
+
+      // Scroll behaviour for nav background
+      let ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            nav?.classList.toggle('scrolled', window.scrollY > 80);
+            ticking = false;
+          });
+          ticking = true;
+        }
       });
-      
+
+      // Mobile menu toggle
       navToggle.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        this.classList.toggle('active');
-        navLinks.classList.toggle('active');
-        console.log('Menu toggled:', navLinks.classList.contains('active'));
+        const isOpen = this.classList.toggle('active');
+        navLinks.classList.toggle('active', isOpen);
+        this.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       });
-      
+
       // Close menu when clicking a link
-      navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
+      navLinks.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
           navToggle.classList.remove('active');
           navLinks.classList.remove('active');
+          navToggle.setAttribute('aria-expanded', 'false');
         });
       });
-      
+
       // Close menu when clicking outside
-      document.addEventListener('click', (e) => {
+      document.addEventListener('click', function(e) {
         if (!nav.contains(e.target) && navLinks.classList.contains('active')) {
           navToggle.classList.remove('active');
           navLinks.classList.remove('active');
+          navToggle.setAttribute('aria-expanded', 'false');
         }
       });
-    });
+
+      // Intersection Observer for scroll-reveal animations
+      if ('IntersectionObserver' in window) {
+        const revealElements = document.querySelectorAll('.reveal, .reveal-stagger > *');
+        const revealObserver = new IntersectionObserver(function(entries) {
+          entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              revealObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        revealElements.forEach(function(el) {
+          revealObserver.observe(el);
+        });
+      } else {
+        // Fallback for older browsers
+        document.querySelectorAll('.reveal, .reveal-stagger > *').forEach(function(el) {
+          el.classList.add('revealed');
+        });
+      }
+    })();
   </script>
 </body>
 </html>
