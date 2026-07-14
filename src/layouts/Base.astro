@@ -22,6 +22,8 @@ const {
   noindex = false,
 } = Astro.props;
 
+const isHomepage = Astro.url.pathname === '/';
+const homePrefix = isHomepage ? '' : '/';
 const siteUrl = 'https://mara.exploreans.com';
 const fullCanonicalUrl = `${siteUrl}${canonicalUrl === '/' ? '' : canonicalUrl}`;
 const fullOgImage = ogImage ? (ogImage.startsWith('http') ? ogImage : `${siteUrl}${ogImage}`) : `${siteUrl}/images/uploads/safari-experience-exploreans-mara-rivercamp.jpg`;
@@ -297,11 +299,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       )}
     </a>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#camp">The Camp</a></li>
-      <li><a href="#stay">Stay</a></li>
-      <li><a href="#when-to-visit">When to Visit</a></li>
-      <li><a href="#experiences">Experiences</a></li>
-      <li><a href="#journal">Journal</a></li>
+      <li><a href={`${homePrefix}#camp`}>The Camp</a></li>
+      <li><a href={`${homePrefix}#stay`}>Stay</a></li>
+      <li><a href={`${homePrefix}#when-to-visit`}>When to Visit</a></li>
+      <li><a href={`${homePrefix}#experiences`}>Experiences</a></li>
+      <li><a href={`${homePrefix}#journal`}>Journal</a></li>
       <li><a href="/contact">Contact Us</a></li>
     </ul>
     <div class="nav-actions">
@@ -334,21 +336,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="footer-links">
         <div class="footer-col">
           <h4>The Camp</h4>
-          <a href="#camp">Our Story</a>
-          <a href="#camp">Location</a>
-          <a href="#when-to-visit">When to Visit</a>
+          <a href={`${homePrefix}#camp`}>Our Story</a>
+          <a href={`${homePrefix}#camp`}>Location</a>
+          <a href={`${homePrefix}#when-to-visit`}>When to Visit</a>
         </div>
         <div class="footer-col">
           <h4>Stay</h4>
-          <a href="#stay">River Tents</a>
-          <a href="#stay">Bush Tents</a>
-          <a href="#stay">Simba's Den</a>
+          <a href={`${homePrefix}#stay`}>River Tents</a>
+          <a href={`${homePrefix}#stay`}>Bush Tents</a>
+          <a href={`${homePrefix}#stay`}>Simba's Den</a>
         </div>
         <div class="footer-col">
           <h4>Explore</h4>
-          <a href="#experiences">Game Drives</a>
-          <a href="#experiences">Walking Safaris</a>
-          <a href="#journal">Journal</a>
+          <a href={`${homePrefix}#experiences`}>Game Drives</a>
+          <a href={`${homePrefix}#experiences`}>Walking Safaris</a>
+          <a href={`${homePrefix}#journal`}>Journal</a>
         </div>
       </div>
       <div class="footer-managed">
