@@ -22,16 +22,15 @@ const bookingUrl = settingsEntry?.data?.bookingUrl || 'https://www.simplebooking
 const seoTitle = room.data.seo_title || `${room.data.title} | Exploreans Mara River Camp — Maasai Mara, Kenya`;
 const seoDescription = room.data.seo_description || `${room.data.title} at Exploreans Mara River Camp — ${room.data.description} Book your luxury safari accommodation in the Maasai Mara.`;
 
-// Support up to 4 images (image, image2, image3, image4)
-const images = [
-  room.data.image,
-  room.data.image2,
-  room.data.image3,
-  room.data.image4,
-].filter(Boolean);
+// Support up to 4 images with individual alt text
+const imageSet = [
+  { src: room.data.image, alt: room.data.imageAlt },
+  { src: room.data.image2, alt: room.data.image2Alt },
+  { src: room.data.image3, alt: room.data.image3Alt },
+  { src: room.data.image4, alt: room.data.image4Alt },
+].filter((item) => item.src);
 
-// Default to single image if no additional images
-const hasCarousel = images.length > 1;
+const hasCarousel = imageSet.length > 1;
 ---
 
 <Base title={seoTitle} description={seoDescription} ogImage={room.data.og_image} navDark={true}>
@@ -46,24 +45,28 @@ const hasCarousel = images.length > 1;
         {hasCarousel ? (
           <>
             <div class="carousel-container">
-              {images.map((img, index) => (
+              {imageSet.map((item, index) => (
                 <div class={`carousel-slide ${index === 0 ? 'active' : ''}`} data-slide={index}>
-                  <img src={img} alt={room.data.imageAlt || ''} />
+                  <img src={item.src} alt={item.alt || ''} />
                 </div>
               ))}
             </div>
-            <button class="carousel-prev" aria-label="Previous image">←</button>
-            <button class="carousel-next" aria-label="Next image">→</button>
+            <button class="carousel-prev" aria-label="Previous image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+            </button>
+            <button class="carousel-next" aria-label="Next image">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+            </button>
             <div class="carousel-dots">
-              {images.map((_, index) => (
+              {imageSet.map((_, index) => (
                 <button class={`dot ${index === 0 ? 'active' : ''}`} data-slide={index} aria-label={`Go to image ${index + 1}`}></button>
               ))}
             </div>
           </>
         ) : (
           <div class="single-image">
-            {images[0] ? (
-              <img src={images[0]} alt={room.data.imageAlt || ''} />
+            {imageSet[0] ? (
+              <img src={imageSet[0].src} alt={imageSet[0].alt || ''} />
             ) : (
               <div class="img-placeholder">{room.data.title}</div>
             )}
@@ -247,11 +250,18 @@ const hasCarousel = images.length > 1;
     background: rgba(255,255,255,0.9);
     border: none;
     border-radius: 50%;
-    font-size: 18px;
-    color: var(--mara-charcoal);
     cursor: pointer;
     transition: all 0.3s ease;
     z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--mara-charcoal);
+  }
+  .carousel-prev svg,
+  .carousel-next svg {
+    width: 20px;
+    height: 20px;
   }
 
   .carousel-prev:hover,

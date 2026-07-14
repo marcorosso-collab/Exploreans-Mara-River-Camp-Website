@@ -655,6 +655,36 @@ h3, .h3-card {
   transform: translateY(-6px);
   box-shadow: 0 20px 40px rgba(26,46,32,0.08);
 }
+
+/* Card wrapper as link */
+a.card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+a.card-link:hover {
+  color: inherit;
+}
+a.card-link h3 {
+  color: var(--deep-moss);
+}
+
+.btn-more-info {
+  display: inline-block;
+  margin-top: 20px;
+  font-family: var(--font-functional);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--deep-moss);
+  border-bottom: 1px solid var(--sand);
+  padding-bottom: 2px;
+  transition: border-color 0.3s;
+}
+a.card-link:hover .btn-more-info {
+  border-color: var(--forest-green);
+}
 .card-body { padding: 28px 24px; }
 .card-category {
   font-family: var(--font-functional);
