@@ -14,8 +14,8 @@ const settings = await getEntry('settings', 'global');
 const site = settings.data;
 
 const {
-  title = `${site.propertyName} | ${site.siteName} — Authentic Safari Camp, Maasai Mara, Kenya`,
-  description = 'Exploreans Mara River Camp — An authentic luxury tented safari camp on the banks of the Mara River in Kenya\'s Maasai Mara. Witness the Great Migration, sleep where wildlife comes to you, and experience the Masai Mara as it should be. Book your authentic safari today.',
+  title = `${site.propertyName} | Exploreans — Maasai Mara Safari Camp`,
+  description = 'Luxury tented safari camp on the Mara River in Kenya\'s Maasai Mara. Witness the Great Migration. Book your authentic safari today.',
   ogImage,
   canonicalUrl = Astro.url.pathname,
   navDark = false,
@@ -32,19 +32,16 @@ const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
     {
-      "@type": "SafariCamp",
-      "@id": `${siteUrl}/#safaricamp`,
+      "@type": "LocalBusiness",
+      "@id": `${siteUrl}/#localbusiness`,
       "name": "Exploreans Mara River Camp",
       "description": description,
       "url": siteUrl,
       "logo": `${siteUrl}${site.logo || '/images/uploads/Exploreans%20Mara%20River%20Camp_RGB.png'}`,
       "image": fullOgImage,
       "priceRange": "$$$$",
-      "starRating": {
-        "@type": "Rating",
-        "ratingValue": "5",
-        "bestRating": "5"
-      },
+      "telephone": "+254-20-234-5678",
+      "email": "reservations.exploreansmara@planhotel.com",
       "address": {
         "@type": "PostalAddress",
         "streetAddress": "Mara River, Oloololo Escarpment",
@@ -57,8 +54,9 @@ const structuredData = {
         "latitude": -1.5065,
         "longitude": 35.1430
       },
-      "telephone": "+254-20-234-5678",
-      "email": "reservations.exploreansmara@planhotel.com",
+      "openingHoursSpecification": [
+        { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], "opens": "00:00", "closes": "23:59" }
+      ],
       "checkinTime": "14:00",
       "checkoutTime": "11:00",
       "numberOfRooms": 24,
@@ -224,6 +222,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <link rel="preconnect" href="https://www.google-analytics.com">
 
   <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico" />
   {site.favicon && <link rel="icon" type="image/png" href={site.favicon} />}
   {site.favicon && <link rel="shortcut icon" type="image/png" href={site.favicon} />}
   {site.favicon && <link rel="apple-touch-icon" sizes="180x180" href={site.favicon} />}
@@ -330,19 +329,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       </div>
       <div class="footer-links">
         <div class="footer-col">
-          <h4>The Camp</h4>
+          <h3>The Camp</h3>
           <a href={`${homePrefix}#camp`}>Our Story</a>
           <a href={`${homePrefix}#camp`}>Location</a>
           <a href={`${homePrefix}#when-to-visit`}>When to Visit</a>
         </div>
         <div class="footer-col">
-          <h4>Stay</h4>
+          <h3>Stay</h3>
           <a href={`${homePrefix}#stay`}>River Tents</a>
           <a href={`${homePrefix}#stay`}>Bush Tents</a>
           <a href={`${homePrefix}#stay`}>Simba's Den</a>
         </div>
         <div class="footer-col">
-          <h4>Explore</h4>
+          <h3>Explore</h3>
           <a href={`${homePrefix}#experiences`}>Game Drives</a>
           <a href={`${homePrefix}#experiences`}>Walking Safaris</a>
           <a href={`${homePrefix}#journal`}>Journal</a>
@@ -356,6 +355,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 {site.siteName} · Planhotel Hospitality Group</span>
+      <div class="footer-contact">
+        <a href="tel:+254-20-234-5678" class="footer-contact-link">+254 20 234 5678</a>
+        <span class="footer-contact-sep">·</span>
+        <a href="mailto:reservations.exploreansmara@planhotel.com" class="footer-contact-link">reservations.exploreansmara@planhotel.com</a>
+      </div>
     </div>
   </footer>
 

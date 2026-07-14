@@ -1003,8 +1003,24 @@ a.card-link:hover .btn-more-info {
   border-top: 1px solid rgba(255,255,255,0.06);
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 12px;
   color: var(--river-grey);
+}
+.footer-contact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.footer-contact-link {
+  color: var(--river-grey);
+  transition: color 0.2s;
+}
+.footer-contact-link:hover {
+  color: var(--pale-leaf);
+}
+.footer-contact-sep {
+  opacity: 0.4;
 }
 .lang-switcher { display: flex; gap: 16px; }
 .lang-switcher a:hover { color: var(--parchment); }
@@ -1035,7 +1051,8 @@ a.card-link:hover .btn-more-info {
   .hero-scroll { display: none; }
   .footer-grid { grid-template-columns: 1fr; gap: 32px; }
   .footer { padding: 48px 24px 100px; }
-  .footer-bottom { flex-direction: column; gap: 16px; }
+  .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
+  .footer-contact { flex-direction: column; gap: 8px; }
   .trust-bar { grid-template-columns: 1fr; }
   .nav { padding: 16px 24px; }
   .nav-brand .nav-logo-img { height: 32px; }

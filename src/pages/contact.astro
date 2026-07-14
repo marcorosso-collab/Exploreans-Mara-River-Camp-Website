@@ -182,17 +182,16 @@ const seoDescription = content.seo_description || `Contact Exploreans Mara River
 
   <!-- ═══ MAP SECTION ═══ -->
   <section class="map-section">
-    <div class="map-placeholder">
-      <div class="map-content">
-        <p class="section-label center">{content.map.subtitle}</p>
-        <h2>{content.map.title}</h2>
-        <p class="body-text">{content.map.description}</p>
-        <a href={content.map.mapsUrl} target="_blank" rel="noopener" class="text-link">
-          View on Google Maps
-          <span class="arrow"></span>
-        </a>
-      </div>
-    </div>
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.6345!2d35.1430!3d-1.5065!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f11a8656f9c49%3A0x7d95a5f4b62e6f0a!2sExploreans%20Mara%20River%20Camp!5e0!3m2!1sen!2ske!4v1700000000000!5m2!1sen!2ske"
+      width="100%"
+      height="450"
+      style="border:0;"
+      allowfullscreen=""
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Exploreans Mara River Camp location on Google Maps"
+    ></iframe>
   </section>
 
 </Base>
@@ -463,36 +462,12 @@ const seoDescription = content.seo_description || `Contact Exploreans Mara River
   /* Map Section */
   .map-section {
     padding: 0;
+    line-height: 0;
   }
-  .map-placeholder {
-    height: 400px;
-    background: linear-gradient(135deg, var(--deep-green) 0%, var(--forest) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-  .map-content {
-    color: var(--pale-leaf);
-    max-width: 500px;
-    padding: 48px;
-  }
-  .map-content h2 {
-    color: var(--natural-white);
-    margin-bottom: 16px;
-  }
-  .map-content .body-text {
-    color: var(--warm-ochre);
-    margin-bottom: 24px;
-  }
-  .map-content .section-label {
-    color: var(--sage);
-  }
-  .map-content .section-label::before {
-    background: var(--sage);
-  }
-  .map-content .text-link {
-    color: var(--dry-savanna);
+  .map-section iframe {
+    width: 100%;
+    height: 450px;
+    display: block;
   }
 
   /* Responsive */
@@ -514,6 +489,9 @@ const seoDescription = content.seo_description || `Contact Exploreans Mara River
     }
     .contact-form-wrapper {
       padding: 24px;
+    }
+    .map-section iframe {
+      height: 300px;
     }
   }
 </style>
