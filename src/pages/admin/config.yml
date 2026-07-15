@@ -136,8 +136,18 @@ collections:
       - { label: "Size (sqm)", name: "sqm", widget: "string" }
       - { label: "Max Guests", name: "maxGuests", widget: "number" }
       - { label: "Description", name: "description", widget: "text" }
-      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Main Image", name: "image", widget: "image", required: false }
+      - { label: "Main Image Alt Text", name: "imageAlt", widget: "string", required: false }
+      - { label: "Carousel Image 2", name: "image2", widget: "image", required: false }
+      - { label: "Carousel Image 2 Alt Text", name: "image2Alt", widget: "string", required: false }
+      - { label: "Carousel Image 3", name: "image3", widget: "image", required: false }
+      - { label: "Carousel Image 3 Alt Text", name: "image3Alt", widget: "string", required: false }
+      - { label: "Carousel Image 4", name: "image4", widget: "image", required: false }
+      - { label: "Carousel Image 4 Alt Text", name: "image4Alt", widget: "string", required: false }
       - { label: "Order", name: "order", widget: "number" }
+      - { label: "SEO Title", name: "seo_title", widget: "string", required: false }
+      - { label: "SEO Description", name: "seo_description", widget: "text", required: false }
+      - { label: "OG Image", name: "og_image", widget: "image", required: false }
       - { label: "Body", name: "body", widget: "markdown" }
 
   - name: "experiences"
@@ -150,8 +160,12 @@ collections:
       - { label: "Label", name: "label", widget: "string" }
       - { label: "Description", name: "description", widget: "text" }
       - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Image Alt Text", name: "imageAlt", widget: "string", required: false }
       - { label: "Featured", name: "featured", widget: "boolean", default: false }
       - { label: "Order", name: "order", widget: "number" }
+      - { label: "SEO Title", name: "seo_title", widget: "string", required: false }
+      - { label: "SEO Description", name: "seo_description", widget: "text", required: false }
+      - { label: "OG Image", name: "og_image", widget: "image", required: false }
       - { label: "Body", name: "body", widget: "markdown" }
 
   - name: "journal"
@@ -164,6 +178,10 @@ collections:
       - { label: "Category", name: "category", widget: "string" }
       - { label: "Description", name: "description", widget: "text" }
       - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Image Alt Text", name: "imageAlt", widget: "string", required: false }
       - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Draft", name: "draft", widget: "boolean", default: false }
+      - { label: "SEO Title", name: "seo_title", widget: "string", required: false }
+      - { label: "SEO Description", name: "seo_description", widget: "text", required: false }
+      - { label: "OG Image", name: "og_image", widget: "image", required: false }
       - { label: "Body", name: "body", widget: "markdown" }
