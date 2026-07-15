@@ -145,8 +145,14 @@ collections:
       - { label: "Size (sqm)", name: "sqm", widget: "string" }
       - { label: "Max Guests", name: "maxGuests", widget: "number" }
       - { label: "Description", name: "description", widget: "text" }
-      - { label: "Image", name: "image", widget: "image", required: false }
-      - { label: "Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
+      - { label: "Main Image", name: "image", widget: "image", required: false }
+      - { label: "Main Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
+      - { label: "Carousel Image 2", name: "image2", widget: "image", required: false, hint: "Additional image for the carousel on the detail page" }
+      - { label: "Carousel Image 2 Alt Text", name: "image2Alt", widget: "string", required: false }
+      - { label: "Carousel Image 3", name: "image3", widget: "image", required: false, hint: "Additional image for the carousel on the detail page" }
+      - { label: "Carousel Image 3 Alt Text", name: "image3Alt", widget: "string", required: false }
+      - { label: "Carousel Image 4", name: "image4", widget: "image", required: false, hint: "Additional image for the carousel on the detail page" }
+      - { label: "Carousel Image 4 Alt Text", name: "image4Alt", widget: "string", required: false }
       - { label: "Order", name: "order", widget: "number" }
       - { label: "Body", name: "body", widget: "markdown" }
       - { label: "SEO Title", name: "seo_title", widget: "string", required: true, hint: "50-60 characters recommended" }
