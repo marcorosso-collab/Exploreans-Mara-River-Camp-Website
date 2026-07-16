@@ -7,11 +7,11 @@ maxGuests: 3
 description: Canvas and wood on the river's edge. Fall asleep to the sound of hippos, wake to birdsong.
 image: /images/uploads/Room_River Tent_exploreans-mara-river-camp.jpg
 imageAlt: Canvas River Tent exterior with private terrace overlooking the Mara River, Exploreans Mara River Camp Kenya
-image2: /images/uploads/river-tent-river-view-masai-mara-kenya.png
+image2: /images/uploads/river-tent-river-view-masai-mara-kenya.webp
 image2Alt: Luxury riverfront tent with view over the Mara river, in Masai Mara, Kenya. At Exploreans Mara River Camp exclusive safari lodge
-image3: /images/uploads/masai-mara-bedroom-exploreas-mara-river-camp-kenya.png
+image3: /images/uploads/masai-mara-bedroom-exploreas-mara-river-camp-kenya.webp
 image3Alt: Comfortable king-size bed inside a canvas safari tent at Exploreans Mara River Camp, Masai Mara, Kenya
-image4: /images/uploads/bathroom-river-tent-masai-mara-kenya.png
+image4: /images/uploads/bathroom-river-tent-masai-mara-kenya.webp
 image4Alt: Modern en-suite private bathroom inside a river view tent at Exploreans Mara River Camp in Masai Mara
 order: 1
 seo_title: River Tents | Mara River Camp Maasai Mara | Exploreans
