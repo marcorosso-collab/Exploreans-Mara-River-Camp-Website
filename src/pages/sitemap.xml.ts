@@ -20,37 +20,37 @@ export const GET: APIRoute = async () => {
     // Static pages
     ...staticPages.map(page => `
     <url>
-      <loc>${siteUrl}${page.url}</loc>
+      <loc>${siteUrl}${page.url === '/' ? '' : page.url}/</loc>
       <lastmod>${new Date().toISOString()}</lastmod>
       <changefreq>${page.changefreq}</changefreq>
       <priority>${page.priority}</priority>
     </url>
     `),
-    
+
     // Accommodation pages
     ...accommodations.map(item => `
     <url>
-      <loc>${siteUrl}/accommodation/${item.slug}</loc>
+      <loc>${siteUrl}/accommodation/${item.slug}/</loc>
       <lastmod>${new Date().toISOString()}</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.7</priority>
     </url>
     `),
-    
+
     // Experience pages
     ...experiences.map(item => `
     <url>
-      <loc>${siteUrl}/experiences/${item.slug}</loc>
+      <loc>${siteUrl}/experiences/${item.slug}/</loc>
       <lastmod>${new Date().toISOString()}</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.7</priority>
     </url>
     `),
-    
+
     // Journal pages
     ...journal.map(item => `
     <url>
-      <loc>${siteUrl}/journal/${item.slug}</loc>
+      <loc>${siteUrl}/journal/${item.slug}/</loc>
       <lastmod>${item.data.date.toISOString()}</lastmod>
       <changefreq>monthly</changefreq>
       <priority>0.6</priority>
