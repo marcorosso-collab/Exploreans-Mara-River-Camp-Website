@@ -1,0 +1,53 @@
+---
+/**
+ * The property lockup: the Exploreans wordmark with the place name set beneath it in
+ * Calibri capitals, tracked +150, centred and no wider than the wordmark. The gap is a
+ * quarter of the wordmark height. Basalt wordmark with the name in the type colour, or
+ * everything in Natural White when reversed (Brand Bible ch. 03).
+ */
+import Wordmark from './Wordmark.astro';
+
+interface Props {
+  name?: string;
+  reversed?: boolean;
+  class?: string;
+}
+
+const { name = 'Mara River Camp', reversed = false, class: className } = Astro.props;
+---
+<span class:list={['lockup', { 'lockup--reversed': reversed }, className]}>
+  <Wordmark class="lockup__wordmark" decorative />
+  <span class="lockup__name">{name}</span>
+</span>
+
+<style>
+  .lockup {
+    --w: 152px;
+    display: inline-grid;
+    justify-items: center;
+    width: var(--w);
+    row-gap: calc(var(--w) * 0.2065 * 0.25);
+    color: var(--basalt);
+  }
+
+  .lockup :global(.lockup__wordmark) {
+    width: 100%;
+  }
+
+  .lockup__name {
+    max-width: 100%;
+    font-family: var(--font-label);
+    font-size: max(12px, calc(var(--w) * 0.079));
+    line-height: 1;
+    letter-spacing: 0.15em;
+    margin-right: -0.15em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--place);
+  }
+
+  .lockup--reversed,
+  .lockup--reversed .lockup__name {
+    color: var(--natural-white);
+  }
+</style>

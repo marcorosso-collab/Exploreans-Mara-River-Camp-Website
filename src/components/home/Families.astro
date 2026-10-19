@@ -1,0 +1,156 @@
+---
+/** Five ways to explore: every Mara experience, filed under its family */
+import { getEntry } from 'astro:content';
+import Stamp from '../Stamp.astro';
+import Icon from '../Icon.astro';
+import MapLines from '../MapLines.astro';
+import { experiences, byFamily, FAMILY_LINES } from '../../lib/data';
+import type { StampId } from '../../lib/stamps';
+
+const f = (await getEntry('home', 'home'))!.data.families;
+const groups = byFamily(await experiences());
+---
+<section class="fam section on-linen" aria-labelledby="fam-title">
+  <MapLines variant="c" tone="basalt" lantern />
+  <div class="wrap">
+    <div class="head head--split">
+      <p class="label label--place" data-reveal>{f.label}</p>
+      <h2 id="fam-title" class="t-headline" data-reveal style="--i:1">{f.headline}</h2>
+      <p class="t-lead" data-reveal style="--i:2">{f.lead}</p>
+    </div>
+
+    <div class="fam__directions" aria-hidden="true">
+      <span class="label fam__beyond">Explore beyond</span>
+      <span class="label fam__within">Explore within</span>
+    </div>
+
+    <ol role="list" class="fam__list" data-reveal-group>
+      {groups.map((g) => (
+        <li class:list={['fam__item', { 'fam__item--within': g.family === 'wellness' }]} data-reveal>
+          <a href={`/experiences/?family=${g.family}`} class="fam__card">
+            <span class="fam__name t-subhead">{g.name}</span>
+            <span class="fam__line muted">{FAMILY_LINES[g.family]}</span>
+            <span class="fam__stamps">
+              {g.items.map((e) => e.data.stamp && <Stamp id={e.data.stamp as StampId} size={44} decorative />)}
+            </span>
+            <span class="fam__count data">{g.items.length === 1 ? 'One experience' : `${['Two', 'Three', 'Four', 'Five', 'Six'][g.items.length - 2] ?? g.items.length} experiences`} at the camp</span>
+            <span class="fam__go label">See them <Icon name="arrow-right" /></span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
+
+<style>
+  .fam {
+    overflow: hidden;
+  }
+
+  .fam .wrap {
+    position: relative;
+  }
+
+  .fam__directions {
+    display: none;
+  }
+
+  .fam__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--gutter);
+    margin-top: var(--s-6);
+  }
+
+  .fam__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+    height: 100%;
+    padding: var(--s-4);
+    border: 1px solid color-mix(in srgb, var(--basalt) 14%, transparent);
+    border-radius: var(--radius);
+    background: var(--natural-white);
+    text-decoration: none;
+    transition: border-color var(--dur) var(--ease), transform 600ms var(--ease-out);
+  }
+
+  .fam__card:hover {
+    border-color: var(--basalt);
+    transform: translateY(-3px);
+  }
+
+  .fam__item--within .fam__card {
+    background: var(--basalt);
+    color: var(--natural-white);
+    border-color: var(--basalt);
+  }
+
+  .fam__item--within .muted,
+  .fam__item--within .fam__count {
+    color: color-mix(in srgb, var(--natural-white) 72%, transparent);
+  }
+
+  .fam__stamps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-block: var(--s-3);
+    color: var(--place);
+  }
+
+  .fam__item--within .fam__stamps {
+    color: var(--warm-ochre);
+  }
+
+  .fam__count {
+    color: var(--stone);
+    margin-top: auto;
+  }
+
+  .fam__go {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: var(--s-3);
+    border-top: 1px solid color-mix(in srgb, currentColor 18%, transparent);
+  }
+
+  .fam__go :global(svg) {
+    width: 14px;
+    height: 14px;
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .fam__card:hover .fam__go :global(svg) {
+    transform: translateX(4px);
+  }
+
+  @media (min-width: 1200px) {
+    .fam__list {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      margin-top: var(--s-3);
+    }
+
+    .fam__directions {
+      display: grid;
+      grid-template-columns: 4fr 1fr;
+      gap: var(--gutter);
+      margin-top: var(--s-6);
+    }
+
+    .fam__directions span {
+      padding: 10px 14px;
+      border-radius: 3px;
+    }
+
+    .fam__beyond {
+      background: var(--natural-white);
+    }
+
+    .fam__within {
+      background: var(--basalt);
+      color: var(--natural-white);
+    }
+  }
+</style>

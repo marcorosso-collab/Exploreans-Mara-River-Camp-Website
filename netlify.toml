@@ -1,13 +1,103 @@
+# Exploreans Mara River Camp: Netlify build configuration
+
 [build]
   command = "npm run build"
   publish = "dist"
 
+[build.environment]
+  NODE_VERSION = "22"
+
+# Sveltia CMS admin
 [[redirects]]
   from = "/admin"
   to = "/admin/index.html"
   status = 200
 
+# ── Old addresses, kept alive after the 2026 rebuild ──
 [[redirects]]
-  from = "/admin/*"
-  to = "/admin/index.html"
-  status = 200
+  from = "/accommodation/river-tents"
+  to = "/stay/river-tents/"
+  status = 301
+
+[[redirects]]
+  from = "/accommodation/bush-tents"
+  to = "/stay/bush-tents/"
+  status = 301
+
+[[redirects]]
+  from = "/accommodation/simbas-den"
+  to = "/stay/simbas-den/"
+  status = 301
+
+[[redirects]]
+  from = "/accommodation/*"
+  to = "/stay/"
+  status = 301
+
+[[redirects]]
+  from = "/experiences/game-drives"
+  to = "/experiences/the-morning-game-drive/"
+  status = 301
+
+[[redirects]]
+  from = "/experiences/walking-tours"
+  to = "/experiences/on-foot-at-first-light/"
+  status = 301
+
+[[redirects]]
+  from = "/experiences/maasai-culture"
+  to = "/experiences/a-morning-in-the-maasai-village/"
+  status = 301
+
+[[redirects]]
+  from = "/experiences/bush-dining"
+  to = "/experiences/a-table-on-the-plains/"
+  status = 301
+
+[[redirects]]
+  from = "/experiences/hot-air-balloon"
+  to = "/experiences/over-the-mara-by-balloon/"
+  status = 301
+
+[[redirects]]
+  from = "/journal/2026-01-when-to-visit"
+  to = "/stories/a-year-on-the-mara-river/"
+  status = 301
+
+[[redirects]]
+  from = "/journal/*"
+  to = "/stories/"
+  status = 301
+
+[[redirects]]
+  from = "/contact"
+  to = "/plan-your-stay/"
+  status = 301
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/stamps/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/video/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

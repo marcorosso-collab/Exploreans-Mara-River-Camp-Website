@@ -6,247 +6,410 @@ backend:
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
+# Uploaded photographs are converted to WebP and capped at 1920 px (Brand Bible image specifications)
+media_libraries:
+  default:
+    config:
+      transformations:
+        raster_image:
+          format: webp
+          quality: 82
+          width: 1920
+          height: 1920
+
+# Brand reminders for editors (Exploreans Brand Bible v1.0):
+# sentence case, British English, no dashes as punctuation, no exclamation marks,
+# describe what the camp is (no comparisons or negatives), no star ratings or luxury vocabulary,
+# name the person who leads each experience wherever possible, real photography with alt text.
+
 collections:
+
+  # ═══════════════════════════════════════════════════════════
+  # SITE SETTINGS
+  # ═══════════════════════════════════════════════════════════
   - name: "settings"
-    label: "Site Settings"
-    folder: "src/content/settings"
-    create: false
-    delete: false
-    extension: json
-    format: json
-    fields:
-      - { label: "Site Name", name: "siteName", widget: "string" }
-      - { label: "Property Name", name: "propertyName", widget: "string" }
-      - { label: "Tagline", name: "tagline", widget: "string" }
-      - { label: "Contact Email", name: "contactEmail", widget: "string" }
-      - { label: "Booking URL", name: "bookingUrl", widget: "string", required: false }
-      - { label: "Transfer Info", name: "transferInfo", widget: "string" }
-      - { label: "Migration Season", name: "migrationSeason", widget: "string" }
-      - { label: "Logo", name: "logo", widget: "image", required: false }
-      - label: "Social Links"
-        name: "socialLinks"
-        widget: "object"
-        required: false
+    label: "Site settings"
+    files:
+      - name: "site"
+        label: "Contacts, booking and navigation"
+        file: "src/content/settings/site.json"
+        format: json
         fields:
-          - { label: "Instagram", name: "instagram", widget: "string", required: false }
-          - { label: "Facebook", name: "facebook", widget: "string", required: false }
-          - { label: "TripAdvisor", name: "tripadvisor", widget: "string", required: false }
-      - { label: "Favicon", name: "favicon", widget: "image", required: false, hint: "Upload a square PNG or ICO file (32x32 or 64x64 recommended). This appears in the browser tab." }
-
-  - name: "homepage"
-    label: "Homepage Sections"
-    folder: "src/content/homepage"
-    create: false
-    delete: false
-    extension: json
-    format: json
-    fields:
-      - label: "Hero"
-        name: "hero"
-        widget: "object"
-        fields:
-          - { label: "Tagline", name: "tagline", widget: "string" }
-          - { label: "Headline", name: "headline", widget: "string" }
-          - { label: "Image", name: "image", widget: "image", required: false }
-          - { label: "Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
-          - { label: "Video", name: "video", widget: "file", required: false }
-      - label: "Intro"
-        name: "intro"
-        widget: "object"
-        fields:
-          - { label: "Label", name: "label", widget: "string" }
-          - { label: "Headline", name: "headline", widget: "string" }
-          - { label: "Lead Text", name: "leadText", widget: "text" }
-          - { label: "Body Text", name: "bodyText", widget: "text" }
-          - { label: "Image", name: "image", widget: "image", required: false }
-          - { label: "Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
-      - label: "River USP"
-        name: "riverUsp"
-        widget: "object"
-        fields:
-          - { label: "Label", name: "label", widget: "string" }
-          - { label: "Headline", name: "headline", widget: "string" }
-          - { label: "Body Text", name: "bodyText", widget: "text" }
-          - { label: "Image", name: "image", widget: "image", required: false }
-          - { label: "Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
-          - label: "Stats"
-            name: "stats"
-            widget: "list"
-            fields:
-              - { label: "Number", name: "number", widget: "string" }
-              - { label: "Label", name: "label", widget: "string" }
-      - label: "Migration"
-        name: "migration"
-        widget: "object"
-        fields:
-          - { label: "Label", name: "label", widget: "string" }
-          - { label: "Headline", name: "headline", widget: "string" }
-          - { label: "Lead Text", name: "leadText", widget: "text" }
-          - { label: "Body Text", name: "bodyText", widget: "text" }
-          - { label: "Disclaimer", name: "disclaimer", widget: "text" }
-          - { label: "Image", name: "image", widget: "image", required: false }
-          - { label: "Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
-          - { label: "Active Months", name: "activeMonths", widget: "list" }
-      - label: "Dining"
-        name: "dining"
-        widget: "object"
-        fields:
-          - { label: "Label", name: "label", widget: "string" }
-          - { label: "Headline", name: "headline", widget: "string" }
-          - { label: "Body Text", name: "bodyText", widget: "text" }
-          - { label: "Secondary Text", name: "secondaryText", widget: "text" }
-          - { label: "Bush Experiences", name: "bushExperiences", widget: "list" }
-          - { label: "Image", name: "image", widget: "image", required: false }
-          - { label: "Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
-      - label: "Plan Visit"
-        name: "planVisit"
-        widget: "object"
-        fields:
-          - { label: "Label", name: "label", widget: "string" }
-          - { label: "Headline", name: "headline", widget: "string" }
-          - { label: "Body Text", name: "bodyText", widget: "text" }
-          - { label: "CTA Text", name: "ctaText", widget: "string" }
-          - { label: "CTA URL", name: "ctaUrl", widget: "string" }
-          - label: "Info Items"
-            name: "infoItems"
+          - { label: "Property name", name: "property_name", widget: "string" }
+          - { label: "Region", name: "region", widget: "string" }
+          - { label: "Default description (SEO)", name: "default_description", widget: "text" }
+          - { label: "Default share image", name: "og_image", widget: "image" }
+          - { label: "Booking engine URL", name: "booking_url", widget: "string", hint: "Simplebooking link. Dates and guests are added automatically." }
+          - { label: "Reservations email", name: "reservations_email", widget: "string" }
+          - { label: "General email", name: "info_email", widget: "string" }
+          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "Reservations hours", name: "reservations_hours", widget: "string" }
+          - { label: "Address lines", name: "address", widget: "list", field: { label: "Line", name: "line", widget: "string" } }
+          - { label: "Google Maps link", name: "maps_url", widget: "string" }
+          - { label: "Latitude", name: "latitude", widget: "number", value_type: "float" }
+          - { label: "Longitude", name: "longitude", widget: "number", value_type: "float" }
+          - label: "Navigation"
+            name: "nav"
             widget: "list"
             fields:
               - { label: "Label", name: "label", widget: "string" }
-              - { label: "Value", name: "value", widget: "string" }
-      - label: "Stay Section"
-        name: "stay"
-        widget: "object"
-        fields:
-          - { label: "Label", name: "label", widget: "string" }
-          - { label: "Headline", name: "headline", widget: "string" }
-          - { label: "Subtitle", name: "subtitle", widget: "string" }
-      - label: "Experiences Section"
-        name: "experiencesSection"
-        widget: "object"
-        fields:
-          - { label: "Label", name: "label", widget: "string" }
-          - { label: "Headline", name: "headline", widget: "string" }
-      - label: "Journal Section"
-        name: "journalSection"
-        widget: "object"
-        fields:
-          - { label: "Label", name: "label", widget: "string" }
-          - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Link", name: "href", widget: "string" }
+          - label: "Social accounts"
+            name: "social"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Link", name: "href", widget: "string" }
+          - { label: "Group line (footer)", name: "group_line", widget: "string" }
+          - label: "Newsletter"
+            name: "newsletter"
+            widget: "object"
+            fields:
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Text", name: "body", widget: "text" }
+              - { label: "Button", name: "button", widget: "string" }
+              - { label: "Thank-you message", name: "success", widget: "string" }
 
-  - name: "accommodation"
-    label: "Accommodation"
-    folder: "src/content/accommodation"
+  # ═══════════════════════════════════════════════════════════
+  # PAGES
+  # ═══════════════════════════════════════════════════════════
+  - name: "pages"
+    label: "Pages"
+    files:
+      - name: "home"
+        label: "Home"
+        file: "src/content/pages/home.json"
+        format: json
+        fields:
+          - { label: "SEO title", name: "seo_title", widget: "string", required: false }
+          - { label: "SEO description", name: "seo_description", widget: "text", required: false }
+          - label: "1. Hero"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Kicker", name: "kicker", widget: "string" }
+              - { label: "Headline (up to eight words)", name: "title", widget: "string" }
+              - { label: "Lead", name: "lead", widget: "text" }
+              - { label: "Film (desktop, MP4)", name: "video", widget: "file" }
+              - { label: "Film (phones, MP4)", name: "video_mobile", widget: "file" }
+              - { label: "Poster image", name: "poster", widget: "image" }
+              - { label: "Film description (alt text)", name: "alt", widget: "string" }
+          - label: "2. What you will live"
+            name: "story"
+            widget: "object"
+            fields:
+              - { label: "Kicker", name: "label", widget: "string" }
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Story text", name: "text", widget: "text", hint: "Write {0}, {1} and so on where each photographed phrase below sits." }
+              - label: "Photographed phrases"
+                name: "targets"
+                widget: "list"
+                fields:
+                  - { label: "Phrase", name: "text", widget: "string" }
+                  - { label: "Photograph", name: "image", widget: "image" }
+                  - { label: "Alt text", name: "alt", widget: "string" }
+          - label: "3. A day at the camp"
+            name: "day"
+            widget: "object"
+            fields:
+              - { label: "Kicker", name: "label", widget: "string" }
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Lead", name: "lead", widget: "text" }
+              - label: "Moments"
+                name: "moments"
+                widget: "list"
+                fields:
+                  - { label: "Time of day", name: "time", widget: "string" }
+                  - { label: "Experience", name: "experience", widget: "relation", collection: "experiences", value_field: "{{slug}}", search_fields: ["name"], display_fields: ["name"] }
+                  - { label: "Text", name: "body", widget: "text" }
+                  - { label: "Photograph", name: "image", widget: "image", required: false, hint: "Leave empty for the night panel." }
+                  - { label: "Alt text", name: "alt", widget: "string", required: false }
+          - label: "Five ways to explore"
+            name: "families"
+            widget: "object"
+            fields:
+              - { label: "Kicker", name: "label", widget: "string" }
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Lead", name: "lead", widget: "text" }
+          - label: "4. The people"
+            name: "people"
+            widget: "object"
+            fields:
+              - { label: "Kicker", name: "label", widget: "string" }
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Lead", name: "lead", widget: "text" }
+              - { label: "Photograph", name: "image", widget: "image" }
+              - { label: "Alt text", name: "alt", widget: "string" }
+              - label: "Roles"
+                name: "roles"
+                widget: "list"
+                fields:
+                  - { label: "Role", name: "role", widget: "string" }
+                  - { label: "Name (when the person agrees to be named)", name: "name", widget: "string", required: false }
+                  - { label: "Text", name: "body", widget: "text" }
+          - label: "5. Rooms and spaces"
+            name: "stay"
+            widget: "object"
+            fields:
+              - { label: "Kicker", name: "label", widget: "string" }
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Lead", name: "lead", widget: "text" }
+          - label: "6. Look closer"
+            name: "closer"
+            widget: "object"
+            fields:
+              - { label: "Kicker", name: "label", widget: "string" }
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Lead", name: "lead", widget: "text" }
+              - { label: "Photograph (WebP with a -960 version)", name: "image", widget: "image" }
+              - { label: "Alt text", name: "alt", widget: "string" }
+              - { label: "Hint", name: "hint", widget: "string" }
+          - label: "6. What to expect"
+            name: "expect"
+            widget: "object"
+            fields:
+              - { label: "Kicker", name: "label", widget: "string" }
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Lead", name: "lead", widget: "text" }
+          - label: "7. The Passport"
+            name: "passport"
+            widget: "object"
+            fields:
+              - { label: "Kicker", name: "label", widget: "string" }
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Lead", name: "lead", widget: "text" }
+          - label: "8. Plan your journey"
+            name: "plan"
+            widget: "object"
+            fields:
+              - { label: "Kicker", name: "label", widget: "string" }
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Lead", name: "lead", widget: "text" }
+
+      - name: "stay"
+        label: "Stay"
+        file: "src/content/pages/stay.json"
+        format: json
+        fields:
+          - { label: "SEO title", name: "seo_title", widget: "string", required: false }
+          - { label: "SEO description", name: "seo_description", widget: "text", required: false }
+          - { label: "Kicker", name: "label", widget: "string" }
+          - { label: "Headline", name: "title", widget: "string" }
+          - { label: "Lead", name: "lead", widget: "text" }
+          - { label: "Reveal photograph", name: "image", widget: "image" }
+          - { label: "Alt text", name: "alt", widget: "string" }
+          - label: "In camp"
+            name: "in_camp"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Text", name: "body", widget: "text" }
+
+      - name: "experiences"
+        label: "Experiences"
+        file: "src/content/pages/experiences.json"
+        format: json
+        fields:
+          - { label: "SEO title", name: "seo_title", widget: "string", required: false }
+          - { label: "SEO description", name: "seo_description", widget: "text", required: false }
+          - { label: "Kicker", name: "label", widget: "string" }
+          - { label: "Headline", name: "title", widget: "string" }
+          - { label: "Lead", name: "lead", widget: "text" }
+
+      - name: "passport"
+        label: "Passport"
+        file: "src/content/pages/passport.json"
+        format: json
+        fields:
+          - { label: "SEO title", name: "seo_title", widget: "string", required: false }
+          - { label: "SEO description", name: "seo_description", widget: "text", required: false }
+          - { label: "Kicker", name: "label", widget: "string" }
+          - { label: "Headline", name: "title", widget: "string" }
+          - { label: "Lead", name: "lead", widget: "text" }
+          - label: "How it will work"
+            name: "steps"
+            widget: "list"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Text", name: "body", widget: "text" }
+          - label: "Rewards"
+            name: "rewards"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Text", name: "body", widget: "text" }
+          - { label: "Note", name: "note", widget: "string", required: false }
+          - label: "Travel Journal"
+            name: "journal"
+            widget: "object"
+            fields:
+              - { label: "Headline", name: "headline", widget: "string" }
+              - { label: "Text", name: "body", widget: "text" }
+              - { label: "Privacy line", name: "privacy", widget: "string" }
+              - label: "Prompts"
+                name: "prompts"
+                widget: "list"
+                fields:
+                  - { label: "Direction", name: "direction", widget: "select", options: ["beyond", "within"] }
+                  - { label: "Prompt", name: "prompt", widget: "string" }
+
+      - name: "stories"
+        label: "Stories"
+        file: "src/content/pages/stories.json"
+        format: json
+        fields:
+          - { label: "SEO title", name: "seo_title", widget: "string", required: false }
+          - { label: "SEO description", name: "seo_description", widget: "text", required: false }
+          - { label: "Kicker", name: "label", widget: "string" }
+          - { label: "Headline", name: "title", widget: "string" }
+          - { label: "Lead", name: "lead", widget: "text" }
+
+      - name: "plan"
+        label: "Plan your stay"
+        file: "src/content/pages/plan.json"
+        format: json
+        fields:
+          - { label: "SEO title", name: "seo_title", widget: "string", required: false }
+          - { label: "SEO description", name: "seo_description", widget: "text", required: false }
+          - { label: "Kicker", name: "label", widget: "string" }
+          - { label: "Headline", name: "title", widget: "string" }
+          - { label: "Lead", name: "lead", widget: "text" }
+          - { label: "Header photograph", name: "image", widget: "image" }
+          - { label: "Alt text", name: "alt", widget: "string" }
+          - label: "Getting there"
+            name: "getting_there"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Text", name: "value", widget: "text" }
+          - label: "What to expect"
+            name: "expect"
+            widget: "list"
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Text", name: "value", widget: "text" }
+          - label: "Months"
+            name: "months"
+            widget: "list"
+            fields:
+              - { label: "Month", name: "month", widget: "string" }
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Text", name: "body", widget: "text" }
+              - { label: "Great Migration at the river", name: "migration", widget: "boolean", default: false }
+          - { label: "Season note", name: "season_note", widget: "text", required: false }
+          - label: "Questions"
+            name: "faqs"
+            widget: "list"
+            fields:
+              - { label: "Question", name: "question", widget: "string" }
+              - { label: "Answer", name: "answer", widget: "text" }
+
+  # ═══════════════════════════════════════════════════════════
+  # STAY
+  # ═══════════════════════════════════════════════════════════
+  - name: "stay"
+    label: "Rooms"
+    label_singular: "Room"
+    folder: "src/content/stay"
     create: true
     extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    sortable_fields: ["order", "title"]
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Category", name: "category", widget: "string" }
-      - { label: "Quantity", name: "quantity", widget: "number" }
-      - { label: "Size (sqm)", name: "sqm", widget: "string" }
-      - { label: "Max Guests", name: "maxGuests", widget: "number" }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Main Image", name: "image", widget: "image", required: false }
-      - { label: "Main Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
-      - { label: "Carousel Image 2", name: "image2", widget: "image", required: false, hint: "Additional image for the carousel on the detail page" }
-      - { label: "Carousel Image 2 Alt Text", name: "image2Alt", widget: "string", required: false }
-      - { label: "Carousel Image 3", name: "image3", widget: "image", required: false, hint: "Additional image for the carousel on the detail page" }
-      - { label: "Carousel Image 3 Alt Text", name: "image3Alt", widget: "string", required: false }
-      - { label: "Carousel Image 4", name: "image4", widget: "image", required: false, hint: "Additional image for the carousel on the detail page" }
-      - { label: "Carousel Image 4 Alt Text", name: "image4Alt", widget: "string", required: false }
+      - { label: "Name", name: "title", widget: "string" }
       - { label: "Order", name: "order", widget: "number" }
-      - { label: "Body", name: "body", widget: "markdown" }
-      - { label: "SEO Title", name: "seo_title", widget: "string", required: true, hint: "50-60 characters recommended" }
-      - { label: "Meta Description", name: "seo_description", widget: "text", required: true, hint: "150-160 characters recommended" }
-      - { label: "Social Share Image", name: "og_image", widget: "image", required: false }
+      - { label: "Setting (kicker)", name: "setting", widget: "string" }
+      - { label: "Summary", name: "summary", widget: "text" }
+      - { label: "Size", name: "size", widget: "string", hint: "For example: 17 sqm, with a 7 sqm terrace" }
+      - { label: "Maximum guests", name: "guests", widget: "number" }
+      - { label: "Sleeps (as written)", name: "sleeping", widget: "string" }
+      - { label: "In the room", name: "features", widget: "list", field: { label: "Feature", name: "feature", widget: "string" } }
+      - { label: "Main photograph", name: "image", widget: "image" }
+      - { label: "Alt text", name: "alt", widget: "string" }
+      - label: "Gallery"
+        name: "gallery"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Photograph", name: "image", widget: "image" }
+          - { label: "Alt text", name: "alt", widget: "string" }
+      - { label: "SEO title", name: "seo_title", widget: "string", required: false }
+      - { label: "SEO description", name: "seo_description", widget: "text", required: false }
+      - { label: "Story", name: "body", widget: "markdown" }
 
+  # ═══════════════════════════════════════════════════════════
+  # EXPERIENCES (Brand Bible ch. 02: every experience described the same way)
+  # ═══════════════════════════════════════════════════════════
   - name: "experiences"
     label: "Experiences"
+    label_singular: "Experience"
     folder: "src/content/experiences"
     create: true
     extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    sortable_fields: ["order", "name"]
+    summary: "{{name}} · {{family}}"
     fields:
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Label", name: "label", widget: "string" }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Image", name: "image", widget: "image", required: false }
-      - { label: "Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
-      - { label: "Featured", name: "featured", widget: "boolean", default: false }
+      - { label: "Name (sentence case, up to six words)", name: "name", widget: "string" }
+      - { label: "Family", name: "family", widget: "select", options: ["adventure", "nature", "culture", "taste", "wellness"] }
+      - label: "Passport stamp"
+        name: "stamp"
+        widget: "select"
+        required: false
+        hint: "Leave empty until the brand team draws a stamp for it."
+        options:
+          - { label: "On foot (Adventure)", value: "on-foot" }
+          - { label: "Summit (Adventure)", value: "summit" }
+          - { label: "Under sail (Adventure)", value: "under-sail" }
+          - { label: "First light (Nature)", value: "first-light" }
+          - { label: "Night sky (Nature)", value: "night-sky" }
+          - { label: "The reef (Nature)", value: "the-reef" }
+          - { label: "Village (Culture)", value: "village" }
+          - { label: "Market (Culture)", value: "market" }
+          - { label: "Craft (Culture)", value: "craft" }
+          - { label: "Harvest (Taste)", value: "harvest" }
+          - { label: "Local kitchen (Taste)", value: "local-kitchen" }
+          - { label: "Tasting (Taste)", value: "tasting" }
+          - { label: "Stillness (Wellness)", value: "stillness" }
+          - { label: "Movement (Wellness)", value: "movement" }
+          - { label: "Rest (Wellness)", value: "rest" }
       - { label: "Order", name: "order", widget: "number" }
-      - { label: "Body", name: "body", widget: "markdown" }
-      - { label: "SEO Title", name: "seo_title", widget: "string", required: true, hint: "50-60 characters recommended" }
-      - { label: "Meta Description", name: "seo_description", widget: "text", required: true, hint: "150-160 characters recommended" }
-      - { label: "Social Share Image", name: "og_image", widget: "image", required: false }
+      - { label: "Led by (role and, where possible, name)", name: "led_by", widget: "string" }
+      - { label: "When and how long", name: "when", widget: "string" }
+      - { label: "What you will live (two or three sentences, present tense)", name: "live", widget: "text" }
+      - { label: "Good to know", name: "good_to_know", widget: "text" }
+      - { label: "Photograph", name: "image", widget: "image", required: false }
+      - { label: "Alt text", name: "alt", widget: "string", required: false }
+      - { label: "SEO title", name: "seo_title", widget: "string", required: false }
+      - { label: "SEO description", name: "seo_description", widget: "text", required: false }
+      - { label: "Story", name: "body", widget: "markdown" }
 
-  - name: "journal"
-    label: "Journal"
-    folder: "src/content/journal"
+  # ═══════════════════════════════════════════════════════════
+  # STORIES
+  # ═══════════════════════════════════════════════════════════
+  - name: "stories"
+    label: "Stories"
+    label_singular: "Story"
+    folder: "src/content/stories"
     create: true
     extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    sortable_fields: ["date", "title"]
     fields:
       - { label: "Title", name: "title", widget: "string" }
-      - { label: "Category", name: "category", widget: "string" }
-      - { label: "Description", name: "description", widget: "text" }
-      - { label: "Image", name: "image", widget: "image", required: false }
-      - { label: "Image Alt Text (SEO)", name: "imageAlt", widget: "string", required: false, hint: "Describe the image for accessibility and SEO" }
-      - { label: "Date", name: "date", widget: "datetime" }
+      - { label: "Excerpt", name: "excerpt", widget: "text" }
+      - { label: "Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - { label: "Family", name: "family", widget: "select", options: ["adventure", "nature", "culture", "taste", "wellness"] }
+      - { label: "Author", name: "author", widget: "string", default: "The team at Mara River Camp" }
+      - { label: "Photograph", name: "image", widget: "image" }
+      - { label: "Alt text", name: "alt", widget: "string" }
+      - { label: "First published on exploreans.com (link)", name: "canonical", widget: "string", required: false, hint: "Only for stories that also appear on exploreans.com." }
       - { label: "Draft", name: "draft", widget: "boolean", default: false }
-      - { label: "Body", name: "body", widget: "markdown" }
-      - { label: "SEO Title", name: "seo_title", widget: "string", required: true, hint: "50-60 characters recommended" }
-      - { label: "Meta Description", name: "seo_description", widget: "text", required: true, hint: "150-160 characters recommended" }
-      - { label: "Social Share Image", name: "og_image", widget: "image", required: false }
-
-  - name: "contact"
-    label: "Contact Page"
-    files:
-      - name: "contact"
-        label: "Contact Page Content"
-        file: "src/content/contact/contact.json"
-        fields:
-          - { label: "Page Title", name: "pageTitle", widget: "string" }
-          - { label: "Page Subtitle", name: "pageSubtitle", widget: "text" }
-          - label: "Reservations Section"
-            name: "reservations"
-            widget: "object"
-            fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
-              - { label: "Email", name: "email", widget: "string" }
-              - { label: "Phone", name: "phone", widget: "string" }
-              - { label: "Hours", name: "hours", widget: "string" }
-          - label: "General Enquiries Section"
-            name: "generalEnquiries"
-            widget: "object"
-            fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
-              - { label: "Email", name: "email", widget: "string" }
-              - { label: "Phone", name: "phone", widget: "string", required: false }
-              - { label: "Hours", name: "hours", widget: "string" }
-          - label: "Location Section"
-            name: "location"
-            widget: "object"
-            fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
-              - { label: "Address Line 1", name: "address1", widget: "string" }
-              - { label: "Address Line 2", name: "address2", widget: "string" }
-              - { label: "Nearest Airstrip", name: "airstrip", widget: "string" }
-          - label: "Social Section"
-            name: "social"
-            widget: "object"
-            fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
-              - { label: "Instagram URL", name: "instagram", widget: "string", required: false }
-              - { label: "Facebook URL", name: "facebook", widget: "string", required: false }
-          - label: "Map Section"
-            name: "map"
-            widget: "object"
-            fields:
-              - { label: "Title", name: "title", widget: "string" }
-              - { label: "Subtitle", name: "subtitle", widget: "string" }
-              - { label: "Description", name: "description", widget: "text" }
-              - { label: "Google Maps URL", name: "mapsUrl", widget: "string" }
-          - { label: "SEO Title", name: "seo_title", widget: "string", required: true, hint: "50-60 characters recommended" }
-          - { label: "Meta Description", name: "seo_description", widget: "text", required: true, hint: "150-160 characters recommended" }
-          - { label: "Social Share Image", name: "og_image", widget: "image", required: false }
+      - { label: "SEO title", name: "seo_title", widget: "string", required: false }
+      - { label: "SEO description", name: "seo_description", widget: "text", required: false }
+      - { label: "Story", name: "body", widget: "markdown" }

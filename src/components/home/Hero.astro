@@ -1,0 +1,233 @@
+---
+/**
+ * 1. The place at its best moment, with the property lockup in the header and the master
+ * line. The film plays only on screen and pauses for reduced motion or data saving.
+ */
+import { getEntry } from 'astro:content';
+import Icon from '../Icon.astro';
+import BookingForm from '../BookingForm.astro';
+
+const h = (await getEntry('home', 'home'))!.data.hero;
+---
+<section class="hero on-basalt" data-hero data-intro aria-labelledby="hero-title">
+  <div class="hero__media" data-parallax="10">
+    <video class="hero__video" muted loop playsinline preload="metadata" poster={h.poster} aria-label={h.alt} data-hero-video>
+      <source src={h.video_mobile} type="video/mp4" media="(max-width: 767px)" />
+      <source src={h.video} type="video/mp4" />
+    </video>
+    <div class="hero__shade" aria-hidden="true"></div>
+  </div>
+
+  <div class="hero__content wrap">
+    <p class="label hero__kicker" data-reveal>{h.kicker}</p>
+    <h1 id="hero-title" class="t-display hero__title" data-reveal style="--i:1">{h.title}</h1>
+    <p class="t-lead hero__lead" data-reveal style="--i:2">{h.lead}</p>
+    <div class="hero__mobile-book" data-reveal style="--i:3">
+      <button type="button" class="btn btn--light" data-book-open>Choose your dates <Icon name="calendar-blank" class="arrow" /></button>
+      <a class="btn btn--ghost-light" href="#story">Discover the camp</a>
+    </div>
+  </div>
+
+  <div class="hero__bar wrap" data-reveal style="--i:3">
+    <BookingForm variant="bar" placement="hero" tone="dark" />
+  </div>
+
+  <div class="hero__foot wrap" data-reveal style="--i:4">
+    <p class="hero__master">Explore beyond. Explore within.</p>
+    <a class="hero__scroll label" href="#story">The camp <span class="hero__scroll-line" aria-hidden="true"></span></a>
+    <button type="button" class="hero__pause" aria-label="Pause the film" data-hero-pause>
+      <span class="hero__pause-icon" data-icon="pause"><Icon name="pause" /></span>
+      <span class="hero__pause-icon" data-icon="play" hidden><Icon name="play" /></span>
+    </button>
+  </div>
+</section>
+
+<script>
+  import { reduceMotion } from '../../scripts/motion';
+
+  const hero = document.querySelector<HTMLElement>('[data-hero]');
+  if (hero) {
+    const video = hero.querySelector<HTMLVideoElement>('[data-hero-video]')!;
+    const btn = hero.querySelector<HTMLButtonElement>('[data-hero-pause]')!;
+    const saveData = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData;
+    let paused = reduceMotion || Boolean(saveData);
+
+    const setPaused = (value: boolean) => {
+      paused = value;
+      btn.setAttribute('aria-label', value ? 'Play the film' : 'Pause the film');
+      btn.querySelector<HTMLElement>('[data-icon="pause"]')!.hidden = value;
+      btn.querySelector<HTMLElement>('[data-icon="play"]')!.hidden = !value;
+      if (value) video.pause();
+      else video.play().catch(() => {});
+    };
+    btn.addEventListener('click', () => setPaused(!paused));
+    new IntersectionObserver(([entry]) => {
+      if (paused) return;
+      if (entry.isIntersecting) video.play().catch(() => {});
+      else video.pause();
+    }).observe(hero);
+    setPaused(paused);
+  }
+</script>
+
+<style>
+  .hero {
+    position: relative;
+    display: grid;
+    grid-template-rows: 1fr auto auto;
+    min-height: 100svh;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: -6% 0 0;
+    z-index: -1;
+    background: var(--basalt) url('/video/mara-river-camp-hero-poster.webp') center / cover;
+  }
+
+  .hero__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Basalt overlay, 30 to 45 percent where type sits on a busy image */
+  .hero__shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to top, rgb(43 43 38 / 0.78) 0%, rgb(43 43 38 / 0.36) 40%, rgb(43 43 38 / 0.14) 68%, rgb(43 43 38 / 0.32) 100%),
+      linear-gradient(to right, rgb(43 43 38 / 0.4), transparent 62%);
+  }
+
+  .hero__content {
+    align-self: end;
+    display: grid;
+    justify-items: start;
+    gap: var(--s-3);
+    padding-top: calc(92px + var(--s-6));
+    padding-bottom: var(--s-5);
+  }
+
+  .hero__title {
+    max-width: 13ch;
+  }
+
+  .hero__lead {
+    max-width: 34rem;
+    color: color-mix(in srgb, var(--natural-white) 88%, transparent);
+  }
+
+  .hero__mobile-book {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+    margin-top: var(--s-2);
+  }
+
+  .hero__bar {
+    display: none;
+  }
+
+  .hero__foot {
+    display: flex;
+    align-items: center;
+    gap: var(--s-4);
+    padding-block: var(--s-4);
+  }
+
+  .hero__kicker {
+    color: color-mix(in srgb, var(--natural-white) 86%, transparent);
+  }
+
+  .hero__master {
+    margin-right: auto;
+    font-style: italic;
+    color: var(--natural-white);
+  }
+
+  .hero__scroll {
+    display: none;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: color-mix(in srgb, var(--natural-white) 80%, transparent);
+  }
+
+  .hero__scroll-line {
+    position: relative;
+    width: 48px;
+    height: 1px;
+    overflow: hidden;
+    background: rgb(250 250 245 / 0.3);
+  }
+
+  .hero__scroll-line::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--natural-white);
+    animation: hero-line 2.8s var(--ease) infinite;
+  }
+
+  @keyframes hero-line {
+    0% { transform: translateX(-100%); }
+    60%, 100% { transform: translateX(100%); }
+  }
+
+  .hero__pause {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid rgb(250 250 245 / 0.4);
+    border-radius: 50%;
+    background: none;
+    transition: border-color var(--dur) var(--ease);
+  }
+
+  .hero__pause:hover {
+    border-color: var(--natural-white);
+  }
+
+  .hero__pause :global(svg) {
+    width: 18px;
+    height: 18px;
+  }
+
+  .hero__pause-icon {
+    display: grid;
+  }
+
+  .hero__pause-icon[hidden] {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .hero__scroll {
+      display: inline-flex;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero__mobile-book {
+      display: none;
+    }
+
+    .hero__bar {
+      display: block;
+      position: relative;
+    }
+
+    .hero__content {
+      padding-bottom: var(--s-5);
+    }
+
+    .hero__foot {
+      padding-top: var(--s-5);
+    }
+  }
+</style>

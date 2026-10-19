@@ -1,0 +1,53 @@
+---
+/**
+ * Passport stamps: master artwork from the brand bible, used as a CSS mask so it inks
+ * in Basalt or the type colour. Dashed ring for an experience, solid ring for a place.
+ * The ring type is part of the artwork and is never swapped.
+ */
+import { stampLabel, type StampId } from '../lib/stamps';
+
+interface Props {
+  id: StampId | 'place-mara-river-camp';
+  size?: number;
+  label?: string;
+  decorative?: boolean;
+  empty?: boolean;
+  class?: string;
+  /** Lets scripts ink the stamp on reveal */
+  ink?: boolean;
+}
+
+const { id, size = 64, label, decorative = false, empty = false, class: className, ink = false } = Astro.props;
+const name = label ?? (id.startsWith('place-') ? 'Mara River Camp place stamp' : `${stampLabel(id as StampId)} stamp`);
+---
+<span
+  class:list={['stamp', { 'stamp--empty': empty }, className]}
+  style={`--stamp-size:${size}px; --stamp-src:url('/stamps/${id}.png')`}
+  role={decorative ? undefined : 'img'}
+  aria-label={decorative ? undefined : empty ? `${name}, still to collect` : name}
+  aria-hidden={decorative ? 'true' : undefined}
+  data-stamp-ink={ink ? '' : undefined}
+></span>
+
+<style>
+  .stamp {
+    display: inline-block;
+    flex: none;
+    width: var(--stamp-size);
+    height: var(--stamp-size);
+    background-color: currentColor;
+    -webkit-mask: var(--stamp-src) center / contain no-repeat;
+    mask: var(--stamp-src) center / contain no-repeat;
+  }
+
+  /* Empty stamps are dashed rings only, never greyed-out icons */
+  .stamp--empty {
+    background: none;
+    -webkit-mask: none;
+    mask: none;
+    border: 1.5px dashed currentColor;
+    border-radius: 50%;
+    opacity: 0.45;
+    transform: scale(0.89);
+  }
+</style>

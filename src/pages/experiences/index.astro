@@ -1,0 +1,224 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import ExperienceCard from '../../components/ExperienceCard.astro';
+import Stamp from '../../components/Stamp.astro';
+import Icon from '../../components/Icon.astro';
+import { page, experiences, byFamily, direction, FAMILY_LINES } from '../../lib/data';
+import { FAMILIES, FAMILY_NAMES, type StampId } from '../../lib/stamps';
+
+const p = await page('experiences');
+const list = await experiences();
+const groups = byFamily(list);
+const siteUrl = Astro.site!.toString().replace(/\/$/, '');
+const jsonLd = [
+  {
+    '@type': 'ItemList',
+    name: 'Experiences at Mara River Camp',
+    itemListElement: list.map((e, i) => ({ '@type': 'ListItem', position: i + 1, name: e.data.name, url: `${siteUrl}/experiences/${e.id}/` })),
+  },
+];
+---
+<Base title={p.seo_title ?? p.title} description={p.seo_description ?? p.lead} navTheme="solid" jsonLd={jsonLd}>
+  <PageHeader label={p.label} title={p.title} lead={p.lead} />
+
+  <section class="xps" aria-label="Experiences by family" data-xps>
+    <div class="xps__bar">
+      <div class="wrap xps__bar-inner">
+        <div class="xps__filters" role="group" aria-label="Show experiences by family">
+          <button type="button" class="chip" aria-pressed="true" data-filter="all">All <span class="data">{list.length}</span></button>
+          {FAMILIES.map((f) => {
+            const n = list.filter((e) => e.data.family === f).length;
+            return n > 0 && <button type="button" class="chip" aria-pressed="false" data-filter={f}>{FAMILY_NAMES[f]} <span class="data">{n}</span></button>;
+          })}
+        </div>
+        <a class="xps__mine label" href="/plan-your-stay/#enquire" data-pick-some hidden>
+          <span class="xps__mine-dot" aria-hidden="true"></span>
+          <span><span data-pick-count>0</span> marked for your stay</span>
+          <Icon name="arrow-right" />
+        </a>
+      </div>
+    </div>
+
+    <div class="wrap">
+      {groups.filter((g) => g.items.length).map((g) => (
+        <div class="xps__family" data-family-group={g.family} id={g.family}>
+          <header class="xps__family-head">
+            <p class="label label--place">{direction(g.family)}</p>
+            <h2 class="t-headline">{g.name}</h2>
+            <p class="muted">{FAMILY_LINES[g.family]}</p>
+            <span class="xps__stamps" aria-hidden="true">
+              {g.items.map((e) => e.data.stamp && <Stamp id={e.data.stamp as StampId} size={36} decorative />)}
+            </span>
+          </header>
+          <div class="xps__grid" data-reveal-group>
+            {g.items.map((e) => <ExperienceCard experience={e} />)}
+          </div>
+        </div>
+      ))}
+      <p class="xps__empty muted" data-empty hidden>Choose a family above to see its experiences.</p>
+    </div>
+  </section>
+
+  <section class="section section--tight on-basalt xps__cta">
+    <div class="wrap xps__cta-inner">
+      <p class="t-subhead">Every experience is led by someone who knows the place by heart. Tell us what you would like to do and we will plan your days around it.</p>
+      <a class="btn btn--light" href="/plan-your-stay/#enquire">Plan your days <Icon name="arrow-right" class="arrow" /></a>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-xps]');
+  if (root) {
+    const chips = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-filter]'));
+    const groups = Array.from(root.querySelectorAll<HTMLElement>('[data-family-group]'));
+    const apply = (family: string, push = true) => {
+      const valid = family === 'all' || groups.some((g) => g.dataset.familyGroup === family);
+      const f = valid ? family : 'all';
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.filter === f)));
+      groups.forEach((g) => (g.hidden = !(f === 'all' || g.dataset.familyGroup === f)));
+      if (push) {
+        const url = new URL(window.location.href);
+        if (f === 'all') url.searchParams.delete('family');
+        else url.searchParams.set('family', f);
+        history.replaceState(null, '', url);
+      }
+      // Cards revealed while hidden would stay armed: show them at once
+      root.querySelectorAll('[data-reveal].is-armed').forEach((el) => el.classList.add('is-in'));
+      window.dispatchEvent(new Event('resize'));
+    };
+    chips.forEach((c) => c.addEventListener('click', () => apply(c.dataset.filter!)));
+    apply(new URLSearchParams(window.location.search).get('family') ?? 'all', false);
+  }
+</script>
+
+<style>
+  .xps__bar {
+    position: sticky;
+    top: var(--nav-h-compact);
+    z-index: 10;
+    background: rgb(250 250 245 / 0.92);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-block: 1px solid var(--hairline);
+  }
+
+  .xps__bar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--s-3);
+    padding-block: 12px;
+  }
+
+  .xps__filters {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-inline: calc(var(--margin) * -1);
+    padding-inline: var(--margin);
+  }
+
+  .xps__filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .xps__filters .data {
+    opacity: 0.6;
+    font-size: 0.8125rem;
+    letter-spacing: 0;
+  }
+
+  .xps__mine {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    flex: none;
+    text-decoration: none;
+    color: var(--place);
+  }
+
+  .xps__mine:not([hidden]) {
+    display: inline-flex;
+  }
+
+  .xps__mine :global(svg) {
+    width: 14px;
+    height: 14px;
+  }
+
+  .xps__mine-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--place);
+  }
+
+  @media (max-width: 899px) {
+    .xps__mine:not([hidden]) {
+      display: none;
+    }
+  }
+
+  .xps__family {
+    padding-block: var(--s-6);
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .xps__family:last-of-type {
+    border-bottom: 0;
+  }
+
+  .xps__family[hidden] {
+    display: none;
+  }
+
+  .xps__family-head {
+    display: grid;
+    gap: var(--s-2);
+    margin-bottom: var(--s-5);
+  }
+
+  .xps__stamps {
+    display: flex;
+    gap: 10px;
+    margin-top: var(--s-2);
+    color: var(--place);
+  }
+
+  .xps__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: var(--gutter);
+  }
+
+  @media (min-width: 1024px) {
+    .xps__family {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+      column-gap: var(--s-6);
+    }
+
+    .xps__family-head {
+      position: sticky;
+      top: calc(var(--nav-h-compact) + 90px);
+      align-self: start;
+    }
+  }
+
+  .xps__cta-inner {
+    display: grid;
+    gap: var(--s-4);
+    justify-items: start;
+  }
+
+  @media (min-width: 1024px) {
+    .xps__cta-inner {
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      column-gap: var(--s-6);
+    }
+  }
+</style>

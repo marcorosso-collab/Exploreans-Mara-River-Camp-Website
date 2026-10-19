@@ -1,0 +1,179 @@
+---
+/**
+ * The Passport, online (Brand Bible ch. 07): the place stamp and every experience stamp at
+ * the camp, grouped by family. Each stamp links to its experience, empty stamps are dashed
+ * rings, and here each ring also marks the experience for the guest's stay.
+ */
+import Stamp from './Stamp.astro';
+import MapLines from './MapLines.astro';
+import { experiences, byFamily } from '../lib/data';
+import { stampLabel, type StampId } from '../lib/stamps';
+
+const groups = byFamily((await experiences()).filter((e) => e.data.stamp));
+const total = groups.reduce((n, g) => n + g.items.length, 0);
+---
+<div class="spread on-linen">
+  <MapLines variant="a" tone="basalt" />
+  <div class="spread__place">
+    <span class="spread__mark place-mark" data-stamp-ink>
+      <Stamp id="place-mara-river-camp" size={150} label="Mara River Camp place stamp: a hippo walking beside the river" />
+    </span>
+    <p class="label spread__title">Your Passport at<br />Mara River Camp</p>
+    <p class="label spread__count"><span data-pick-count>0</span> of {total} marked for your stay</p>
+  </div>
+  <ol role="list" class="spread__families">
+    {groups.map((g) => (
+      <li class="spread__family">
+        <p class="label spread__family-name">{g.name}</p>
+        <ul role="list" class="spread__rings">
+          {g.items.map((e) => (
+            <li>
+              <button type="button" class="spread__ring" aria-pressed="false" data-pick={e.id} data-pick-name={e.data.name}>
+                <span class="spread__dash" aria-hidden="true"></span>
+                <span class="spread__ink" aria-hidden="true"><Stamp id={e.data.stamp as StampId} size={50} decorative /></span>
+                <span class="visually-hidden">Mark {e.data.name} for your stay</span>
+              </button>
+              <a class="spread__name" href={`/experiences/${e.id}/`}>{stampLabel(e.data.stamp as StampId)}<span class="visually-hidden">: {e.data.name}</span></a>
+            </li>
+          ))}
+          {g.items.length === 0 && <li class="spread__empty" aria-hidden="true"><span class="spread__dash"></span></li>}
+        </ul>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .spread {
+    position: relative;
+    display: grid;
+    gap: var(--s-5);
+    padding: var(--s-5) var(--s-4);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .spread__place {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    gap: var(--s-2);
+    text-align: center;
+  }
+
+  .spread__mark {
+    margin-bottom: var(--s-2);
+  }
+
+  .spread__title {
+    color: var(--place);
+  }
+
+  .spread__count {
+    font-size: 0.75rem;
+    color: var(--stone);
+  }
+
+  .spread__families {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+    gap: var(--s-4) var(--s-3);
+  }
+
+  .spread__family {
+    display: grid;
+    gap: var(--s-3);
+    justify-items: center;
+    align-content: start;
+  }
+
+  .spread__family-name {
+    font-size: 0.75rem;
+    color: var(--stone);
+  }
+
+  .spread__rings {
+    display: grid;
+    gap: var(--s-3);
+    justify-items: center;
+  }
+
+  .spread__rings > li {
+    display: grid;
+    justify-items: center;
+    gap: 6px;
+  }
+
+  .spread__ring {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    color: var(--place);
+  }
+
+  .spread__dash {
+    grid-area: 1 / 1;
+    display: block;
+    width: 56px;
+    height: 56px;
+    border: 1.5px dashed color-mix(in srgb, var(--basalt) 40%, transparent);
+    border-radius: 50%;
+    transition: border-color var(--dur) var(--ease), transform 500ms var(--ease-out);
+  }
+
+  .spread__empty .spread__dash {
+    opacity: 0.6;
+  }
+
+  .spread__ink {
+    grid-area: 1 / 1;
+    display: grid;
+    opacity: 0;
+    transform: scale(1.45) rotate(-7deg);
+    transition: opacity 240ms var(--ease), transform 520ms var(--ease-out);
+  }
+
+  .spread__ring:hover .spread__dash {
+    border-color: var(--basalt);
+    transform: scale(1.05);
+  }
+
+  .spread__ring[aria-pressed='true'] .spread__dash {
+    border-color: transparent;
+  }
+
+  .spread__ring[aria-pressed='true'] .spread__ink {
+    opacity: 1;
+    transform: rotate(-4deg);
+  }
+
+  .spread__name {
+    font-family: var(--font-label);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--stone);
+  }
+
+  .spread__name:hover {
+    color: var(--basalt);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media (min-width: 900px) {
+    .spread {
+      grid-template-columns: minmax(200px, 3fr) 7fr;
+      align-items: center;
+      padding: var(--s-6) var(--s-5);
+    }
+  }
+</style>

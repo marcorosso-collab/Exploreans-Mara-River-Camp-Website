@@ -1,0 +1,29 @@
+{
+  "seo_title": "The Exploreans Passport at Mara River Camp | Exploreans",
+  "seo_description": "Coming soon: the Exploreans Passport, stamped by the guide who leads each experience at Mara River Camp. Turn the pages, mark the experiences you would like to collect and we will plan your days around them.",
+  "label": "The Exploreans Passport",
+  "title": "A passport the guide stamps",
+  "lead": "Imagine a passport that keeps how deeply you lived each place. Turn the pages of your Mara River Camp Passport and mark the experiences you would like to collect.",
+  "steps": [
+    { "title": "Given at first arrival", "body": "A passport-format book with your name and number, yours to keep for every future stay. Taking part will be your choice." },
+    { "title": "Stamped on arrival", "body": "The camp stamps its place mark, the hippo walking beside the river, in Safari Green on a fresh page." },
+    { "title": "Stamped after each experience", "body": "The guide who leads the experience stamps and signs it, filed under the five families." },
+    { "title": "Mirrored online", "body": "A digital record will keep your stamps safe, ready for your next stay and for your travel adviser." }
+  ],
+  "rewards": [
+    { "label": "Complete a place", "title": "Finish your Mara page", "body": "Collect every experience stamp at Mara River Camp to earn an on-site reward, such as a private sundowner or a dinner with the chef." },
+    { "label": "Collect across places", "title": "Fill the Passport over time", "body": "Collect place stamps and complete families across Exploreans for a larger reward, such as a stay voucher." }
+  ],
+  "note": "Taking part will be your choice. Recognition first, rewards second.",
+  "journal": {
+    "headline": "A journal you write, in pen",
+    "body": "Alongside the Passport, the Travel Journal: a printed book in which you write, by hand, what you lived and what it meant to you. Given at every stay, with a pen, as part of the welcome.",
+    "privacy": "Your journal belongs to you. It stays private unless you choose to share it.",
+    "prompts": [
+      { "direction": "beyond", "prompt": "What did you notice at first light that you would have missed alone?" },
+      { "direction": "within", "prompt": "When did you last feel this unhurried?" },
+      { "direction": "beyond", "prompt": "Who did you meet today, and what did they teach you?" },
+      { "direction": "within", "prompt": "What will you take home from this place that fits in no suitcase?" }
+    ]
+  }
+}

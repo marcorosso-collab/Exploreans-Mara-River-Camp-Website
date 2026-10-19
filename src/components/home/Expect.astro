@@ -1,0 +1,78 @@
+---
+/** 6. What to expect: the place, specifically; the profile; the seasons */
+import { getEntry } from 'astro:content';
+import LookCloser from '../islands/LookCloser';
+import Seasons from '../Seasons.astro';
+import Icon from '../Icon.astro';
+import { page } from '../../lib/data';
+
+const home = (await getEntry('home', 'home'))!.data;
+const c = home.closer;
+const x = home.expect;
+const plan = await page('plan');
+---
+<section class="expect section" aria-labelledby="closer-title">
+  <div class="wrap expect__grid">
+    <div class="expect__closer">
+      <div class="head">
+        <p class="label label--place" data-reveal>{c.label}</p>
+        <h2 id="closer-title" class="t-headline" data-reveal style="--i:1">{c.headline}</h2>
+        <p class="t-lead" data-reveal style="--i:2">{c.lead}</p>
+      </div>
+      <figure class="expect__loupe" data-reveal>
+        <LookCloser client:visible src={c.image.replace(/\.webp$/, '-960.webp')} zoomSrc={c.image} alt={c.alt} />
+        <figcaption class="caption"><Icon name="magnifying-glass-plus" /> {c.hint}</figcaption>
+      </figure>
+    </div>
+
+    <div class="expect__profile" id="expect">
+      <div class="head">
+        <p class="label label--place" data-reveal>{x.label}</p>
+        <h2 class="t-headline" data-reveal style="--i:1">{x.headline}</h2>
+        <p class="t-lead" data-reveal style="--i:2">{x.lead}</p>
+      </div>
+      <dl class="facts" data-reveal>
+        {(plan.expect ?? []).map((f) => <div><dt>{f.label}</dt><dd>{f.value}</dd></div>)}
+      </dl>
+    </div>
+
+    <div class="expect__seasons" data-reveal>
+      <Seasons />
+    </div>
+  </div>
+</section>
+
+<style>
+  .expect__grid {
+    display: grid;
+    gap: var(--s-7) var(--s-6);
+  }
+
+  .expect__closer,
+  .expect__profile {
+    display: grid;
+    gap: var(--s-5);
+    align-content: start;
+  }
+
+  .expect__loupe .caption {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .expect__loupe .caption :global(svg) {
+    width: 16px;
+    height: 16px;
+  }
+
+  @media (min-width: 1024px) {
+    .expect__grid {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+
+    .expect__seasons {
+      grid-column: 1 / -1;
+    }
+  }
+</style>

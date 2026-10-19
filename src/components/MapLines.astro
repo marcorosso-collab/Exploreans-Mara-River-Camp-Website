@@ -1,0 +1,115 @@
+---
+/**
+ * The map line as a quiet background texture. Rendered through a CSS mask so one set of
+ * contour files serves every ground at the strengths set in the brand bible:
+ * Natural White on Basalt or a type colour 8 to 12%, Basalt on Linen 6 to 10%,
+ * Warm Ochre on Natural White 30 to 40%.
+ */
+interface Props {
+  variant?: 'a' | 'b' | 'c';
+  tone?: 'light' | 'basalt' | 'ochre';
+  /** Lines lit by the cursor, like a lantern held over the map */
+  lantern?: boolean;
+  /** Lines spread across the ground as the section scrolls into view */
+  reveal?: boolean;
+  class?: string;
+}
+
+const { variant = 'a', tone = 'light', lantern = false, reveal = false, class: className } = Astro.props;
+---
+<div
+  class:list={['map', `map--${tone}`, className]}
+  style={`--map-src:url('/map/${variant}.svg')`}
+  aria-hidden="true"
+  data-map
+  data-map-lantern={lantern ? '' : undefined}
+>
+  <div class="map__view" data-map-view>
+    <div class="map__lines" data-map-reveal={reveal ? '' : undefined}></div>
+    {lantern && <div class="map__lantern"></div>}
+  </div>
+</div>
+
+<style>
+  .map {
+    position: absolute;
+    inset: 0;
+    overflow: clip;
+    pointer-events: none;
+    /* Soft edges so the texture never stops on a hard line */
+    -webkit-mask: linear-gradient(to bottom, transparent, #000 10%, #000 85%, transparent);
+    mask: linear-gradient(to bottom, transparent, #000 10%, #000 85%, transparent);
+    --map-o: 0.1;
+    --map-c: var(--natural-white);
+    --lantern-o: 0.42;
+  }
+
+  .map--basalt {
+    --map-c: var(--basalt);
+    --map-o: 0.08;
+    --lantern-o: 0.26;
+  }
+
+  .map--ochre {
+    --map-c: var(--warm-ochre);
+    --map-o: 0.38;
+    --lantern-o: 0.9;
+  }
+
+  /* One screen of map that stays with the reader through tall sections, so lines keep their weight */
+  .map__view {
+    position: sticky;
+    top: 0;
+    height: min(100vh, 100%);
+  }
+
+  .map__lines,
+  .map__lantern {
+    position: absolute;
+    inset: 0;
+    background: var(--map-c);
+    -webkit-mask: var(--map-src) center / cover no-repeat;
+    mask: var(--map-src) center / cover no-repeat;
+  }
+
+  .map__lines {
+    opacity: var(--map-o);
+  }
+
+  /* Reveal: an ink spread from the upper left, driven by --r */
+  :global(html.js) .map__lines[data-map-reveal] {
+    --r: -20%;
+    -webkit-mask:
+      var(--map-src) center / cover no-repeat,
+      radial-gradient(at 18% 22%, #000 var(--r), transparent calc(var(--r) + 22%)) 0 0 / 100% 100% no-repeat;
+    -webkit-mask-composite: source-in;
+    mask:
+      var(--map-src) center / cover no-repeat,
+      radial-gradient(at 18% 22%, #000 var(--r), transparent calc(var(--r) + 22%)) 0 0 / 100% 100% no-repeat;
+    mask-composite: intersect;
+  }
+
+  .map__lantern {
+    opacity: 0;
+    transition: opacity 600ms var(--ease);
+    -webkit-mask:
+      var(--map-src) center / cover no-repeat,
+      radial-gradient(circle 240px at var(--mx, -999px) var(--my, -999px), #000 0%, rgb(0 0 0 / 0.35) 45%, transparent 100%) 0 0 / 100% 100% no-repeat;
+    -webkit-mask-composite: source-in;
+    mask:
+      var(--map-src) center / cover no-repeat,
+      radial-gradient(circle 240px at var(--mx, -999px) var(--my, -999px), #000 0%, rgb(0 0 0 / 0.35) 45%, transparent 100%) 0 0 / 100% 100% no-repeat;
+    mask-composite: intersect;
+  }
+
+  .map.is-lit .map__lantern {
+    opacity: var(--lantern-o);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    :global(html.js) .map__lines[data-map-reveal] {
+      -webkit-mask: var(--map-src) center / cover no-repeat;
+      mask: var(--map-src) center / cover no-repeat;
+    }
+  }
+</style>

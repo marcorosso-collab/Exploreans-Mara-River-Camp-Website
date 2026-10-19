@@ -1,0 +1,179 @@
+---
+/**
+ * The enquiry, kept as the existing Netlify form "contact" so submissions continue in the
+ * same place. Experiences marked in the Passport arrive in the "experiences" field.
+ */
+import Icon from './Icon.astro';
+import { rooms, experiences } from '../lib/data';
+
+const roomList = await rooms();
+const xps = (await experiences()).map((e) => ({ id: e.id, name: e.data.name }));
+---
+<form
+  class="enquiry"
+  name="contact"
+  method="POST"
+  action="/thank-you/"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  data-ajax-form
+  data-enquiry
+  data-experiences={JSON.stringify(xps)}
+>
+  <input type="hidden" name="form-name" value="contact" />
+  <p class="visually-hidden"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+
+  <fieldset class="enquiry__group">
+    <legend class="label label--place">About you</legend>
+    <div class="enquiry__row">
+      <div class="field"><label for="firstName">First name</label><input id="firstName" name="firstName" required autocomplete="given-name" /></div>
+      <div class="field"><label for="lastName">Last name</label><input id="lastName" name="lastName" required autocomplete="family-name" /></div>
+    </div>
+    <div class="enquiry__row">
+      <div class="field"><label for="email">Email address</label><input id="email" name="email" type="email" required autocomplete="email" inputmode="email" /></div>
+      <div class="field"><label for="phone">Phone <span class="enquiry__opt">(optional)</span></label><input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" /></div>
+    </div>
+    <div class="field"><label for="country">Country <span class="enquiry__opt">(optional)</span></label><input id="country" name="country" autocomplete="country-name" /></div>
+  </fieldset>
+
+  <fieldset class="enquiry__group">
+    <legend class="label label--place">Your stay</legend>
+    <div class="enquiry__row">
+      <div class="field"><label for="travelDate">When would you like to come?</label><input id="travelDate" name="travelDate" placeholder="August 2027, or exact dates" /></div>
+      <div class="field"><label for="guests">Guests</label><input id="guests" name="guests" placeholder="Two adults and a child of 9" /></div>
+    </div>
+    <div class="enquiry__row">
+      <div class="field">
+        <label for="room">Where you would like to stay</label>
+        <select id="room" name="room" data-room>
+          <option value="">Open to suggestions</option>
+          {roomList.map((r) => <option value={r.data.title}>{r.data.title}</option>)}
+        </select>
+      </div>
+      <div class="field">
+        <label for="subject">What it is about</label>
+        <select id="subject" name="subject" required>
+          <option value="reservation">Planning a stay</option>
+          <option value="availability">Dates and availability</option>
+          <option value="rates">Rates</option>
+          <option value="experiences">Experiences</option>
+          <option value="group">Travelling as a group</option>
+          <option value="other">Something else</option>
+        </select>
+      </div>
+    </div>
+    <div class="field enquiry__xps">
+      <span class="field__label">Experiences you would like to collect</span>
+      <ul role="list" class="enquiry__chips" data-chips></ul>
+      <p class="field__hint" data-chips-empty>Mark experiences in your <a class="link" href="/passport/">Passport</a> or on the <a class="link" href="/experiences/">experiences page</a> and they appear here.</p>
+      <input type="hidden" name="experiences" data-experiences-field />
+    </div>
+    <div class="field"><label for="message">Your message</label><textarea id="message" name="message" rows="6" required placeholder="Tell us about the trip you have in mind"></textarea></div>
+  </fieldset>
+
+  <label class="check">
+    <input type="checkbox" name="newsletter" />
+    <span>Send me occasional letters from the camp: when the herds reach the river, and what the guides saw this week.</span>
+  </label>
+
+  <div class="enquiry__go">
+    <button type="submit" class="btn btn--place">Send your enquiry <Icon name="arrow-right" class="arrow" /></button>
+    <p class="form-status" role="status" data-form-status data-success="Thank you. The reservations team will reply within a day, often sooner."></p>
+  </div>
+</form>
+
+<script>
+  import { picks, onPicks, togglePick } from '../scripts/passport';
+
+  const form = document.querySelector<HTMLFormElement>('[data-enquiry]');
+  if (form) {
+    const all: { id: string; name: string }[] = JSON.parse(form.dataset.experiences ?? '[]');
+    const chips = form.querySelector<HTMLUListElement>('[data-chips]')!;
+    const empty = form.querySelector<HTMLElement>('[data-chips-empty]')!;
+    const field = form.querySelector<HTMLInputElement>('[data-experiences-field]')!;
+    const params = new URLSearchParams(window.location.search);
+
+    // Arriving from a room or an experience page
+    const room = params.get('room');
+    if (room) {
+      const select = form.querySelector<HTMLSelectElement>('[data-room]')!;
+      if ([...select.options].some((o) => o.value === room)) select.value = room;
+    }
+    const xp = params.get('experience');
+    if (xp && all.some((e) => e.id === xp)) togglePick(xp, true);
+
+    const render = (list: string[]) => {
+      const chosen = all.filter((e) => list.includes(e.id));
+      chips.innerHTML = '';
+      chosen.forEach((e) => {
+        const li = document.createElement('li');
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'chip';
+        b.setAttribute('aria-pressed', 'true');
+        b.innerHTML = `${e.name} <span aria-hidden="true">&times;</span><span class="visually-hidden">, remove</span>`;
+        b.addEventListener('click', () => togglePick(e.id, false));
+        li.appendChild(b);
+        chips.appendChild(li);
+      });
+      empty.hidden = chosen.length > 0;
+      field.value = chosen.map((e) => e.name).join('; ');
+    };
+    render(picks());
+    onPicks(render);
+    form.addEventListener('form:sent', () => render(picks()));
+  }
+</script>
+
+<style>
+  .enquiry {
+    display: grid;
+    gap: var(--s-5);
+  }
+
+  .enquiry__group {
+    display: grid;
+    gap: var(--s-3);
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .enquiry__group legend {
+    margin-bottom: var(--s-3);
+    padding: 0;
+  }
+
+  .enquiry__row {
+    display: grid;
+    gap: var(--s-3);
+  }
+
+  @media (min-width: 640px) {
+    .enquiry__row {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .enquiry__opt {
+    text-transform: none;
+    letter-spacing: 0;
+    color: var(--stone);
+  }
+
+  .enquiry__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .enquiry__chips:empty {
+    display: none;
+  }
+
+  .enquiry__go {
+    display: grid;
+    gap: var(--s-3);
+    justify-items: start;
+  }
+</style>

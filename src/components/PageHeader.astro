@@ -1,0 +1,115 @@
+---
+/**
+ * The opening of an inner page: photography leads, given room to breathe, with the kicker,
+ * headline and lead set on a calm area. Without a photograph the page opens on Natural White.
+ */
+import Img from './Img.astro';
+import MapLines from './MapLines.astro';
+
+interface Props {
+  label: string;
+  title: string;
+  lead?: string;
+  image?: string;
+  alt?: string;
+  crumbs?: { label: string; href?: string }[];
+  position?: string;
+}
+
+const { label, title, lead, image, alt = '', crumbs = [], position } = Astro.props;
+---
+<header class:list={['ph', image ? 'ph--image on-basalt' : 'ph--plain']} data-intro>
+  {image ? (
+    <div class="ph__media" data-parallax="12">
+      <Img src={image} alt={alt} priority position={position} />
+      <div class="ph__shade" aria-hidden="true"></div>
+    </div>
+  ) : (
+    <MapLines variant="a" tone="ochre" />
+  )}
+  <div class="ph__content wrap">
+    {crumbs.length > 0 && (
+      <nav aria-label="Breadcrumb" data-reveal>
+        <ol role="list" class="crumbs">
+          {crumbs.map((c) => <li>{c.href ? <a href={c.href}>{c.label}</a> : <span aria-current="page">{c.label}</span>}</li>)}
+        </ol>
+      </nav>
+    )}
+    <p class:list={['label', image ? 'ph__kicker' : 'label--place']} data-reveal style="--i:1">{label}</p>
+    <h1 class="t-display ph__title" data-reveal style="--i:2">{title}</h1>
+    {lead && <p class="t-lead ph__lead" data-reveal style="--i:3">{lead}</p>}
+    <slot />
+  </div>
+</header>
+
+<style>
+  .ph {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+  }
+
+  .ph--image {
+    display: grid;
+    align-items: end;
+    min-height: min(88svh, 860px);
+  }
+
+  .ph--plain {
+    padding-top: calc(92px + var(--s-6));
+  }
+
+  .ph__media {
+    position: absolute;
+    inset: -8% 0 0;
+    z-index: -1;
+  }
+
+  .ph__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .ph__shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to top, rgb(43 43 38 / 0.72) 0%, rgb(43 43 38 / 0.3) 45%, rgb(43 43 38 / 0.18) 75%, rgb(43 43 38 / 0.4) 100%),
+      linear-gradient(to right, rgb(43 43 38 / 0.32), transparent 60%);
+  }
+
+  .ph__content {
+    position: relative;
+    display: grid;
+    justify-items: start;
+    gap: var(--s-3);
+    padding-top: calc(92px + var(--s-6));
+    padding-bottom: var(--s-6);
+  }
+
+  .ph--plain .ph__content {
+    padding-top: 0;
+    padding-bottom: var(--s-6);
+  }
+
+  .ph__kicker {
+    color: color-mix(in srgb, var(--natural-white) 86%, transparent);
+  }
+
+  .ph__title {
+    max-width: 18ch;
+  }
+
+  .ph__lead {
+    max-width: 40rem;
+  }
+
+  .ph--plain .ph__lead {
+    color: var(--stone);
+  }
+
+  .ph--image .ph__lead {
+    color: color-mix(in srgb, var(--natural-white) 88%, transparent);
+  }
+</style>

@@ -1,0 +1,171 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Gallery from '../../components/Gallery.astro';
+import RoomCard from '../../components/RoomCard.astro';
+import Icon from '../../components/Icon.astro';
+import { rooms } from '../../lib/data';
+
+export async function getStaticPaths() {
+  const list = await rooms();
+  return list.map((room) => ({ params: { slug: room.id }, props: { room, others: list.filter((r) => r.id !== room.id) } }));
+}
+
+const { room, others } = Astro.props;
+const r = room.data;
+const { Content } = await render(room);
+const siteUrl = Astro.site!.toString().replace(/\/$/, '');
+
+const jsonLd = [
+  {
+    '@type': 'HotelRoom',
+    name: r.title,
+    description: r.summary,
+    image: `${siteUrl}${r.image}`,
+    occupancy: { '@type': 'QuantitativeValue', maxValue: r.guests },
+    amenityFeature: r.features.map((f) => ({ '@type': 'LocationFeatureSpecification', name: f, value: true })),
+    containedInPlace: { '@id': `${siteUrl}/#lodging` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+      { '@type': 'ListItem', position: 2, name: 'Stay', item: `${siteUrl}/stay/` },
+      { '@type': 'ListItem', position: 3, name: r.title, item: `${siteUrl}/stay/${room.id}/` },
+    ],
+  },
+];
+---
+<Base title={r.seo_title ?? `${r.title} | Mara River Camp`} description={r.seo_description ?? r.summary} ogImage={r.image} jsonLd={jsonLd}>
+  <PageHeader
+    label={r.setting}
+    title={r.title}
+    lead={r.summary}
+    image={r.image}
+    alt={r.alt}
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Stay', href: '/stay/' }, { label: r.title }]}
+  />
+
+  <section class="section">
+    <div class="wrap detail">
+      <div class="prose detail__story" data-reveal>
+        <Content />
+      </div>
+      <aside class="detail__panel card" aria-label={`${r.title} at a glance`}>
+        <dl class="facts">
+          <div><dt>Size</dt><dd>{r.size}</dd></div>
+          <div><dt>Sleeps</dt><dd>{r.sleeping}</dd></div>
+        </dl>
+        <div>
+          <p class="label muted detail__in">In the room</p>
+          <ul role="list" class="detail__features">
+            {r.features.map((f) => <li><Icon name="check" /> {f}</li>)}
+          </ul>
+        </div>
+        <button type="button" class="btn btn--place detail__book" data-book-open>Check dates and book <Icon name="arrow-right" class="arrow" /></button>
+        <a class="link-arrow" href={`/plan-your-stay/?room=${encodeURIComponent(r.title)}#enquire`}>Ask the team about this stay <Icon name="arrow-right" /></a>
+      </aside>
+    </div>
+  </section>
+
+  {r.gallery.length > 0 && (
+    <section class="section section--tight" aria-labelledby="gallery-title">
+      <div class="wrap">
+        <h2 id="gallery-title" class="label label--place gallery-title">Look inside</h2>
+        <Gallery images={[{ image: r.image, alt: r.alt }, ...r.gallery]} label={r.title} />
+      </div>
+    </section>
+  )}
+
+  <section class="section on-linen" aria-labelledby="others-title">
+    <div class="wrap">
+      <div class="head others__head">
+        <p class="label label--place">Rooms and spaces</p>
+        <h2 id="others-title" class="t-headline">Other ways to stay</h2>
+      </div>
+      <div class="others">
+        {others.map((o, i) => <RoomCard room={o} index={i} sizes="(min-width: 768px) 45vw, 90vw" />)}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .detail {
+    display: grid;
+    gap: var(--s-6);
+  }
+
+  .detail__panel {
+    display: grid;
+    gap: var(--s-4);
+    align-content: start;
+    justify-items: start;
+    padding: var(--s-4);
+  }
+
+  .detail__panel .facts {
+    width: 100%;
+  }
+
+  .detail__in {
+    margin-bottom: var(--s-3);
+  }
+
+  .detail__features {
+    display: grid;
+    gap: 10px;
+  }
+
+  .detail__features li {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+
+  .detail__features :global(svg) {
+    width: 18px;
+    height: 18px;
+    margin-top: 4px;
+    color: var(--place);
+  }
+
+  .detail__book {
+    width: 100%;
+  }
+
+  .gallery-title {
+    margin-bottom: var(--s-4);
+  }
+
+  .others__head {
+    margin-bottom: var(--s-5);
+  }
+
+  .others {
+    display: grid;
+    gap: var(--s-5) var(--gutter);
+  }
+
+  @media (min-width: 768px) {
+    .others {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .detail {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+      column-gap: var(--s-6);
+      align-items: start;
+    }
+
+    .detail__panel {
+      position: sticky;
+      top: calc(var(--nav-h-compact) + 24px);
+      padding: var(--s-5);
+    }
+  }
+</style>

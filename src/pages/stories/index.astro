@@ -1,0 +1,45 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import StoryCard from '../../components/StoryCard.astro';
+import { page, stories } from '../../lib/data';
+
+const p = await page('stories');
+const [first, ...rest] = await stories();
+---
+<Base title={p.seo_title ?? p.title} description={p.seo_description ?? p.lead} navTheme="solid">
+  <PageHeader label={p.label} title={p.title} lead={p.lead} />
+  <section class="section" aria-label="Stories">
+    <div class="wrap stories">
+      {first && <div class="stories__lead"><StoryCard story={first} large /></div>}
+      <div class="stories__rest" data-reveal-group>
+        {rest.map((s) => <StoryCard story={s} />)}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .stories {
+    display: grid;
+    gap: var(--s-6);
+  }
+
+  .stories__rest {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: var(--s-6) var(--gutter);
+  }
+
+  @media (min-width: 1024px) {
+    .stories {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      column-gap: var(--s-6);
+      align-items: start;
+    }
+
+    .stories__rest {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

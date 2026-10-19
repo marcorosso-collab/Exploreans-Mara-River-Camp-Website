@@ -1,0 +1,93 @@
+---
+import Img from './Img.astro';
+import Icon from './Icon.astro';
+import type { Room } from '../lib/data';
+
+interface Props {
+  room: Room;
+  index: number;
+  sizes?: string;
+}
+
+const { room, index, sizes = '(min-width: 1024px) 33vw, 90vw' } = Astro.props;
+const r = room.data;
+const href = `/stay/${room.id}/`;
+---
+<article class="room" data-reveal style={`--i:${index}`}>
+  <a href={href} class="room__media frame" data-follow="Look inside">
+    <Img src={r.image} alt={r.alt} sizes={sizes} />
+    <span class="room__no data" aria-hidden="true">0{index + 1}</span>
+  </a>
+  <div class="room__body">
+    <p class="label label--place">{r.setting}</p>
+    <h3 class="t-subhead"><a href={href} class="room__link">{r.title}</a></h3>
+    <p class="muted">{r.summary}</p>
+    <p class="room__meta data">
+      <span>{r.size}</span>
+      <span aria-hidden="true">&middot;</span>
+      <span>{r.sleeping}</span>
+    </p>
+    <a href={href} class="link-arrow room__cta" tabindex="-1" aria-hidden="true">Look inside <Icon name="arrow-right" /></a>
+  </div>
+</article>
+
+<style>
+  .room {
+    display: grid;
+    gap: var(--s-4);
+    align-content: start;
+  }
+
+  .room__media {
+    display: block;
+    aspect-ratio: 4 / 5;
+  }
+
+  .room__media :global(img) {
+    transition: transform 1400ms var(--ease-out);
+  }
+
+  .room:hover .room__media :global(img) {
+    transform: scale(1.04);
+  }
+
+  .room__no {
+    position: absolute;
+    left: 16px;
+    top: 14px;
+    color: var(--natural-white);
+    letter-spacing: 0.12em;
+    text-shadow: 0 1px 8px rgb(43 43 38 / 0.5);
+  }
+
+  .room__body {
+    display: grid;
+    gap: var(--s-2);
+    justify-items: start;
+  }
+
+  .room__link {
+    text-decoration: none;
+  }
+
+  .room__link::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .room {
+    position: relative;
+  }
+
+  .room__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: var(--stone);
+  }
+
+  .room__cta {
+    margin-top: var(--s-2);
+  }
+</style>

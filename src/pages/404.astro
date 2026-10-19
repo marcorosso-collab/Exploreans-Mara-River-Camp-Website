@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Icon from '../components/Icon.astro';
+---
+<Base title="Off the map | Mara River Camp" description="This page has moved or never existed." navTheme="solid" noindex>
+  <PageHeader label="Off the map" title="This track goes cold here" lead="The page you were looking for has moved. The river, the tents and the experiences are a step away.">
+    <div class="lost" data-reveal style="--i:4">
+      <a class="btn btn--outline" href="/">Back to the camp <Icon name="arrow-right" class="arrow" /></a>
+      <a class="link-arrow" href="/stay/">Stay</a>
+      <a class="link-arrow" href="/experiences/">Experiences</a>
+      <a class="link-arrow" href="/plan-your-stay/">Plan your stay</a>
+    </div>
+  </PageHeader>
+  <div class="section--tight"></div>
+</Base>
+
+<style>
+  .lost {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-3) var(--s-4);
+    margin-top: var(--s-3);
+  }
+</style>

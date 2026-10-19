@@ -1,203 +1,196 @@
-import { defineCollection, z } from 'astro:content';
+import { defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders';
+import { z } from 'astro/zod';
+import { FAMILIES, STAMP_IDS } from './lib/stamps';
 
-// ─── Site Settings (singleton) ───
+const family = z.enum(FAMILIES);
+const stamp = z.enum(STAMP_IDS as [string, ...string[]]);
+const picture = z.object({ image: z.string(), alt: z.string() });
+const pair = z.object({ label: z.string(), value: z.string() });
+// The CMS can save an emptied optional field as "" or null; treat both as absent
+const blank = (v: unknown) => (v === '' || v === null ? undefined : v);
+const optString = z.preprocess(blank, z.string().optional());
+const seo = {
+  seo_title: optString,
+  seo_description: optString,
+};
+
+/* ─── Site settings: contacts, booking, navigation ─── */
 const settings = defineCollection({
-  type: 'data',
+  loader: glob({ pattern: '*.json', base: './src/content/settings' }),
   schema: z.object({
-    siteName: z.string(),
-    propertyName: z.string(),
-    tagline: z.string(),
-    contactEmail: z.string(),
-    bookingUrl: z.string().optional(),
-    transferInfo: z.string(),
-    migrationSeason: z.string(),
-    logo: z.string().optional(),
-    favicon: z.string().optional(),
-    socialLinks: z.object({
-      instagram: z.string().optional(),
-      facebook: z.string().optional(),
-      tripadvisor: z.string().optional(),
-    }).optional(),
+    property_name: z.string(),
+    region: z.string(),
+    default_description: z.string(),
+    og_image: z.string(),
+    booking_url: z.string().url(),
+    reservations_email: z.string().email(),
+    info_email: z.string().email(),
+    phone: z.string(),
+    reservations_hours: z.string(),
+    address: z.array(z.string()),
+    maps_url: z.string().url(),
+    latitude: z.number(),
+    longitude: z.number(),
+    nav: z.array(z.object({ label: z.string(), href: z.string() })),
+    social: z.preprocess(blank, z.array(z.object({ label: z.string(), href: z.string().url() })).default([])),
+    group_line: z.string(),
+    newsletter: z.object({
+      headline: z.string(),
+      body: z.string(),
+      button: z.string(),
+      success: z.string(),
+    }),
   }),
 });
 
-// ─── Homepage Sections ───
-const homepage = defineCollection({
-  type: 'data',
+/* ─── Pages: one JSON file per page ─── */
+const home = defineCollection({
+  loader: glob({ pattern: 'home.json', base: './src/content/pages' }),
   schema: z.object({
+    ...seo,
     hero: z.object({
-      tagline: z.string(),
-      headline: z.string(),
-      image: z.string().optional(),
-      imageAlt: z.string().optional(),
+      kicker: z.string(),
+      title: z.string(),
+      lead: z.string(),
+      video: z.string(),
+      video_mobile: z.string(),
+      poster: z.string(),
+      alt: z.string(),
     }),
-    intro: z.object({
+    story: z.object({
       label: z.string(),
       headline: z.string(),
-      leadText: z.string(),
-      bodyText: z.string(),
-      image: z.string().optional(),
-      imageAlt: z.string().optional(),
+      /** Running text with {0}, {1} where the photographed words sit */
+      text: z.string(),
+      targets: z.array(z.object({ text: z.string(), image: z.string(), alt: z.string() })),
     }),
-    riverUsp: z.object({
+    day: z.object({
       label: z.string(),
       headline: z.string(),
-      bodyText: z.string(),
-      image: z.string().optional(),
-      imageAlt: z.string().optional(),
-      stats: z.array(z.object({
-        number: z.string(),
-        label: z.string(),
-      })),
+      lead: z.string(),
+      moments: z.array(
+        z.object({
+          time: z.string(),
+          experience: z.string(),
+          body: z.string(),
+          image: optString,
+          alt: optString,
+        }),
+      ),
     }),
-    migration: z.object({
+    families: z.object({ label: z.string(), headline: z.string(), lead: z.string() }),
+    people: z.object({
       label: z.string(),
       headline: z.string(),
-      leadText: z.string(),
-      bodyText: z.string(),
-      disclaimer: z.string(),
-      image: z.string().optional(),
-      imageAlt: z.string().optional(),
-      activeMonths: z.array(z.string()),
+      lead: z.string(),
+      image: z.string(),
+      alt: z.string(),
+      roles: z.array(z.object({ role: z.string(), name: optString, body: z.string() })),
     }),
-    dining: z.object({
+    stay: z.object({ label: z.string(), headline: z.string(), lead: z.string() }),
+    closer: z.object({
       label: z.string(),
       headline: z.string(),
-      bodyText: z.string(),
-      secondaryText: z.string(),
-      bushExperiences: z.array(z.string()),
-      image: z.string().optional(),
-      imageAlt: z.string().optional(),
+      lead: z.string(),
+      image: z.string(),
+      alt: z.string(),
+      hint: z.string(),
     }),
-    planVisit: z.object({
-      label: z.string(),
-      headline: z.string(),
-      bodyText: z.string(),
-      ctaText: z.string(),
-      ctaUrl: z.string(),
-      infoItems: z.array(z.object({
-        label: z.string(),
-        value: z.string(),
-      })),
-    }),
-    stay: z.object({
-      label: z.string(),
-      headline: z.string(),
-      subtitle: z.string(),
-    }),
-    experiencesSection: z.object({
-      label: z.string(),
-      headline: z.string(),
-    }),
-    journalSection: z.object({
-      label: z.string(),
-      headline: z.string(),
-    }),
+    expect: z.object({ label: z.string(), headline: z.string(), lead: z.string() }),
+    passport: z.object({ label: z.string(), headline: z.string(), lead: z.string() }),
+    plan: z.object({ label: z.string(), headline: z.string(), lead: z.string() }),
   }),
 });
 
-// ─── Accommodation ───
-const accommodation = defineCollection({
-  type: 'content',
+const pages = defineCollection({
+  loader: glob({ pattern: ['stay.json', 'experiences.json', 'passport.json', 'stories.json', 'plan.json'], base: './src/content/pages' }),
   schema: z.object({
-    title: z.string(),
-    category: z.string(),
-    quantity: z.number(),
-    sqm: z.string(),
-    maxGuests: z.number(),
-    description: z.string(),
-    image: z.string().optional(),
-    imageAlt: z.string().optional(),
-    image2: z.string().optional(),
-    image2Alt: z.string().optional(),
-    image3: z.string().optional(),
-    image3Alt: z.string().optional(),
-    image4: z.string().optional(),
-    image4Alt: z.string().optional(),
-    order: z.number(),
-    seo_title: z.string().optional(),
-    seo_description: z.string().optional(),
-    og_image: z.string().optional(),
-  }),
-});
-
-// ─── Experiences ───
-const experiences = defineCollection({
-  type: 'content',
-  schema: z.object({
-    title: z.string(),
+    ...seo,
     label: z.string(),
-    description: z.string(),
-    image: z.string().optional(),
-    imageAlt: z.string().optional(),
-    featured: z.boolean().default(false),
-    order: z.number(),
-    seo_title: z.string().optional(),
-    seo_description: z.string().optional(),
-    og_image: z.string().optional(),
-  }),
-});
-
-// ─── Journal ───
-const journal = defineCollection({
-  type: 'content',
-  schema: z.object({
     title: z.string(),
-    category: z.string(),
-    description: z.string(),
-    image: z.string().optional(),
-    imageAlt: z.string().optional(),
-    date: z.date(),
-    draft: z.boolean().default(false),
-    seo_title: z.string().optional(),
-    seo_description: z.string().optional(),
-    og_image: z.string().optional(),
+    lead: z.string(),
+    image: optString,
+    alt: optString,
+    /* Stay */
+    in_camp: z.array(z.object({ title: z.string(), body: z.string() })).optional(),
+    /* Passport */
+    steps: z.array(z.object({ title: z.string(), body: z.string() })).optional(),
+    rewards: z.array(z.object({ label: z.string(), title: z.string(), body: z.string() })).optional(),
+    note: optString,
+    journal: z
+      .object({
+        headline: z.string(),
+        body: z.string(),
+        privacy: z.string(),
+        prompts: z.array(z.object({ direction: z.enum(['beyond', 'within']), prompt: z.string() })),
+      })
+      .optional(),
+    /* Plan your stay */
+    getting_there: z.array(pair).optional(),
+    expect: z.array(pair).optional(),
+    months: z
+      .array(z.object({ month: z.string(), title: z.string(), body: z.string(), migration: z.boolean().default(false) }))
+      .optional(),
+    season_note: optString,
+    faqs: z.array(z.object({ question: z.string(), answer: z.string() })).optional(),
   }),
 });
 
-// ─── Contact Page ───
-const contact = defineCollection({
-  type: 'data',
+/* ─── Stay: tents and the log cabin ─── */
+const stay = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/stay' }),
   schema: z.object({
-    pageTitle: z.string(),
-    pageSubtitle: z.string(),
-    reservations: z.object({
-      title: z.string(),
-      description: z.string(),
-      email: z.string(),
-      phone: z.string(),
-      hours: z.string(),
-    }),
-    generalEnquiries: z.object({
-      title: z.string(),
-      description: z.string(),
-      email: z.string(),
-      phone: z.string().optional(),
-      hours: z.string(),
-    }),
-    location: z.object({
-      title: z.string(),
-      description: z.string(),
-      address1: z.string(),
-      address2: z.string(),
-      airstrip: z.string(),
-    }),
-    social: z.object({
-      title: z.string(),
-      description: z.string(),
-      instagram: z.string().optional(),
-      facebook: z.string().optional(),
-    }),
-    map: z.object({
-      title: z.string(),
-      subtitle: z.string(),
-      description: z.string(),
-      mapsUrl: z.string(),
-    }),
-    seo_title: z.string().optional(),
-    seo_description: z.string().optional(),
-    og_image: z.string().optional(),
+    ...seo,
+    title: z.string(),
+    order: z.number(),
+    setting: z.string(),
+    summary: z.string(),
+    size: z.string(),
+    guests: z.number(),
+    sleeping: z.string(),
+    features: z.array(z.string()),
+    image: z.string(),
+    alt: z.string(),
+    gallery: z.array(picture).default([]),
   }),
 });
 
-export const collections = { settings, homepage, accommodation, experiences, journal, contact };
+/* ─── Experiences: one structure everywhere (Brand Bible ch. 02) ─── */
+const experiences = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/experiences' }),
+  schema: z.object({
+    ...seo,
+    name: z.string(),
+    family,
+    /** The Passport stamp it earns. Left empty until the brand team draws one. */
+    stamp: z.preprocess(blank, stamp.optional()),
+    order: z.number(),
+    led_by: z.string(),
+    when: z.string(),
+    live: z.string(),
+    good_to_know: z.string(),
+    image: optString,
+    alt: optString,
+  }),
+});
+
+/* ─── Stories ─── */
+const stories = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/stories' }),
+  schema: z.object({
+    ...seo,
+    title: z.string(),
+    excerpt: z.string(),
+    date: z.coerce.date(),
+    family,
+    author: z.string(),
+    image: z.string(),
+    alt: z.string(),
+    /** Set when the story was first published on exploreans.com */
+    canonical: z.preprocess(blank, z.string().url().optional()),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { settings, home, pages, stay, experiences, stories };

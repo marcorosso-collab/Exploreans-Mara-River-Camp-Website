@@ -1,0 +1,43 @@
+/* Restyled to the Exploreans system: Georgia text, a Warm Ochre underline, soft geometry */
+.hover-preview-container {
+  position: relative;
+}
+
+.hover-preview-target {
+  position: relative;
+  cursor: default;
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--warm-ochre, #d6c8a8);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
+  transition: text-decoration-color 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.hover-preview-target:hover {
+  text-decoration-color: currentColor;
+}
+
+.hover-preview-image-wrapper {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform, opacity;
+}
+
+.hover-preview-image-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+
+.hover-preview-image {
+  object-fit: cover;
+}
+
+.hover-preview-image-shadow {
+  box-shadow: 0 24px 48px -16px rgba(43, 43, 38, 0.35);
+}

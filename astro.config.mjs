@@ -1,6 +1,17 @@
 import { defineConfig } from 'astro/config';
+import react from '@astrojs/react';
 
 export default defineConfig({
-  output: 'static',
   site: 'https://mara.exploreans.com',
+  trailingSlash: 'always',
+  integrations: [react()],
+  build: {
+    assets: 'assets',
+    format: 'directory',
+  },
+  prefetch: {
+    prefetchAll: false,
+    defaultStrategy: 'hover',
+  },
+  devToolbar: { enabled: false },
 });

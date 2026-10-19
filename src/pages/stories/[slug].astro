@@ -1,0 +1,130 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import StoryCard from '../../components/StoryCard.astro';
+import ExperienceCard from '../../components/ExperienceCard.astro';
+import Icon from '../../components/Icon.astro';
+import { stories, experiences } from '../../lib/data';
+import { FAMILY_NAMES } from '../../lib/stamps';
+import { formatDate } from '../../lib/format';
+
+export async function getStaticPaths() {
+  const list = await stories();
+  const xps = await experiences();
+  return list.map((story) => ({
+    params: { slug: story.id },
+    props: {
+      story,
+      others: list.filter((s) => s.id !== story.id).slice(0, 2),
+      related: xps.filter((e) => e.data.family === story.data.family).slice(0, 2),
+    },
+  }));
+}
+
+const { story, others, related } = Astro.props;
+const s = story.data;
+const { Content } = await render(story);
+const siteUrl = Astro.site!.toString().replace(/\/$/, '');
+const jsonLd = [
+  {
+    '@type': 'Article',
+    headline: s.title,
+    description: s.excerpt,
+    image: `${siteUrl}${s.image}`,
+    datePublished: s.date.toISOString().slice(0, 10),
+    author: { '@type': 'Organization', name: s.author },
+    publisher: { '@id': `${siteUrl}/#lodging` },
+    inLanguage: 'en-GB',
+  },
+];
+---
+<Base
+  title={s.seo_title ?? `${s.title} | Mara River Camp`}
+  description={s.seo_description ?? s.excerpt}
+  ogImage={s.image}
+  type="article"
+  canonical={s.canonical}
+  jsonLd={jsonLd}
+>
+  <PageHeader
+    label={`${FAMILY_NAMES[s.family]} · ${formatDate(s.date)}`}
+    title={s.title}
+    lead={s.excerpt}
+    image={s.image}
+    alt={s.alt}
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Stories', href: '/stories/' }, { label: s.title }]}
+  />
+
+  <article class="section">
+    <div class="wrap article">
+      <p class="label muted article__by">{s.author}</p>
+      <div class="prose" data-reveal>
+        <Content />
+      </div>
+    </div>
+  </article>
+
+  {related.length > 0 && (
+    <section class="section on-linen" aria-labelledby="live-title">
+      <div class="wrap">
+        <h2 id="live-title" class="t-headline related__title">Live it at the camp</h2>
+        <div class="related">
+          {related.map((e) => <ExperienceCard experience={e} variant="compact" />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {others.length > 0 && (
+    <section class="section" aria-labelledby="more-title">
+      <div class="wrap">
+        <div class="more__head">
+          <h2 id="more-title" class="t-headline">More from the river</h2>
+          <a class="link-arrow" href="/stories/">Every story <Icon name="arrow-right" /></a>
+        </div>
+        <div class="more">
+          {others.map((o) => <StoryCard story={o} />)}
+        </div>
+      </div>
+    </section>
+  )}
+</Base>
+
+<style>
+  .article {
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  @media (min-width: 1024px) {
+    .article {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+      column-gap: var(--s-6);
+    }
+
+    .article__by {
+      padding-top: 10px;
+    }
+  }
+
+  .related__title {
+    margin-bottom: var(--s-5);
+  }
+
+  .related,
+  .more {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: var(--s-5) var(--gutter);
+  }
+
+  .more__head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: end;
+    gap: var(--s-3);
+    margin-bottom: var(--s-5);
+  }
+</style>
