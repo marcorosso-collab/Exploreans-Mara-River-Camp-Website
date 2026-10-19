@@ -89,6 +89,27 @@ const uid = `bk-${placement}`;
     const guests = form.querySelector<HTMLInputElement>('[data-guests]')!;
     const nights = form.querySelector<HTMLElement>('[data-nights]')!;
 
+    // The whole field opens the calendar, not only the small icon at its edge
+    [inEl, outEl].forEach((el) => {
+      el.addEventListener('click', () => {
+        try {
+          el.showPicker?.();
+        } catch {
+          /* Browsers without showPicker open their own picker on tap */
+        }
+      });
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          try {
+            el.showPicker?.();
+          } catch {
+            /* keyboard entry still works */
+          }
+        }
+      });
+    });
+
     const today = iso(new Date());
     inEl.min = today;
     outEl.min = addDays(today, 1);
@@ -173,6 +194,14 @@ const uid = `bk-${placement}`;
   .booking :global(input),
   .booking :global(select) {
     min-width: 0;
+  }
+
+  .booking :global(input[type='date']) {
+    cursor: pointer;
+  }
+
+  .booking :global(input[type='date']::-webkit-calendar-picker-indicator) {
+    cursor: pointer;
   }
 
   .booking__ages {

@@ -52,7 +52,7 @@ const home = defineCollection({
     hero: z.object({
       kicker: z.string(),
       title: z.string(),
-      lead: z.string(),
+      lead: optString,
       video: z.string(),
       video_mobile: z.string(),
       poster: z.string(),

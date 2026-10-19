@@ -89,8 +89,8 @@ collections:
             widget: "object"
             fields:
               - { label: "Kicker", name: "kicker", widget: "string" }
-              - { label: "Headline (up to eight words)", name: "title", widget: "string" }
-              - { label: "Lead", name: "lead", widget: "text" }
+              - { label: "Headline", name: "title", widget: "string" }
+              - { label: "Lead (optional)", name: "lead", widget: "text", required: false }
               - { label: "Film (desktop, MP4)", name: "video", widget: "file" }
               - { label: "Film (phones, MP4)", name: "video_mobile", widget: "file" }
               - { label: "Poster image", name: "poster", widget: "image" }

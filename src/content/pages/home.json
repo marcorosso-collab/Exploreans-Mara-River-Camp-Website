@@ -3,8 +3,7 @@
   "seo_description": "A tented camp on a quiet bend of the Mara River, at the foot of the Oloololo Escarpment. Walk with Maasai guides at first light, follow the Great Migration from July to October and sleep beside the river.",
   "hero": {
     "kicker": "Maasai Mara, Kenya",
-    "title": "A river camp at first light",
-    "lead": "A tented camp on a quiet bend of the Mara River, at the foot of the Oloololo Escarpment.",
+    "title": "A tented camp on a quiet bend of the Mara River",
     "video": "/video/mara-river-camp-hero-1920.mp4",
     "video_mobile": "/video/mara-river-camp-hero-720sq.mp4",
     "poster": "/video/mara-river-camp-hero-poster.webp",
@@ -15,11 +14,31 @@
     "headline": "The day begins on foot, with the river still in mist",
     "text": "Mara River Camp sits on {0}, at the foot of {1}. {2} pass through the camp itself, and from July to October {3} gathers at crossing points close by. {4} read the grass, the tracks and the birds, and share them at walking pace. Evenings end by the open fire, as the stars come out over the river.",
     "targets": [
-      { "text": "a quiet bend of the Mara River", "image": "/images/places/mara-river-camp/mara-river-camp-nature-river-bend-aerial-01-960.webp", "alt": "The Mara River curving between grassland and trees, seen from above" },
-      { "text": "the Oloololo Escarpment", "image": "/images/places/mara-river-camp/mara-river-camp-nature-escarpment-01-960.webp", "alt": "The forested Oloololo Escarpment rising above the river valley" },
-      { "text": "Elephants, giraffes and monkeys", "image": "/images/places/mara-river-camp/mara-river-camp-nature-giraffe-01-960.webp", "alt": "A giraffe standing at the edge of the trees near the camp" },
-      { "text": "the Great Migration", "image": "/images/places/mara-river-camp/mara-river-camp-nature-mara-river-01-960.webp", "alt": "The wide brown water of the Mara River between wooded banks" },
-      { "text": "Maasai guides from the camp", "image": "/images/places/mara-river-camp/mara-river-camp-adventure-maasai-guides-at-first-light-01-960.webp", "alt": "Maasai guides in red shukas looking out over the river at first light" }
+      {
+        "text": "a quiet bend of the Mara River",
+        "image": "/images/places/mara-river-camp/mara-river-camp-nature-river-bend-aerial-01-960.webp",
+        "alt": "The Mara River curving between grassland and trees, seen from above"
+      },
+      {
+        "text": "the Oloololo Escarpment",
+        "image": "/images/places/mara-river-camp/mara-river-camp-nature-escarpment-01-960.webp",
+        "alt": "The forested Oloololo Escarpment rising above the river valley"
+      },
+      {
+        "text": "Elephants, giraffes and monkeys",
+        "image": "/images/places/mara-river-camp/mara-river-camp-nature-giraffe-01-960.webp",
+        "alt": "A giraffe standing at the edge of the trees near the camp"
+      },
+      {
+        "text": "the Great Migration",
+        "image": "/images/places/mara-river-camp/mara-river-camp-nature-mara-river-01-960.webp",
+        "alt": "The wide brown water of the Mara River between wooded banks"
+      },
+      {
+        "text": "Maasai guides from the camp",
+        "image": "/images/places/mara-river-camp/mara-river-camp-adventure-maasai-guides-at-first-light-01-960.webp",
+        "alt": "Maasai guides in red shukas looking out over the river at first light"
+      }
     ]
   },
   "day": {
@@ -81,9 +100,18 @@
     "image": "/images/places/mara-river-camp/mara-river-camp-culture-maasai-welcome-01.webp",
     "alt": "Maasai hosts in red shukas singing and jumping to welcome guests at the camp entrance",
     "roles": [
-      { "role": "Maasai guides", "body": "They lead the walks and the village visits. They grew up on this land and read the grass, the tracks and the birds the way most of us read a page." },
-      { "role": "Guides and drivers", "body": "They lead the game drives, morning, afternoon or the whole day, and know where the herds are likely to be before the vehicle leaves camp." },
-      { "role": "Camp hosts and kitchen team", "body": "They lay the tables on the plains, keep the Zebra Bar open until bedtime and light the fire on the lawn every night." }
+      {
+        "role": "Maasai guides",
+        "body": "They lead the walks and the village visits. They grew up on this land and read the grass, the tracks and the birds the way most of us read a page."
+      },
+      {
+        "role": "Guides and drivers",
+        "body": "They lead the game drives, morning, afternoon or the whole day, and know where the herds are likely to be before the vehicle leaves camp."
+      },
+      {
+        "role": "Camp hosts and kitchen team",
+        "body": "They lay the tables on the plains, keep the Zebra Bar open until bedtime and light the fire on the lawn every night."
+      }
     ]
   },
   "stay": {

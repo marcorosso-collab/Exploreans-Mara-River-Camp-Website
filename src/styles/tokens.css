@@ -70,7 +70,11 @@
   --dur-slow: 900ms;
 
   --nav-h: 76px;
-  --nav-h-compact: 64px;
+  /* Property header: tall with the lockup at the top, compact with the place mark */
+  --nav-h-top: 92px;
+  --nav-h-compact: 68px;
+  --lockup-w: 172px;
+  --mark-size: 48px;
 
   /* Layers */
   --z-nav: 50;
@@ -83,12 +87,19 @@
   :root {
     --margin: 40px;
     --gutter: 24px;
+    --nav-h-top: 104px;
+    --nav-h-compact: 76px;
+    --lockup-w: 200px;
+    --mark-size: 54px;
   }
 }
 
 @media (min-width: 1200px) {
   :root {
     --margin: 80px;
+    --nav-h-top: 116px;
+    --lockup-w: 224px;
+    --mark-size: 58px;
   }
 }
 
