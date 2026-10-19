@@ -62,7 +62,6 @@ const uid = `bk-${placement}`;
       See rates and book
       <Icon name="arrow-up-right" class="arrow" />
     </button>
-    <p class="booking__nights data" aria-live="polite" data-nights></p>
   </div>
 </form>
 
@@ -87,7 +86,6 @@ const uid = `bk-${placement}`;
     const ages = form.querySelector<HTMLFieldSetElement>('[data-ages]')!;
     const agesList = form.querySelector<HTMLElement>('[data-ages-list]')!;
     const guests = form.querySelector<HTMLInputElement>('[data-guests]')!;
-    const nights = form.querySelector<HTMLElement>('[data-nights]')!;
 
     // The whole field opens the calendar, not only the small icon at its edge
     [inEl, outEl].forEach((el) => {
@@ -122,11 +120,6 @@ const uid = `bk-${placement}`;
         outEl.min = addDays(inEl.value, 1);
         if (!outEl.value || outEl.value <= inEl.value) outEl.value = addDays(inEl.value, 3);
       }
-      const n =
-        inEl.value && outEl.value
-          ? Math.round((new Date(`${outEl.value}T12:00:00`).getTime() - new Date(`${inEl.value}T12:00:00`).getTime()) / 864e5)
-          : 0;
-      nights.textContent = n > 0 ? `${n === 1 ? 'One night' : n < 10 ? ['Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'][n - 2] + ' nights' : `${n} nights`} at the river` : '';
       guests.value = [...Array(Number(adults.value)).fill('A'), ...childAges()].join(',');
     };
 
@@ -234,10 +227,6 @@ const uid = `bk-${placement}`;
     gap: var(--s-2) var(--s-4);
   }
 
-  .booking__nights {
-    color: var(--stone);
-  }
-
   .booking__submit {
     width: 100%;
   }
@@ -257,10 +246,6 @@ const uid = `bk-${placement}`;
     backdrop-filter: blur(14px) saturate(1.1);
     color: var(--natural-white);
     border: 1px solid rgb(250 250 245 / 0.14);
-  }
-
-  .booking--bar .booking__nights {
-    color: color-mix(in srgb, var(--natural-white) 78%, transparent);
   }
 
   .booking--bar :global(.field input),
@@ -300,18 +285,9 @@ const uid = `bk-${placement}`;
       align-items: stretch;
       gap: 0;
     }
-
-    .booking--bar .booking__nights {
-      position: absolute;
-      transform: translateY(calc(100% + 14px));
-    }
   }
 
   .booking--dark {
     color: var(--natural-white);
-  }
-
-  .booking--dark .booking__nights {
-    color: color-mix(in srgb, var(--natural-white) 78%, transparent);
   }
 </style>
