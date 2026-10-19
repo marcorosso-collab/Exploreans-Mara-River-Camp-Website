@@ -77,8 +77,14 @@ const total = groups.reduce((n, g) => n + g.items.length, 0);
   .spread__families {
     position: relative;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
-    gap: var(--s-4) var(--s-3);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--s-4) var(--s-2);
+  }
+
+  @media (min-width: 600px) {
+    .spread__families {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
   }
 
   .spread__family {

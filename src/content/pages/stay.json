@@ -4,12 +4,24 @@
   "label": "Stay",
   "title": "Sleep to the sound of the river",
   "lead": "Canvas and timber under the trees of the riverbank. Every tent and the cabin has its own terrace or deck, an en-suite bathroom and turndown every evening.",
-  "image": "/images/places/mara-river-camp/mara-river-camp-stay-river-tent-01.webp",
-  "alt": "A guest on the terrace of a river tent, with the lawn running down to the Mara River",
+  "image": "/images/places/mara-river-camp/mara-river-camp-nature-mara-river-01.webp",
+  "alt": "The wide brown water of the Mara River between wooded banks, below the camp",
   "in_camp": [
-    { "title": "The deck and the pool", "body": "A swimming pool among the trees, with sunbeds and shade for the middle of the day." },
-    { "title": "The Zebra Bar", "body": "Poolside by day and beside the fire in the evening, open until the last guest calls it a night." },
-    { "title": "At the table", "body": "Breakfast, lunch and dinner in the garden or on the deck, with local, Asian and international dishes from the camp kitchen." },
-    { "title": "Around camp", "body": "Wi-Fi throughout, a gift shop, laundry and a medical service." }
+    {
+      "title": "The deck and the pool",
+      "body": "A swimming pool among the trees, with sunbeds and shade for the middle of the day."
+    },
+    {
+      "title": "The Zebra Bar",
+      "body": "Poolside by day and beside the fire in the evening, open until the last guest calls it a night."
+    },
+    {
+      "title": "At the table",
+      "body": "Breakfast, lunch and dinner in the garden or on the deck, with local, Asian and international dishes from the camp kitchen."
+    },
+    {
+      "title": "Around camp",
+      "body": "Wi-Fi throughout, a gift shop, laundry and a medical service."
+    }
   ]
 }

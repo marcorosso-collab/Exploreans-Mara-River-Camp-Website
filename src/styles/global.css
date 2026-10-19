@@ -100,6 +100,11 @@ a {
   border-radius: 2px;
 }
 
+/* The hidden attribute always wins over a component's display value */
+[hidden] {
+  display: none !important;
+}
+
 /* ---------- Typography ---------- */
 h1,
 h2,
@@ -814,4 +819,9 @@ html.js [data-reveal].is-armed.is-in {
   content: '/';
   margin-right: 8px;
   opacity: 0.5;
+}
+
+/* Long email addresses wrap rather than push the layout wider */
+a[href^='mailto:'] {
+  overflow-wrap: anywhere;
 }

@@ -101,6 +101,9 @@ const isCurrent = (href: string) => href !== '/' && path.startsWith(href);
   update(window.scrollY);
   ScrollTrigger.create({ start: 0, end: 'max', onUpdate: (self) => update(self.scroll()) });
   window.addEventListener('resize', () => update(window.scrollY));
+  // Arriving on an anchor, or scrolling without smooth scroll, still sets the header
+  window.addEventListener('scroll', () => update(window.scrollY), { passive: true });
+  window.addEventListener('load', () => update(window.scrollY));
 
   // Mobile menu
   const menu = document.querySelector<HTMLDialogElement>('[data-menu]')!;
@@ -164,6 +167,7 @@ const isCurrent = (href: string) => href !== '/' && path.startsWith(href);
   }
 
   .nav__inner {
+    position: relative;
     display: flex;
     align-items: center;
     gap: var(--s-4);

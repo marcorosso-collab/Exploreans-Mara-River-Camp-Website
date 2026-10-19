@@ -16,7 +16,6 @@ const families = byFamily((await experiences()).filter((e) => e.data.stamp)).map
   rings: g.items.map((e) => ({ slug: e.id, name: e.data.name, stamp: e.data.stamp!, stampLabel: stampLabel(e.data.stamp as StampId) })),
 }));
 const total = families.reduce((n, f) => n + f.rings.length, 0);
-const prompt = p.journal?.prompts[0]?.prompt ?? '';
 ---
 <Base title={p.seo_title ?? p.title} description={p.seo_description ?? p.lead} navTheme="solid">
   <PageHeader label={p.label} title={p.title} lead={p.lead}>
@@ -25,7 +24,7 @@ const prompt = p.journal?.prompts[0]?.prompt ?? '';
 
   <section class="book-wrap" aria-label="Your Mara River Camp Passport">
     <div class="wrap">
-      <PassportBook client:visible place="Mara River Camp" families={families} rewards={p.rewards ?? []} prompt={prompt} wordmark={wordmarkSvg()} />
+      <PassportBook client:visible place="Mara River Camp" families={families} rewards={p.rewards ?? []} steps={p.steps ?? []} wordmark={wordmarkSvg()} />
       <div class="book-wrap__after">
         <p class="data muted"><span data-pick-count>0</span> of {total} experiences marked. Your choices stay in this browser and travel with your enquiry.</p>
         <a class="btn btn--place" href="/plan-your-stay/#enquire" data-pick-some hidden>Plan these days with us <Icon name="arrow-right" class="arrow" /></a>

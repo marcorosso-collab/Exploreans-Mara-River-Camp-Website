@@ -20,7 +20,7 @@ interface Props {
   place: string;
   families: PassportFamily[];
   rewards: { label: string; title: string; body: string }[];
-  prompt: string;
+  steps: { title: string; body: string }[];
   /** Wordmark SVG markup from the master artwork, so the cover never redraws it */
   wordmark: string;
 }
@@ -47,7 +47,7 @@ function Page({ side, children, tone = 'paper' }: { side: 'left' | 'right'; chil
  * slowed to the brand's 500 ms). The families page is live: each ring marks an experience
  * for the guest's stay and is remembered for the enquiry form.
  */
-export default function PassportBook({ place, families, rewards, prompt, wordmark }: Props) {
+export default function PassportBook({ place, families, rewards, steps, wordmark }: Props) {
   const host = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [open, setOpen] = useState(0);
@@ -109,6 +109,7 @@ export default function PassportBook({ place, families, rewards, prompt, wordmar
     </Page>
   );
 
+  // The bible's page order: holder page, how it works, a spread per place, rewards record
   const pages = useMemo<{ key: string; label: string; node: ReactNode }[]>(
     () => [
       {
@@ -119,6 +120,41 @@ export default function PassportBook({ place, families, rewards, prompt, wordmar
             <span className="pp-wordmark" dangerouslySetInnerHTML={{ __html: wordmark }} />
             <span className="pp-cover-label">Passport</span>
             <span className="pp-cover-no">No. 0001</span>
+          </Page>
+        ),
+      },
+      {
+        key: 'holder',
+        label: 'Holder page',
+        node: (
+          <Page side="left">
+            <span className="pp-eyebrow">Exploreans Passport</span>
+            <span className="pp-holder-title">This Passport belongs to</span>
+            <span className="pp-sign">
+              <span className="pp-sign-label">Passport holder</span>
+              <span className="pp-sign-line" />
+              <span className="pp-sign-label">Number</span>
+              <span className="pp-sign-no">0001</span>
+            </span>
+            <span className="pp-master pp-master--paper">Explore beyond. Explore within.</span>
+          </Page>
+        ),
+      },
+      {
+        key: 'how',
+        label: 'How it works',
+        node: (
+          <Page side="right">
+            <span className="pp-eyebrow">How it works</span>
+            <ol className="pp-steps">
+              {steps.map((st, i) => (
+                <li key={st.title}>
+                  <span className="pp-step-no">{i + 1}</span>
+                  <span className="pp-step-title">{st.title}</span>
+                </li>
+              ))}
+            </ol>
+            <span className="pp-journal-note">Each stamp signed by the guide who led it</span>
           </Page>
         ),
       },
@@ -136,8 +172,6 @@ export default function PassportBook({ place, families, rewards, prompt, wordmar
             <span className="pp-sign">
               <span className="pp-sign-label">Welcomed by</span>
               <span className="pp-sign-line" />
-              <span className="pp-sign-label">Passport holder</span>
-              <span className="pp-sign-line" />
             </span>
           </Page>
         ),
@@ -145,10 +179,10 @@ export default function PassportBook({ place, families, rewards, prompt, wordmar
       { key: 'rings', label: 'Experiences', node: ringsPage },
       {
         key: 'rewards',
-        label: 'Rewards',
+        label: 'Rewards record',
         node: (
           <Page side="left">
-            <span className="pp-eyebrow">Rewards</span>
+            <span className="pp-eyebrow">Rewards record</span>
             {rewards.map((r) => (
               <span className="pp-reward" key={r.title}>
                 <span className="pp-reward-label">{r.label}</span>
@@ -160,18 +194,14 @@ export default function PassportBook({ place, families, rewards, prompt, wordmar
         ),
       },
       {
-        key: 'journal',
-        label: 'Travel Journal',
+        key: 'next',
+        label: 'The next Exploreans',
         node: (
           <Page side="right">
-            <span className="pp-eyebrow">Day 2 &middot; Mara River &middot; Explore beyond</span>
-            <span className="pp-prompt">{prompt}</span>
-            <span className="pp-lines" aria-hidden="true">
-              {Array.from({ length: 9 }, (_, i) => (
-                <span key={i} />
-              ))}
-            </span>
-            <span className="pp-journal-note">From the Travel Journal, written by you</span>
+            <span className="pp-eyebrow">Exploreans Passport &middot; Page 2</span>
+            <span className="pp-next-ring" aria-hidden="true" />
+            <span className="pp-place-name pp-next-name">The next Exploreans</span>
+            <span className="pp-place-meta">Every empty page is a place still to explore</span>
           </Page>
         ),
       },
@@ -197,7 +227,7 @@ export default function PassportBook({ place, families, rewards, prompt, wordmar
   const book = width >= 720;
   const pageWidth = Math.min(380, Math.floor((width - 32) / 2));
   const pageHeight = Math.round(pageWidth * 1.42);
-  const spreads = ['Cover', 'Your page and experiences', 'Rewards and Travel Journal', 'Back cover'];
+  const spreads = ['Cover', 'Holder page and how it works', `Your ${place} page`, 'Rewards record and the next page', 'Back cover'];
   const go = (n: number) => setOpen(Math.max(0, Math.min(leaves.length, n)));
 
   return (
@@ -237,13 +267,16 @@ export default function PassportBook({ place, families, rewards, prompt, wordmar
           </div>
         </>
       ) : (
-        <div className="pp-rail" role="list" aria-label="Passport pages">
-          {pages.map((p) => (
-            <div className="pp-rail-page" role="listitem" aria-label={p.label} key={p.key}>
-              {p.node}
-            </div>
-          ))}
-        </div>
+        <>
+          <div className="pp-rail" role="list" aria-label="Passport pages">
+            {pages.map((p) => (
+              <div className="pp-rail-page" role="listitem" aria-label={p.label} key={p.key}>
+                {p.node}
+              </div>
+            ))}
+          </div>
+          <p className="pp-swipe">Swipe to turn the pages</p>
+        </>
       )}
     </div>
   );

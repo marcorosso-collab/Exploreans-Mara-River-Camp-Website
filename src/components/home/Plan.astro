@@ -41,6 +41,10 @@ const site = await getSite();
     gap: var(--s-5);
   }
 
+  .plan__grid > * {
+    min-width: 0;
+  }
+
   .plan .accent {
     color: color-mix(in srgb, var(--natural-white) 82%, transparent);
   }
@@ -55,7 +59,7 @@ const site = await getSite();
     display: flex;
     align-items: center;
     gap: 10px;
-    word-break: break-word;
+    overflow-wrap: anywhere;
   }
 
   .plan__contact :global(svg) {

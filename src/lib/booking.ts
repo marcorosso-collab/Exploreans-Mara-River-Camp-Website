@@ -12,12 +12,11 @@ export interface BookingQuery {
 
 export function bookingHref(base: string, q: BookingQuery = {}): string {
   const url = new URL(base);
-  if (q.arrival && q.departure) {
-    url.searchParams.set('in', q.arrival);
-    url.searchParams.set('out', q.departure);
-  }
+  if (!q.arrival || !q.departure) return url.toString();
+  url.searchParams.set('in', q.arrival);
+  url.searchParams.set('out', q.departure);
   const adults = Math.max(1, q.adults ?? 2);
-  const guests = [...Array(adults).fill('A'), ...(q.childAges ?? []).map(String)];
-  if (q.arrival && q.departure) url.searchParams.set('guests', guests.join(','));
-  return url.toString();
+  const guests = [...Array(adults).fill('A'), ...(q.childAges ?? []).map((a) => String(Math.round(a)))];
+  // Commas kept as written: the engine reads guests=A,A,8 exactly as tested
+  return `${url.toString()}&guests=${guests.join(',')}`;
 }

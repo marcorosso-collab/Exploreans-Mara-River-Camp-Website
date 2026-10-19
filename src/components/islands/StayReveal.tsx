@@ -23,7 +23,7 @@ export default function StayReveal({ src, alt, children }: Props) {
       feather={12}
       zoom={1.1}
       radius={6}
-      overlay={0.28}
+      overlay={0.4}
       background="var(--natural-white)"
       revealContent
       calm={false}

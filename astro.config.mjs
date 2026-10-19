@@ -14,4 +14,8 @@ export default defineConfig({
     defaultStrategy: 'hover',
   },
   devToolbar: { enabled: false },
+  vite: {
+    // Pre-bundled for the dev server so islands hydrate on first load
+    optimizeDeps: { include: ['three', 'motion/react', 'react', 'react-dom/client'] },
+  },
 });
