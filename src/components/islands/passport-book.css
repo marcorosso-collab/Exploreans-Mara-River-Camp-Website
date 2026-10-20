@@ -182,10 +182,8 @@
 
 .pp-row {
   display: grid;
-  grid-template-columns: 6.2em 1fr;
-  align-items: center;
-  gap: 8px;
-  padding-block: 6px;
+  gap: 2px;
+  padding-block: 4px 5px;
   border-bottom: 1px solid color-mix(in srgb, var(--basalt) 14%, transparent);
 }
 
@@ -199,7 +197,7 @@
 .pp-rings {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px 10px;
+  gap: 4px 6px;
 }
 
 .pp-none {
@@ -212,7 +210,7 @@
   display: grid;
   justify-items: center;
   gap: 2px;
-  width: 64px;
+  width: 72px;
   padding: 2px 0;
   border: 0;
   background: none;
@@ -224,8 +222,8 @@
 .pp-ring,
 .pp-ink {
   grid-area: 1 / 1;
-  width: 46px;
-  height: 46px;
+  width: 40px;
+  height: 40px;
 }
 
 .pp-ring {
@@ -261,16 +259,18 @@
 }
 
 .pp-slot-name {
+  max-width: 100%;
   font-size: 0.625rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--stone);
   line-height: 1.2;
+  white-space: nowrap;
 }
 
 .pp-progress {
   margin-top: auto;
-  padding-top: 10px;
+  padding-top: 8px;
   font-size: 0.6875rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;

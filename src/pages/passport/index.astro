@@ -6,14 +6,14 @@ import Stamp from '../../components/Stamp.astro';
 import MapLines from '../../components/MapLines.astro';
 import Icon from '../../components/Icon.astro';
 import { page, experiences, byFamily } from '../../lib/data';
-import { stampLabel, type StampId } from '../../lib/stamps';
+import { stampCaption, type StampId } from '../../lib/stamps';
 import { wordmarkSvg } from '../../lib/wordmark';
 
 const p = await page('passport');
 const families = byFamily((await experiences()).filter((e) => e.data.stamp)).map((g) => ({
   family: g.family,
   name: g.name,
-  rings: g.items.map((e) => ({ slug: e.id, name: e.data.name, stamp: e.data.stamp!, stampLabel: stampLabel(e.data.stamp as StampId) })),
+  rings: g.items.map((e) => ({ slug: e.id, name: e.data.name, stamp: e.data.stamp!, stampLabel: stampCaption(e.data.stamp as StampId) })),
 }));
 const total = families.reduce((n, f) => n + f.rings.length, 0);
 ---
@@ -26,7 +26,7 @@ const total = families.reduce((n, f) => n + f.rings.length, 0);
     <div class="wrap">
       <PassportBook client:visible place="Mara River Camp" families={families} rewards={p.rewards ?? []} steps={p.steps ?? []} wordmark={wordmarkSvg()} />
       <div class="book-wrap__after">
-        <p class="data muted"><span data-pick-count>0</span> of {total} experiences marked. Your choices stay in this browser and travel with your enquiry.</p>
+        <p class="data muted"><span data-pick-count>0</span> of {total} experiences marked. One stamp in each family completes your Mara page. Your choices stay in this browser and travel with your enquiry.</p>
         <a class="btn btn--place" href="/plan-your-stay/#enquire" data-pick-some hidden>Plan these days with us <Icon name="arrow-right" class="arrow" /></a>
         <a class="link-arrow" href="/experiences/" data-pick-none>Browse every experience <Icon name="arrow-right" /></a>
       </div>

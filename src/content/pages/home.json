@@ -47,44 +47,51 @@
     "lead": "Every experience here is led by someone who knows the place by heart. This is how a day can unfold.",
     "moments": [
       {
-        "time": "First light",
-        "experience": "on-foot-at-first-light",
-        "body": "The grass is still wet and the river is still in mist. Your guide kneels by a fresh track and reads the night that just passed, animal by animal.",
-        "image": "/images/places/mara-river-camp/mara-river-camp-adventure-maasai-guides-at-first-light-01.webp",
-        "alt": "Maasai guides in red shukas looking out over the river at first light"
+        "time": "Sunrise",
+        "experience": "sunrise-stillness",
+        "body": "The camp is still quiet. On the River Deck, gentle stretching and a few long breaths as the first light comes up over the water.",
+        "image": "/images/places/mara-river-camp/mara-river-camp-nature-mara-river-01.webp",
+        "alt": "The wide brown water of the Mara River between wooded banks, below the camp"
       },
       {
         "time": "Morning",
-        "experience": "the-morning-game-drive",
-        "body": "The vehicle stops at the edge of the plains and the engine goes quiet. Elephants cross ahead, close enough to hear the grass tear.",
+        "experience": "game-drive",
+        "body": "From 6am the vehicle heads into the reserve, coffee in the flask. The engine goes quiet at the edge of the plains and elephants cross ahead.",
         "image": "/images/places/mara-river-camp/mara-river-camp-adventure-elephants-game-drive-01.webp",
         "alt": "Elephants grazing beside a safari vehicle on the open plains"
       },
       {
         "time": "Breakfast",
-        "experience": "a-table-on-the-plains",
-        "body": "A table appears under open sky, laid with white linen and a meal from the camp kitchen. Coffee, warm bread and fresh fruit, with the plains all around.",
+        "experience": "bush-breakfast",
+        "body": "Near Olkiombo Airstrip, the camp kitchen cooks in the open: eggs to order, pastries, fruit and fresh coffee, with the plains all around.",
         "image": "/images/places/mara-river-camp/mara-river-camp-taste-bush-breakfast-01.webp",
         "alt": "The camp team laying a table with a red cloth on the plains beside the safari vehicles"
       },
       {
         "time": "Midday",
-        "experience": "an-afternoon-by-the-pool",
-        "body": "The heat settles over the plains and the camp goes quiet. A book, a swim and a cold drink brought to the sunbed, with the trees moving overhead.",
+        "experience": "by-the-pool",
+        "body": "The heat settles and the camp goes quiet. A book, a swim and the sound of the river.",
         "image": "/images/places/mara-river-camp/mara-river-camp-wellness-pool-from-above-01.webp",
         "alt": "The camp swimming pool surrounded by sunbeds and trees, seen from above"
       },
       {
         "time": "Late afternoon",
-        "experience": "sundowner-on-the-plains",
-        "body": "A cork is drawn, the plains turn amber and the first glass arrives as the sun drops toward the horizon.",
+        "experience": "sundowner-at-the-elephants-couch",
+        "body": "At 4.30pm the table is waiting at the Elephant’s Couch. Wine, cold Kenyan beer and warm bites as the sun drops behind the plains.",
         "image": "/images/places/mara-river-camp/mara-river-camp-taste-sundowner-pour-01.webp",
         "alt": "Sparkling wine poured into a glass against the low sun"
       },
       {
+        "time": "Dusk",
+        "experience": "hippos-at-dusk",
+        "body": "Back at camp, the pod shifts in the river below the River Deck as the light goes.",
+        "image": "/images/places/mara-river-camp/mara-river-camp-nature-hippos-from-above-01.webp",
+        "alt": "A pod of hippos resting in the brown water of the Mara River, seen from above"
+      },
+      {
         "time": "After dark",
-        "experience": "fireside-under-the-stars",
-        "body": "The fire is lit on the lawn above the river. Conversation slows as the stars come out, and the night fills with the sounds of the Mara."
+        "experience": "around-the-fire",
+        "body": "The fire is lit on the River Deck. Stories from the Maasai team, and the hippos calling below in the dark."
       }
     ]
   },
@@ -99,16 +106,16 @@
     "alt": "Maasai hosts in red shukas singing and jumping to welcome guests at the camp entrance",
     "roles": [
       {
-        "role": "Maasai guides",
-        "body": "They lead the walks and the village visits. They grew up on this land and read the grass, the tracks and the birds the way most of us read a page."
+        "role": "Maasai guides and hosts",
+        "body": "They welcome guests to the camp in song and tell the stories around the fire. They read the grass, the tracks and the birds the way most of us read a page."
       },
       {
         "role": "Guides and drivers",
-        "body": "They lead the game drives, morning, afternoon or the whole day, and know where the herds are likely to be before the vehicle leaves camp."
+        "body": "They lead the game drives, by day in the reserve and by spotlight in the Ole Sugut Conservancy, and know where the herds are likely to be before the vehicle leaves camp."
       },
       {
         "role": "Camp hosts and kitchen team",
-        "body": "They lay the tables on the plains, keep the Zebra Bar open until bedtime and light the fire on the lawn every night."
+        "body": "They cook breakfast in the open near Olkiombo, lay the sundowner at the Elephant’s Couch and keep the Zebra Bar open until bedtime."
       }
     ]
   },
@@ -131,7 +138,7 @@
   "passport": {
     "label": "The Exploreans Passport",
     "headline": "Your page at Mara River Camp",
-    "lead": "Every guest will receive an Exploreans Passport, stamped by the guide who leads each experience. Mark the experiences you would like to collect and we will plan your days around them."
+    "lead": "Every guest will receive an Exploreans Passport, stamped by the person who leads each experience. Collect one stamp in each of the five families and your Mara page is complete. Mark the experiences you would like and we will plan your days around them."
   },
   "plan": {
     "label": "Plan your journey",

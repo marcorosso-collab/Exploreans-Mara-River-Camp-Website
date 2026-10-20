@@ -31,6 +31,7 @@ const href = `/experiences/${experience.id}/`;
         {e.stamp && <Stamp id={e.stamp as StampId} size={96} decorative />}
       </span>
     )}
+    {e.included && <span class="xp__included label">With every stay</span>}
   </a>
   <div class="xp__body">
     <div class="xp__top">
@@ -43,6 +44,21 @@ const href = `/experiences/${experience.id}/`;
       {variant === 'full' && <div><dt class="label muted">When and how long</dt><dd>{e.when}</dd></div>}
       {variant === 'full' && <div><dt class="label muted">What you will live</dt><dd class="xp__live">{e.live}</dd></div>}
       {variant === 'full' && <div><dt class="label muted">Good to know</dt><dd>{e.good_to_know}</dd></div>}
+      <div>
+        <dt class="label muted">{e.included ? 'Rate' : e.rates.length > 1 ? 'Rates' : 'Rate'}</dt>
+        {e.included ? (
+          <dd class="xp__free">Included with every stay</dd>
+        ) : variant === 'full' ? (
+          <dd>
+            <ul role="list" class="xp__rates">
+              {e.rates.map((r) => <li><span>{r.label}</span><span class="data">{r.value}</span></li>)}
+            </ul>
+            {e.fees.length > 0 && <p class="xp__fees data">Plus {e.fees.map((f) => f.label.toLowerCase()).join(', ').replace(/, ([^,]*)$/, ' and $1')}</p>}
+          </dd>
+        ) : (
+          <dd class="data">{e.rates[0]?.value}{e.fees.length > 0 && <span class="xp__fees"> &middot; plus fees</span>}</dd>
+        )}
+      </div>
     </dl>
     <div class="xp__foot">
       <PickButton slug={experience.id} name={e.name} stamp={e.stamp} size="sm" />
@@ -62,6 +78,7 @@ const href = `/experiences/${experience.id}/`;
   }
 
   .xp__media {
+    position: relative;
     display: block;
     aspect-ratio: 4 / 3;
     overflow: hidden;
@@ -135,6 +152,42 @@ const href = `/experiences/${experience.id}/`;
 
   .xp__live {
     font-style: italic;
+  }
+
+  /* "With every stay": the Passport's own words for what comes with the room */
+  .xp__included {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    padding: 6px 10px;
+    border-radius: 3px;
+    background: var(--place);
+    color: var(--natural-white);
+    font-size: 0.75rem;
+  }
+
+  .xp__free {
+    color: var(--place);
+  }
+
+  .xp__rates {
+    display: grid;
+    gap: 6px;
+  }
+
+  .xp__rates li {
+    display: grid;
+    gap: 2px;
+  }
+
+  .xp__rates li span:first-child {
+    font-size: 0.9375rem;
+  }
+
+  .xp__fees {
+    margin-top: 6px;
+    color: var(--stone);
+    font-size: 0.875rem;
   }
 
   .xp__foot {

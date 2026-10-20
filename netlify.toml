@@ -36,27 +36,27 @@
 
 [[redirects]]
   from = "/experiences/game-drives"
-  to = "/experiences/the-morning-game-drive/"
+  to = "/experiences/game-drive/"
   status = 301
 
 [[redirects]]
   from = "/experiences/walking-tours"
-  to = "/experiences/on-foot-at-first-light/"
+  to = "/experiences/on-foot-in-ole-sugut/"
   status = 301
 
 [[redirects]]
   from = "/experiences/maasai-culture"
-  to = "/experiences/a-morning-in-the-maasai-village/"
+  to = "/experiences/maasai-village/"
   status = 301
 
 [[redirects]]
   from = "/experiences/bush-dining"
-  to = "/experiences/a-table-on-the-plains/"
+  to = "/experiences/bush-breakfast/"
   status = 301
 
 [[redirects]]
   from = "/experiences/hot-air-balloon"
-  to = "/experiences/over-the-mara-by-balloon/"
+  to = "/experiences/above-the-mara/"
   status = 301
 
 [[redirects]]

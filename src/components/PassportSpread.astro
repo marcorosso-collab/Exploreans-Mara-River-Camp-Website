@@ -7,10 +7,9 @@
 import Stamp from './Stamp.astro';
 import MapLines from './MapLines.astro';
 import { experiences, byFamily } from '../lib/data';
-import { stampLabel, type StampId } from '../lib/stamps';
+import { stampCaption, type StampId } from '../lib/stamps';
 
 const groups = byFamily((await experiences()).filter((e) => e.data.stamp));
-const total = groups.reduce((n, g) => n + g.items.length, 0);
 ---
 <div class="spread on-linen">
   <MapLines variant="a" tone="basalt" />
@@ -19,7 +18,7 @@ const total = groups.reduce((n, g) => n + g.items.length, 0);
       <Stamp id="place-mara-river-camp" size={150} label="Mara River Camp place stamp: a hippo walking beside the river" />
     </span>
     <p class="label spread__title">Your Passport at<br />Mara River Camp</p>
-    <p class="label spread__count"><span data-pick-count>0</span> of {total} marked for your stay</p>
+    <p class="label spread__count"><span data-family-count>0</span> of 5 families marked</p>
   </div>
   <ol role="list" class="spread__families">
     {groups.map((g) => (
@@ -28,12 +27,12 @@ const total = groups.reduce((n, g) => n + g.items.length, 0);
         <ul role="list" class="spread__rings">
           {g.items.map((e) => (
             <li>
-              <button type="button" class="spread__ring" aria-pressed="false" data-pick={e.id} data-pick-name={e.data.name}>
+              <button type="button" class="spread__ring" aria-pressed="false" data-pick={e.id} data-pick-name={e.data.name} data-pick-family={e.data.family}>
                 <span class="spread__dash" aria-hidden="true"></span>
                 <span class="spread__ink" aria-hidden="true"><Stamp id={e.data.stamp as StampId} size={50} decorative /></span>
                 <span class="visually-hidden">Mark {e.data.name} for your stay</span>
               </button>
-              <a class="spread__name" href={`/experiences/${e.id}/`}>{stampLabel(e.data.stamp as StampId)}<span class="visually-hidden">: {e.data.name}</span></a>
+              <a class="spread__name" href={`/experiences/${e.id}/`} title={e.data.name}><span aria-hidden="true">{stampCaption(e.data.stamp as StampId)}</span><span class="visually-hidden">{e.data.name}</span></a>
             </li>
           ))}
           {g.items.length === 0 && <li class="spread__empty" aria-hidden="true"><span class="spread__dash"></span></li>}

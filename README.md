@@ -34,7 +34,8 @@ Node 22.12 or later (set in `netlify.toml`).
 - **Type**: Georgia and Calibri, falling back to the metric-matched Gelasio and Carlito (self-hosted).
 - **Wordmark and lockup** (`Wordmark.astro`, `Lockup.astro`): master artwork paths, never redrawn or animated. The lockup sets MARA RIVER CAMP in Calibri capitals under the wordmark.
 - **The compact header** (`Nav.astro`): the lockup at the top of every page; past the first screen the header shortens and the hippo place mark crossfades in over 300 ms.
-- **Stamps and the place mark** (`public/stamps/`, `Stamp.astro`): master artwork used as CSS masks. The place mark appears only in the compact header and Passport contexts.
+- **Stamps and the place mark** (`public/stamps/`, `Stamp.astro`): master artwork used as CSS masks. The place mark appears only in the compact header and Passport contexts. The twelve `mara-*.png` stamps are lifted from the draft Mara River Camp Passport (October 2026); swap the files when the final artwork is approved.
+- **The Mara page reward**: one stamp in each of the five families completes the page.
 - **Map line** (`src/lib/contours.ts`, served at `/map/a.svg`, `/b.svg`, `/c.svg`): contour lines generated at build time.
 
 ## Motion and React Bits Pro
@@ -67,7 +68,7 @@ All copy lives in `src/content/` and is editable at `/admin` (Sveltia CMS, GitHu
 - `settings/site.json`: contacts, booking engine, navigation, newsletter
 - `pages/*.json`: one file per page (home, stay, experiences, passport, stories, plan)
 - `stay/*.md`: the rooms
-- `experiences/*.md`: name, family, stamp, led by, when, what you will live, good to know
+- `experiences/*.md`: name, family, stamp, led by, when, where, what you will live, good to know, rates and fees paid on top. Tick **With every stay** for experiences included at no charge. Rates show with a note that they are in US dollars and subject to change
 - `stories/*.md`: stories; set `canonical` for stories first published on exploreans.com
 
 ### Photography

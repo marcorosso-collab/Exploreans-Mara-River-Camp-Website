@@ -21,4 +21,4 @@ Maasai guides lead the walks and village visits from the camp. They read the gra
 
 ## In the evening
 
-On some evenings the singing returns, around the fire on the lawn above the river. Ask the camp hosts which nights, and keep a seat close to the fire.
+On some evenings the singing returns, around the fire on the River Deck. Ask the camp hosts which nights, and keep a seat close to the fire.

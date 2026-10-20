@@ -377,11 +377,40 @@ collections:
           - { label: "Stillness (Wellness)", value: "stillness" }
           - { label: "Movement (Wellness)", value: "movement" }
           - { label: "Rest (Wellness)", value: "rest" }
+          - { label: "Mara: On foot in Ole Sugut (Adventure)", value: "mara-on-foot-in-ole-sugut" }
+          - { label: "Mara: Above the Mara (Adventure)", value: "mara-above-the-mara" }
+          - { label: "Mara: After dark (Adventure)", value: "mara-after-dark" }
+          - { label: "Mara: Game drive (Nature)", value: "mara-game-drive" }
+          - { label: "Mara: Hippos at dusk (Nature)", value: "mara-hippos-at-dusk" }
+          - { label: "Mara: Camp nature walk (Nature)", value: "mara-camp-nature-walk" }
+          - { label: "Mara: Maasai village (Culture)", value: "mara-maasai-village" }
+          - { label: "Mara: Around the fire (Culture)", value: "mara-around-the-fire" }
+          - { label: "Mara: Bush breakfast (Taste)", value: "mara-bush-breakfast" }
+          - { label: "Mara: Sundowner at the Elephant’s Couch (Taste)", value: "mara-sundowner-at-the-elephants-couch" }
+          - { label: "Mara: By the pool (Wellness)", value: "mara-by-the-pool" }
+          - { label: "Mara: Sunrise stillness (Wellness)", value: "mara-sunrise-stillness" }
       - { label: "Order", name: "order", widget: "number" }
+      - { label: "With every stay (no charge)", name: "included", widget: "boolean", default: false }
       - { label: "Led by (role and, where possible, name)", name: "led_by", widget: "string" }
       - { label: "When and how long", name: "when", widget: "string" }
+      - { label: "Where", name: "where", widget: "string", required: false }
       - { label: "What you will live (two or three sentences, present tense)", name: "live", widget: "text" }
       - { label: "Good to know", name: "good_to_know", widget: "text" }
+      - label: "Rates"
+        name: "rates"
+        widget: "list"
+        required: false
+        hint: "One line per rate, for example: Half day, private jeep → USD 240 per jeep, up to seven guests"
+        fields:
+          - { label: "What", name: "label", widget: "string" }
+          - { label: "Rate", name: "value", widget: "string" }
+      - label: "Also payable (park, conservancy, guide, ranger fees)"
+        name: "fees"
+        widget: "list"
+        required: false
+        fields:
+          - { label: "Fee", name: "label", widget: "string" }
+          - { label: "Amount", name: "value", widget: "string" }
       - { label: "Photograph", name: "image", widget: "image", required: false }
       - { label: "Alt text", name: "alt", widget: "string", required: false }
       - { label: "SEO title", name: "seo_title", widget: "string", required: false }

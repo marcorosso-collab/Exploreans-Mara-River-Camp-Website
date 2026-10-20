@@ -66,8 +66,8 @@ export default function PassportBook({ place, families, rewards, steps, wordmark
     };
   }, []);
 
-  const total = families.reduce((n, f) => n + f.rings.length, 0);
-  const marked = families.flatMap((f) => f.rings).filter((r) => chosen.includes(r.slug)).length;
+  // The Mara page is complete with one stamp in each of the five families
+  const marked = families.filter((f) => f.rings.some((r) => chosen.includes(r.slug))).length;
 
   const ringsPage = (
     <Page side="right">
@@ -93,9 +93,9 @@ export default function PassportBook({ place, families, rewards, steps, wordmark
                   >
                     <span className="pp-ring" aria-hidden="true" />
                     <span className="pp-ink" style={{ '--rot': `${((i * 37 + r.slug.length * 11) % 13) - 6}deg` } as CSSProperties}>
-                      <Stamp id={r.stamp} size={40} />
+                      <Stamp id={r.stamp} size={36} />
                     </span>
-                    <span className="pp-slot-name">{r.stampLabel}</span>
+                    <span className="pp-slot-name" title={r.name}>{r.stampLabel}</span>
                   </button>
                 );
               })}
@@ -104,7 +104,7 @@ export default function PassportBook({ place, families, rewards, steps, wordmark
         ))}
       </ol>
       <p className="pp-progress">
-        {marked} of {total} {place} experiences marked for your stay
+        {marked} of 5 families marked{marked === 5 ? ', your Mara page is complete' : ''}
       </p>
     </Page>
   );
