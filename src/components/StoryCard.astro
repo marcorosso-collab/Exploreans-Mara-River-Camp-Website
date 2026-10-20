@@ -1,0 +1,53 @@
+---
+import Img from './Img.astro';
+import { FAMILY_NAMES } from '../lib/stamps';
+import { formatDate } from '../lib/format';
+import type { Story } from '../lib/data';
+
+interface Props {
+  story: Story;
+  large?: boolean;
+}
+
+const { story, large = false } = Astro.props;
+const s = story.data;
+---
+<article class:list={['story-card', { 'story-card--large': large }]} data-reveal>
+  <a href={`/stories/${story.id}/`} class="story-card__link">
+    <span class="story-card__media frame">
+      <Img src={s.image} alt={s.alt} sizes={large ? '(min-width: 1024px) 58vw, 90vw' : '(min-width: 1024px) 30vw, 90vw'} />
+    </span>
+    <span class="label label--place">{FAMILY_NAMES[s.family]} &middot; {formatDate(s.date)}</span>
+    <span class:list={['story-card__title', large ? 't-headline' : 't-subhead']}>{s.title}</span>
+    <span class="muted">{s.excerpt}</span>
+  </a>
+</article>
+
+<style>
+  .story-card__link {
+    display: grid;
+    gap: var(--s-2);
+    text-decoration: none;
+  }
+
+  .story-card__media {
+    display: block;
+    aspect-ratio: 3 / 2;
+    margin-bottom: var(--s-2);
+  }
+
+  .story-card__media :global(img) {
+    transition: transform 1400ms var(--ease-out);
+  }
+
+  .story-card__link:hover :global(img) {
+    transform: scale(1.04);
+  }
+
+  .story-card__link:hover .story-card__title {
+    text-decoration: underline;
+    text-decoration-color: var(--warm-ochre);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 5px;
+  }
+</style>

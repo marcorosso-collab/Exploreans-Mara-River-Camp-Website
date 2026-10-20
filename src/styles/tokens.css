@@ -1,0 +1,111 @@
+/*
+ * Exploreans design tokens. Source: Brand Bible v1.0 (October 2026),
+ * chapter 03 (colour, typography, layout) and chapter 07 (components and tokens).
+ */
+:root {
+  /* Core palette */
+  --basalt: #2b2b26;
+  --natural-white: #fafaf5;
+  --linen: #efe7d6;
+  --warm-ochre: #d6c8a8;
+
+  /* Functional tints: interfaces only, never brand colours */
+  --stone: #5e5e56;
+  --hairline: #e4e0d4;
+  --panel: #37362f;
+
+  /* Type colours: one per kind of place */
+  --safari-green: #113d2e;
+  --lagoon: #1f5f63;
+  --vintage: #6a2638;
+  --talavera: #2c4e8a;
+  --granite: #3d3a52;
+
+  /* The colour of the place. Mara River Camp is a safari camp: Safari Green carries the
+     place name, accents, the Passport and its stamps. Everything else stays in the core palette. */
+  --place: var(--safari-green);
+
+  /* Type: Georgia and Calibri, with open-licensed metric matches */
+  --font-serif: Georgia, 'Gelasio', serif;
+  --font-label: Calibri, 'Carlito', 'Lato', sans-serif;
+
+  /* Type scale (screen sizes from the hierarchy table) */
+  --text-display: clamp(2.75rem, 1.55rem + 4.1vw, 5rem);
+  --text-headline: clamp(2rem, 1.45rem + 1.9vw, 3rem);
+  --text-subhead: clamp(1.375rem, 1.22rem + 0.55vw, 1.75rem);
+  --text-lead: clamp(1.1875rem, 1.1rem + 0.3vw, 1.375rem);
+  --text-body: clamp(1.0625rem, 1.04rem + 0.1vw, 1.125rem);
+  --text-quote: clamp(1.5rem, 1.25rem + 0.9vw, 2rem);
+  --text-label: 0.8125rem;
+  --text-data: 0.9375rem;
+
+  --leading-display: 1.1;
+  --leading-headline: 1.15;
+  --leading-subhead: 1.25;
+  --leading-lead: 1.45;
+  --leading-body: 1.65;
+  --label-track: 0.18em;
+
+  /* Spacing steps: 4 8 16 24 40 64 104 */
+  --s-1: 4px;
+  --s-2: 8px;
+  --s-3: 16px;
+  --s-4: 24px;
+  --s-5: 40px;
+  --s-6: 64px;
+  --s-7: 104px;
+
+  /* Grid: mobile 4 cols, tablet 8, desktop 12 */
+  --margin: 20px;
+  --gutter: 16px;
+  --content-max: 1280px;
+  --measure: 62ch;
+
+  --radius: 6px;
+
+  /* Motion: slow fades, 300 to 500 ms, no bounce */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur: 450ms;
+  --dur-slow: 900ms;
+
+  --nav-h: 76px;
+  /* Property header: tall with the lockup at the top, compact with the place mark */
+  --nav-h-top: 92px;
+  --nav-h-compact: 68px;
+  --lockup-w: 172px;
+  --mark-size: 48px;
+
+  /* Layers */
+  --z-nav: 50;
+  --z-menu: 60;
+  --z-follower: 70;
+  --z-skip: 100;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --margin: 40px;
+    --gutter: 24px;
+    --nav-h-top: 104px;
+    --nav-h-compact: 76px;
+    --lockup-w: 200px;
+    --mark-size: 54px;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --margin: 80px;
+    --nav-h-top: 116px;
+    --lockup-w: 224px;
+    --mark-size: 58px;
+  }
+}
+
+/* Each place sets its own type colour on any element it owns */
+[data-place='safari'] { --place: var(--safari-green); }
+[data-place='lagoon'] { --place: var(--lagoon); }
+[data-place='vintage'] { --place: var(--vintage); }
+[data-place='talavera'] { --place: var(--talavera); }
+[data-place='granite'] { --place: var(--granite); }

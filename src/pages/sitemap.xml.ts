@@ -1,71 +1,21 @@
 import type { APIRoute } from 'astro';
-import { getCollection } from 'astro:content';
+import { experiences, rooms, stories } from '../lib/data';
 
-export const GET: APIRoute = async () => {
-  const siteUrl = 'https://mara.exploreans.com';
-  
-  // Get all dynamic content
-  const accommodations = await getCollection('accommodation');
-  const experiences = await getCollection('experiences');
-  const journal = await getCollection('journal', ({ data }) => !data.draft);
-  
-  // Static pages
-  const staticPages = [
-    { url: '/', priority: '1.0', changefreq: 'weekly' },
-    { url: '/contact', priority: '0.8', changefreq: 'monthly' },
+export const GET: APIRoute = async ({ site }) => {
+  const base = site!.toString().replace(/\/$/, '');
+  const pages = ['/', '/stay/', '/experiences/', '/passport/', '/stories/', '/plan-your-stay/'];
+  const urls = [
+    ...pages.map((p) => ({ loc: p })),
+    ...(await rooms()).map((r) => ({ loc: `/stay/${r.id}/` })),
+    ...(await experiences()).map((e) => ({ loc: `/experiences/${e.id}/` })),
+    // Stories first published on exploreans.com point there and stay out of this sitemap
+    ...(await stories())
+      .filter((s) => !s.data.canonical)
+      .map((s) => ({ loc: `/stories/${s.id}/`, lastmod: s.data.date.toISOString().slice(0, 10) })),
   ];
-  
-  // Build sitemap entries
-  const entries = [
-    // Static pages
-    ...staticPages.map(page => `
-    <url>
-      <loc>${siteUrl}${page.url === '/' ? '' : page.url}/</loc>
-      <lastmod>${new Date().toISOString()}</lastmod>
-      <changefreq>${page.changefreq}</changefreq>
-      <priority>${page.priority}</priority>
-    </url>
-    `),
-
-    // Accommodation pages
-    ...accommodations.map(item => `
-    <url>
-      <loc>${siteUrl}/accommodation/${item.slug}/</loc>
-      <lastmod>${new Date().toISOString()}</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.7</priority>
-    </url>
-    `),
-
-    // Experience pages
-    ...experiences.map(item => `
-    <url>
-      <loc>${siteUrl}/experiences/${item.slug}/</loc>
-      <lastmod>${new Date().toISOString()}</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.7</priority>
-    </url>
-    `),
-
-    // Journal pages
-    ...journal.map(item => `
-    <url>
-      <loc>${siteUrl}/journal/${item.slug}/</loc>
-      <lastmod>${item.data.date.toISOString()}</lastmod>
-      <changefreq>monthly</changefreq>
-      <priority>0.6</priority>
-    </url>
-    `),
-  ];
-  
-  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${entries.join('')}
+${urls.map((u) => `  <url><loc>${base}${u.loc}</loc>${'lastmod' in u && u.lastmod ? `<lastmod>${u.lastmod}</lastmod>` : ''}</url>`).join('\n')}
 </urlset>`;
-
-  return new Response(sitemap, {
-    headers: {
-      'Content-Type': 'application/xml',
-    },
-  });
+  return new Response(xml, { headers: { 'Content-Type': 'application/xml' } });
 };

@@ -1,0 +1,306 @@
+---
+/**
+ * A gallery that opens full screen: arrows, swipe and Escape. Photography leads, never
+ * boxed in frames; captions are the alt text, in plain words.
+ */
+import Img from './Img.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  images: { image: string; alt: string }[];
+  label: string;
+}
+
+const { images, label } = Astro.props;
+const id = `gallery-${label.toLowerCase().replace(/[^a-z]+/g, '-')}`;
+---
+<div class="gallery" data-gallery id={id}>
+  <ul role="list" class:list={['gallery__grid', `gallery__grid--${Math.min(images.length, 5)}`]}>
+    {images.map((img, i) => (
+      <li class="gallery__item" data-reveal style={`--i:${i}`}>
+        <button type="button" class="gallery__open frame" data-open={i} data-follow="View">
+          <Img src={img.image} alt={img.alt} sizes={i === 0 ? '(min-width: 1024px) 66vw, 100vw' : '(min-width: 1024px) 33vw, 50vw'} />
+          <span class="visually-hidden">Open photograph {i + 1} of {images.length} full screen</span>
+          <span class="gallery__zoom" aria-hidden="true"><Icon name="arrows-out" /></span>
+        </button>
+      </li>
+    ))}
+  </ul>
+
+  <dialog class="lightbox" aria-label={`${label} photographs`} data-lightbox>
+    <div class="lightbox__stage" data-stage>
+      {images.map((img, i) => (
+        <figure class="lightbox__slide" data-slide={i} hidden={i !== 0}>
+          <img src={img.image} alt={img.alt} loading="lazy" decoding="async" />
+          <figcaption class="lightbox__caption data">{img.alt}<span class="lightbox__count">{i + 1} / {images.length}</span></figcaption>
+        </figure>
+      ))}
+    </div>
+    <button type="button" class="lightbox__btn lightbox__close" aria-label="Close" data-close><Icon name="x" /></button>
+    {images.length > 1 && (
+      <>
+        <button type="button" class="lightbox__btn lightbox__prev" aria-label="Previous photograph" data-prev><Icon name="caret-left" /></button>
+        <button type="button" class="lightbox__btn lightbox__next" aria-label="Next photograph" data-next><Icon name="caret-right" /></button>
+      </>
+    )}
+  </dialog>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-gallery]').forEach((root) => {
+    const box = root.querySelector<HTMLDialogElement>('[data-lightbox]')!;
+    const slides = Array.from(box.querySelectorAll<HTMLElement>('[data-slide]'));
+    let index = 0;
+    let opener: HTMLElement | null = null;
+
+    const show = (i: number) => {
+      index = (i + slides.length) % slides.length;
+      slides.forEach((s, k) => (s.hidden = k !== index));
+    };
+    const open = (i: number, from: HTMLElement) => {
+      opener = from;
+      show(i);
+      box.showModal();
+      window.__lenis?.stop();
+      requestAnimationFrame(() => box.classList.add('is-open'));
+    };
+    const close = () => {
+      box.classList.remove('is-open');
+      window.__lenis?.start();
+      window.setTimeout(() => {
+        box.close();
+        opener?.focus();
+      }, 260);
+    };
+
+    root.querySelectorAll<HTMLButtonElement>('[data-open]').forEach((b) =>
+      b.addEventListener('click', () => open(Number(b.dataset.open), b)),
+    );
+    box.querySelector('[data-close]')!.addEventListener('click', close);
+    box.querySelector('[data-prev]')?.addEventListener('click', () => show(index - 1));
+    box.querySelector('[data-next]')?.addEventListener('click', () => show(index + 1));
+    box.addEventListener('cancel', (e) => {
+      e.preventDefault();
+      close();
+    });
+    box.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') show(index + 1);
+      if (e.key === 'ArrowLeft') show(index - 1);
+    });
+    box.addEventListener('click', (e) => {
+      if (e.target === box || (e.target as HTMLElement).matches('[data-stage]')) close();
+    });
+
+    // Swipe on touch screens
+    let x0 = 0;
+    box.addEventListener('touchstart', (e) => (x0 = e.touches[0].clientX), { passive: true });
+    box.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - x0;
+      if (Math.abs(dx) > 48) show(index + (dx < 0 ? 1 : -1));
+    });
+  });
+</script>
+
+<style>
+  .gallery__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--gutter);
+  }
+
+  .gallery__item:first-child {
+    grid-column: 1 / -1;
+  }
+
+  .gallery__open {
+    position: relative;
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    padding: 0;
+    border: 0;
+    cursor: zoom-in;
+  }
+
+  .gallery__item:first-child .gallery__open {
+    aspect-ratio: 16 / 9;
+  }
+
+  .gallery__open :global(img) {
+    transition: transform 1200ms var(--ease-out);
+  }
+
+  .gallery__open:hover :global(img) {
+    transform: scale(1.03);
+  }
+
+  .gallery__zoom {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgb(250 250 245 / 0.86);
+    color: var(--basalt);
+  }
+
+  .gallery__zoom :global(svg) {
+    width: 18px;
+    height: 18px;
+  }
+
+  @media (min-width: 1024px) {
+    .gallery__grid--4,
+    .gallery__grid--5 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .gallery__grid--4 .gallery__item:first-child,
+    .gallery__grid--5 .gallery__item:first-child {
+      grid-column: 1 / 3;
+      grid-row: 1 / 3;
+    }
+
+    .gallery__grid--4 .gallery__item:first-child .gallery__open,
+    .gallery__grid--5 .gallery__item:first-child .gallery__open {
+      aspect-ratio: auto;
+      height: 100%;
+    }
+
+    .gallery__grid--4 .gallery__item:last-child {
+      grid-column: 1 / -1;
+    }
+
+    .gallery__grid--4 .gallery__item:last-child .gallery__open {
+      aspect-ratio: 21 / 9;
+    }
+
+    .gallery__grid--3 {
+      grid-template-columns: 2fr 1fr;
+    }
+
+    .gallery__grid--3 .gallery__item:first-child {
+      grid-column: 1;
+      grid-row: 1 / 3;
+    }
+
+    .gallery__grid--3 .gallery__item:first-child .gallery__open {
+      aspect-ratio: auto;
+      height: 100%;
+    }
+  }
+
+  /* ---------- Lightbox ---------- */
+  .lightbox {
+    width: 100%;
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: rgb(43 43 38 / 0.96);
+    color: var(--natural-white);
+    opacity: 0;
+    transition: opacity 260ms var(--ease);
+  }
+
+  .lightbox.is-open {
+    opacity: 1;
+  }
+
+  .lightbox::backdrop {
+    background: transparent;
+  }
+
+  .lightbox__stage {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    padding: 64px var(--margin) 24px;
+  }
+
+  .lightbox__slide {
+    display: grid;
+    gap: 14px;
+    justify-items: center;
+    max-width: 100%;
+    animation: reveal-in 500ms var(--ease-out);
+  }
+
+  .lightbox__slide[hidden] {
+    display: none;
+  }
+
+  .lightbox__slide img {
+    max-width: min(100%, 1600px);
+    max-height: calc(100dvh - 160px);
+    width: auto;
+    height: auto;
+    border-radius: var(--radius);
+  }
+
+  .lightbox__caption {
+    display: flex;
+    gap: 16px;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 60rem;
+    color: color-mix(in srgb, var(--natural-white) 82%, transparent);
+  }
+
+  .lightbox__count {
+    flex: none;
+    color: var(--warm-ochre);
+  }
+
+  .lightbox__btn {
+    position: fixed;
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: 1px solid rgb(250 250 245 / 0.35);
+    border-radius: 50%;
+    background: rgb(43 43 38 / 0.5);
+    color: var(--natural-white);
+    font-size: 22px;
+    transition: background-color var(--dur) var(--ease);
+  }
+
+  .lightbox__btn:hover {
+    background: var(--panel);
+  }
+
+  .lightbox__close {
+    top: 12px;
+    right: 12px;
+  }
+
+  .lightbox__prev,
+  .lightbox__next {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .lightbox__prev {
+    left: 12px;
+  }
+
+  .lightbox__next {
+    right: 12px;
+  }
+
+  @media (max-width: 767px) {
+    .lightbox__prev,
+    .lightbox__next {
+      top: auto;
+      bottom: 16px;
+      transform: none;
+    }
+  }
+</style>

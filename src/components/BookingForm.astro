@@ -1,0 +1,293 @@
+---
+/**
+ * Dates and guests, straight into the booking engine with live rates. Without JavaScript
+ * the form still submits the dates to Simplebooking as a plain GET request.
+ */
+import Icon from './Icon.astro';
+import { site as getSite } from '../lib/data';
+
+interface Props {
+  /** 'bar' sits across the hero; 'panel' stacks inside the dialog and the plan page */
+  variant?: 'bar' | 'panel';
+  /** Where the form sits, for the booking funnel in analytics */
+  placement: string;
+  tone?: 'light' | 'dark';
+  class?: string;
+}
+
+const { variant = 'panel', placement, tone = 'light', class: className } = Astro.props;
+const site = await getSite();
+const base = new URL(site.booking_url);
+const uid = `bk-${placement}`;
+---
+<form
+  class:list={['booking', `booking--${variant}`, `booking--${tone}`, className]}
+  action={`${base.origin}${base.pathname}`}
+  method="get"
+  target="_blank"
+  data-booking
+  data-base={site.booking_url}
+  data-placement={placement}
+>
+  {[...base.searchParams].map(([k, v]) => <input type="hidden" name={k} value={v} />)}
+  <div class="booking__fields">
+    <div class="field booking__date">
+      <label for={`${uid}-in`}>Arrival</label>
+      <input id={`${uid}-in`} name="in" type="date" required data-in />
+    </div>
+    <div class="field booking__date">
+      <label for={`${uid}-out`}>Departure</label>
+      <input id={`${uid}-out`} name="out" type="date" required data-out />
+    </div>
+    <div class="field booking__num">
+      <label for={`${uid}-adults`}>Adults</label>
+      <select id={`${uid}-adults`} data-adults>
+        {[1, 2, 3, 4, 5, 6].map((n) => <option value={n} selected={n === 2}>{n}</option>)}
+      </select>
+    </div>
+    <div class="field booking__num">
+      <label for={`${uid}-children`}>Children</label>
+      <select id={`${uid}-children`} data-children>
+        {[0, 1, 2, 3, 4].map((n) => <option value={n}>{n}</option>)}
+      </select>
+    </div>
+  </div>
+  <fieldset class="booking__ages" data-ages hidden>
+    <legend class="label">Age of each child on arrival</legend>
+    <div class="booking__ages-list" data-ages-list></div>
+  </fieldset>
+  <input type="hidden" name="guests" value="A,A" data-guests />
+  <div class="booking__go">
+    <button type="submit" class="btn btn--place booking__submit">
+      See rates and book
+      <Icon name="arrow-up-right" class="arrow" />
+    </button>
+  </div>
+</form>
+
+<script>
+  import { bookingHref } from '../lib/booking';
+
+  const iso = (d: Date) => {
+    const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+    return local.toISOString().slice(0, 10);
+  };
+  const addDays = (s: string, n: number) => {
+    const d = new Date(`${s}T12:00:00`);
+    d.setDate(d.getDate() + n);
+    return iso(d);
+  };
+
+  document.querySelectorAll<HTMLFormElement>('form[data-booking]').forEach((form) => {
+    const inEl = form.querySelector<HTMLInputElement>('[data-in]')!;
+    const outEl = form.querySelector<HTMLInputElement>('[data-out]')!;
+    const adults = form.querySelector<HTMLSelectElement>('[data-adults]')!;
+    const children = form.querySelector<HTMLSelectElement>('[data-children]')!;
+    const ages = form.querySelector<HTMLFieldSetElement>('[data-ages]')!;
+    const agesList = form.querySelector<HTMLElement>('[data-ages-list]')!;
+    const guests = form.querySelector<HTMLInputElement>('[data-guests]')!;
+
+    // The whole field opens the calendar, not only the small icon at its edge
+    [inEl, outEl].forEach((el) => {
+      el.addEventListener('click', () => {
+        try {
+          el.showPicker?.();
+        } catch {
+          /* Browsers without showPicker open their own picker on tap */
+        }
+      });
+      el.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          try {
+            el.showPicker?.();
+          } catch {
+            /* keyboard entry still works */
+          }
+        }
+      });
+    });
+
+    const today = iso(new Date());
+    inEl.min = today;
+    outEl.min = addDays(today, 1);
+
+    const childAges = () =>
+      Array.from(agesList.querySelectorAll<HTMLSelectElement>('select')).map((s) => Number(s.value));
+
+    const sync = () => {
+      if (inEl.value) {
+        outEl.min = addDays(inEl.value, 1);
+        if (!outEl.value || outEl.value <= inEl.value) outEl.value = addDays(inEl.value, 3);
+      }
+      guests.value = [...Array(Number(adults.value)).fill('A'), ...childAges()].join(',');
+    };
+
+    const buildAges = () => {
+      const count = Number(children.value);
+      const current = childAges();
+      agesList.innerHTML = '';
+      for (let i = 0; i < count; i++) {
+        const id = `${form.dataset.placement}-age-${i}`;
+        const wrap = document.createElement('div');
+        wrap.className = 'field';
+        wrap.innerHTML = `<label for="${id}">Child ${i + 1}</label><select id="${id}">${Array.from(
+          { length: 18 },
+          (_, a) => `<option value="${a}"${(current[i] ?? 8) === a ? ' selected' : ''}>${a === 0 ? 'Under 1' : a}</option>`,
+        ).join('')}</select>`;
+        wrap.querySelector('select')!.addEventListener('change', sync);
+        agesList.appendChild(wrap);
+      }
+      ages.hidden = count === 0;
+      sync();
+    };
+
+    inEl.addEventListener('change', sync);
+    outEl.addEventListener('change', sync);
+    adults.addEventListener('change', sync);
+    children.addEventListener('change', buildAges);
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+      const href = bookingHref(form.dataset.base!, {
+        arrival: inEl.value,
+        departure: outEl.value,
+        adults: Number(adults.value),
+        childAges: childAges(),
+      });
+      window.dataLayer?.push({ event: 'booking_click', placement: form.dataset.placement, url: href });
+      // A real link click opens the engine in a new tab without tripping popup blockers
+      const a = document.createElement('a');
+      a.href = href;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    });
+
+    sync();
+  });
+</script>
+
+<style>
+  .booking {
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  .booking__fields {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--s-3);
+  }
+
+  .booking__fields > *,
+  .booking :global(input),
+  .booking :global(select) {
+    min-width: 0;
+  }
+
+  .booking :global(input[type='date']) {
+    cursor: pointer;
+  }
+
+  .booking :global(input[type='date']::-webkit-calendar-picker-indicator) {
+    cursor: pointer;
+  }
+
+  .booking__ages {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    display: grid;
+    gap: var(--s-2);
+  }
+
+  .booking__ages[hidden] {
+    display: none;
+  }
+
+  .booking__ages legend {
+    padding: 0;
+    margin-bottom: var(--s-2);
+  }
+
+  .booking__ages-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+    gap: var(--s-2);
+  }
+
+  .booking__go {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-2) var(--s-4);
+  }
+
+  .booking__submit {
+    width: 100%;
+  }
+
+  @media (min-width: 560px) {
+    .booking__submit {
+      width: auto;
+    }
+  }
+
+  /* Over the hero: one line on desktop, white fields on a quiet glass of Basalt */
+  .booking--bar {
+    padding: var(--s-4);
+    border-radius: var(--radius);
+    background: rgb(43 43 38 / 0.62);
+    -webkit-backdrop-filter: blur(14px) saturate(1.1);
+    backdrop-filter: blur(14px) saturate(1.1);
+    color: var(--natural-white);
+    border: 1px solid rgb(250 250 245 / 0.14);
+  }
+
+  .booking--bar :global(.field input),
+  .booking--bar :global(.field select) {
+    border-color: transparent;
+  }
+
+  .booking--bar .booking__submit {
+    --btn-bg: var(--natural-white);
+    --btn-fg: var(--basalt);
+    --btn-border: var(--natural-white);
+  }
+
+  .booking--bar .booking__submit:hover {
+    --btn-bg: var(--linen);
+    --btn-border: var(--linen);
+  }
+
+  @media (min-width: 1024px) {
+    .booking--bar {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      padding: var(--s-3) var(--s-3) var(--s-3) var(--s-4);
+    }
+
+    .booking--bar .booking__fields {
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.2fr) minmax(0, 0.8fr) minmax(0, 0.8fr);
+    }
+
+    .booking--bar .booking__ages {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+
+    .booking--bar .booking__go {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+  }
+
+  .booking--dark {
+    color: var(--natural-white);
+  }
+</style>

@@ -1,0 +1,86 @@
+---
+/** 5. Rooms and spaces */
+import { getEntry } from 'astro:content';
+import RoomCard from '../RoomCard.astro';
+import Icon from '../Icon.astro';
+import { rooms } from '../../lib/data';
+
+const s = (await getEntry('home', 'home'))!.data.stay;
+const list = await rooms();
+---
+<section class="stay section" aria-labelledby="stay-title">
+  <div class="wrap">
+    <div class="stay__head">
+      <div class="head">
+        <p class="label label--place" data-reveal>{s.label}</p>
+        <h2 id="stay-title" class="t-headline" data-reveal style="--i:1">{s.headline}</h2>
+        <p class="t-lead" data-reveal style="--i:2">{s.lead}</p>
+      </div>
+      <a href="/stay/" class="link-arrow" data-reveal style="--i:3">Every room and space <Icon name="arrow-right" /></a>
+    </div>
+    <div class="stay__list" data-reveal-group>
+      {list.map((room, i) => <RoomCard room={room} index={i} />)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .stay__head {
+    display: grid;
+    gap: var(--s-4);
+    justify-items: start;
+    margin-bottom: var(--s-6);
+  }
+
+  .stay__list {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(78%, 1fr);
+    gap: var(--gutter);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-inline: var(--margin);
+    margin-inline: calc(var(--margin) * -1);
+    scroll-padding-inline: var(--margin);
+    padding-bottom: var(--s-3);
+    scrollbar-width: none;
+  }
+
+  .stay__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .stay__list > :global(*) {
+    scroll-snap-align: start;
+  }
+
+  @media (min-width: 768px) {
+    .stay__list {
+      grid-auto-columns: minmax(46%, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .stay__head {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+
+    .stay__list {
+      grid-auto-flow: row;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      overflow: visible;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* A staggered line of three, like tents along the bank */
+    .stay__list > :global(*:nth-child(2)) {
+      margin-top: var(--s-6);
+    }
+
+    .stay__list > :global(*:nth-child(3)) {
+      margin-top: calc(var(--s-6) * 2);
+    }
+  }
+</style>

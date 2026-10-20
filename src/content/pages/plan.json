@@ -1,0 +1,46 @@
+{
+  "seo_title": "Plan your stay | Getting there, seasons and enquiries | Mara River Camp",
+  "seo_description": "Plan a stay at Exploreans Mara River Camp in the Maasai Mara: how to get there from Nairobi, the river month by month, what to expect and how to reach the reservations team.",
+  "label": "Plan your stay",
+  "title": "Plan your stay at the river",
+  "lead": "Book directly with your dates, or write to the reservations team. They know the river through every season and will help you find the right moment.",
+  "image": "/images/places/mara-river-camp/mara-river-camp-nature-escarpment-01.webp",
+  "alt": "The forested Oloololo Escarpment rising above the river valley",
+  "getting_there": [
+    { "label": "By air", "value": "Scheduled light-aircraft flights from Nairobi's Wilson Airport land at Kichwa Tembo Airstrip, about 15 minutes from camp by road." },
+    { "label": "Transfers", "value": "The camp meets you at Kichwa Tembo or Musiara airstrip and drives you to the river." },
+    { "label": "By road", "value": "Around 5 to 6 hours from Nairobi, the last stretch across the reserve." }
+  ],
+  "expect": [
+    { "label": "Setting", "value": "A bend of the Mara River at the foot of the Oloololo Escarpment, in the Maasai Mara, Kenya." },
+    { "label": "Season", "value": "Open all year. The Great Migration reaches the river from July to October." },
+    { "label": "Stay", "value": "River tents and bush tents with private terraces, and a two-bedroom log cabin with a deck over the river." },
+    { "label": "At the table", "value": "Breakfast, lunch and dinner in the garden or on the deck, the Zebra Bar until bedtime and a fire every night." },
+    { "label": "In camp", "value": "Swimming pool and deck, Wi-Fi throughout, a gift shop, laundry and a medical service." },
+    { "label": "Getting there", "value": "About 15 minutes by road from Kichwa Tembo Airstrip, with transfers from Kichwa Tembo or Musiara." }
+  ],
+  "months": [
+    { "month": "January", "title": "Green plains", "body": "The short rains have passed and the plains are green. The Mara's resident wildlife stays close, and the light is clear after the rain.", "migration": false },
+    { "month": "February", "title": "Calving in the south", "body": "Far to the south, the herds are calving in the Serengeti. Here the grass is long and the resident lions, elephants and giraffes have the plains to themselves.", "migration": false },
+    { "month": "March", "title": "Before the long rains", "body": "Warm days and green country. Afternoon storms begin to build over the escarpment toward the end of the month.", "migration": false },
+    { "month": "April", "title": "The long rains", "body": "Dramatic skies and heavy afternoon rain. The bush is thick and green, and the birdlife is at its richest.", "migration": false },
+    { "month": "May", "title": "Green season", "body": "The rains ease and the river runs full. A quiet month on the plains, with the camp at its most unhurried.", "migration": false },
+    { "month": "June", "title": "The plains dry out", "body": "Cool mornings and drying grass. The herds begin their journey north, and the first columns can reach the Mara late in the month.", "migration": false },
+    { "month": "July", "title": "The herds arrive", "body": "Wildebeest and zebra pour onto the plains and gather along the river. The first crossings begin close to camp.", "migration": true },
+    { "month": "August", "title": "Crossing season", "body": "The Great Migration fills the Mara. Crossing days start early, waiting on the bank with your guide until the whole river moves.", "migration": true },
+    { "month": "September", "title": "The river moves", "body": "Herds cross back and forth as the rains fall to the south. Some of the best crossing days of the year.", "migration": true },
+    { "month": "October", "title": "The last crossings", "body": "The herds begin to turn south. The final crossings of the season, and golden afternoons on the plains.", "migration": true },
+    { "month": "November", "title": "The short rains", "body": "Brief, dramatic showers and green shoots. The herds return to the Serengeti and the Mara settles into a quieter rhythm.", "migration": false },
+    { "month": "December", "title": "Quiet plains", "body": "Green grass, clear evenings by the fire and the resident wildlife close to camp. A gentle month to end the year at the river.", "migration": false }
+  ],
+  "season_note": "Crossings follow the herds and the water level, so each crossing day is different. Your guide will read the river with you.",
+  "faqs": [
+    { "question": "Where is Mara River Camp?", "answer": "On a bend of the Mara River at the foot of the Oloololo Escarpment, in Kenya's Maasai Mara. The camp is about 15 minutes by road from Kichwa Tembo Airstrip." },
+    { "question": "How do I get to the camp from Nairobi?", "answer": "Most guests take a scheduled light-aircraft flight from Nairobi's Wilson Airport to Kichwa Tembo Airstrip, where the camp meets them. Transfers also run from Musiara airstrip. By road, the journey takes around 5 to 6 hours." },
+    { "question": "When can I see the Great Migration?", "answer": "From July to October, when the wildebeest and zebra reach the Mara River. Several crossing points lie close to camp. Crossings follow the herds and the water level, so each crossing day is different." },
+    { "question": "What kinds of rooms are there?", "answer": "River tents on the bank of the river for up to three guests, bush tents with more space for up to four, and Simba's Den, a two-bedroom log cabin with a deck over the river for up to six. Each has a private terrace or deck and an en-suite bathroom." },
+    { "question": "Is the camp suited to families?", "answer": "Families are welcome. Simba's Den, the two-bedroom log cabin, sleeps up to six and suits families and small groups travelling together." },
+    { "question": "How are experiences arranged?", "answer": "Tell the reservations team what you would like before you arrive, or speak to the camp team once you are here. Most experiences are arranged with your guide the day before. Balloon flights are best booked ahead." },
+    { "question": "Is there Wi-Fi?", "answer": "Yes, throughout the camp." }
+  ]
+}

@@ -1,0 +1,92 @@
+---
+/** 4. The people: guides and hosts */
+import { getEntry } from 'astro:content';
+import Img from '../Img.astro';
+
+const p = (await getEntry('home', 'home'))!.data.people;
+---
+<section class="people section" aria-labelledby="people-title">
+  <div class="wrap people__grid">
+    <figure class="people__media" data-clip>
+      <Img src={p.image} alt={p.alt} sizes="(min-width: 1024px) 50vw, 100vw" />
+    </figure>
+    <div class="people__text">
+      <div class="head">
+        <p class="label label--place" data-reveal>{p.label}</p>
+        <h2 id="people-title" class="t-headline" data-reveal style="--i:1">{p.headline}</h2>
+        <p class="t-lead" data-read>{p.lead}</p>
+      </div>
+      <ul role="list" class="people__roles" data-reveal-group>
+        {p.roles.map((r) => (
+          <li class="people__role" data-reveal>
+            <h3 class="label">{r.role}{r.name && <span class="people__name"> &middot; {r.name}</span>}</h3>
+            <p>{r.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .people__grid {
+    display: grid;
+    gap: var(--s-5);
+  }
+
+  .people__media {
+    aspect-ratio: 4 / 5;
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .people__media :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: 40% center;
+  }
+
+  .people__text {
+    display: grid;
+    gap: var(--s-5);
+    align-content: center;
+  }
+
+  .people__text .t-lead {
+    color: var(--basalt);
+  }
+
+  .people__roles {
+    display: grid;
+    gap: 0;
+  }
+
+  .people__role {
+    display: grid;
+    gap: var(--s-2);
+    padding-block: var(--s-4);
+    border-top: 1px solid var(--hairline);
+  }
+
+  .people__role:last-child {
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .people__role h3 {
+    color: var(--place);
+  }
+
+  @media (min-width: 1024px) {
+    .people__grid {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      column-gap: var(--s-6);
+    }
+
+    .people__media {
+      aspect-ratio: auto;
+      min-height: 100%;
+      max-height: 860px;
+    }
+  }
+</style>

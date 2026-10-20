@@ -1,0 +1,324 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import BookingForm from '../../components/BookingForm.astro';
+import EnquiryForm from '../../components/EnquiryForm.astro';
+import Seasons from '../../components/Seasons.astro';
+import MapLines from '../../components/MapLines.astro';
+import Icon from '../../components/Icon.astro';
+import { page, site as getSite } from '../../lib/data';
+import { telHref } from '../../lib/format';
+
+const p = await page('plan');
+const site = await getSite();
+const jsonLd = [
+  {
+    '@type': 'FAQPage',
+    mainEntity: (p.faqs ?? []).map((f) => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })),
+  },
+];
+---
+<Base title={p.seo_title ?? p.title} description={p.seo_description ?? p.lead} ogImage={p.image} jsonLd={jsonLd}>
+  <PageHeader label={p.label} title={p.title} lead={p.lead} image={p.image} alt={p.alt} crumbs={[{ label: 'Home', href: '/' }, { label: p.label }]} />
+
+  <section class="section" aria-labelledby="book-direct">
+    <div class="wrap duo">
+      <div class="duo__book card">
+        <p class="label label--place">Book directly</p>
+        <h2 id="book-direct" class="t-headline">Choose your dates</h2>
+        <p class="muted">Live rates and availability from the camp's own booking engine.</p>
+        <BookingForm placement="plan" />
+      </div>
+      <div class="duo__talk">
+        <p class="label label--place">Or plan it with us</p>
+        <h2 class="t-headline">The reservations team</h2>
+        <p class="t-lead muted">They know the river through every season and will help with dates, rooms, transfers and experiences.</p>
+        <dl class="facts">
+          <div><dt>Email</dt><dd><a class="link" href={`mailto:${site.reservations_email}`}>{site.reservations_email}</a></dd></div>
+          <div><dt>Phone</dt><dd><a class="link" href={telHref(site.phone)}>{site.phone}</a></dd></div>
+          <div><dt>Hours</dt><dd>{site.reservations_hours}</dd></div>
+          <div><dt>General</dt><dd><a class="link" href={`mailto:${site.info_email}`}>{site.info_email}</a></dd></div>
+        </dl>
+        <a class="link-arrow" href="#enquire">Send an enquiry <Icon name="arrow-right" /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section on-linen" id="enquire" aria-labelledby="enquire-title">
+    <div class="wrap enquire">
+      <div class="head enquire__head">
+        <p class="label label--place">Enquire</p>
+        <h2 id="enquire-title" class="t-headline">Tell us about your journey</h2>
+        <p class="t-lead">A member of the reservations team will reply within a day, often sooner.</p>
+      </div>
+      <div class="enquire__form card">
+        <EnquiryForm />
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="there-title">
+    <div class="wrap there">
+      <div>
+        <div class="head">
+          <p class="label label--place">Getting there</p>
+          <h2 id="there-title" class="t-headline">Nairobi to the river</h2>
+        </div>
+        <dl class="facts there__facts">
+          {(p.getting_there ?? []).map((f) => <div><dt>{f.label}</dt><dd>{f.value}</dd></div>)}
+        </dl>
+      </div>
+      <a class="there__map on-place" href={site.maps_url} target="_blank" rel="noopener" data-follow="Open map">
+        <MapLines variant="a" tone="light" lantern />
+        <span class="there__pin" aria-hidden="true"><Icon name="map-pin" /></span>
+        <span class="there__where">
+          <span class="label">Mara River Camp</span>
+          <span class="data">{site.address.join(', ')}</span>
+          <span class="data">{Math.abs(site.latitude).toFixed(4)}° S, {site.longitude.toFixed(4)}° E</span>
+        </span>
+        <span class="there__open label">Open in Google Maps <Icon name="arrow-up-right" /></span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section section--tight" aria-labelledby="seasons-title">
+    <div class="wrap">
+      <Seasons headingLevel="h2" title="When to come: the river, month by month" />
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="expect-title">
+    <div class="wrap qa">
+      <div>
+        <div class="head">
+          <h2 id="expect-title" class="t-headline">What to expect</h2>
+        </div>
+        <dl class="facts qa__facts">
+          {(p.expect ?? []).map((f) => <div><dt>{f.label}</dt><dd>{f.value}</dd></div>)}
+        </dl>
+      </div>
+      <div>
+        <div class="head">
+          <p class="label label--place">Questions</p>
+          <h2 class="t-headline">Before you travel</h2>
+        </div>
+        <div class="faq">
+          {(p.faqs ?? []).map((f) => (
+            <details class="faq__item">
+              <summary class="faq__q">{f.question}<span class="faq__icon" aria-hidden="true"><Icon name="plus" /></span></summary>
+              <p class="faq__a">{f.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .duo {
+    display: grid;
+    gap: var(--s-6);
+  }
+
+  .duo__book,
+  .duo__talk {
+    display: grid;
+    gap: var(--s-3);
+    align-content: start;
+    justify-items: start;
+  }
+
+  .duo__book {
+    padding: var(--s-4);
+  }
+
+  .duo__book > :global(form) {
+    width: 100%;
+    margin-top: var(--s-2);
+  }
+
+  .duo__talk .facts {
+    width: 100%;
+    margin-block: var(--s-2);
+  }
+
+  @media (min-width: 1024px) {
+    .duo {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      column-gap: var(--s-6);
+    }
+
+    .duo__book {
+      padding: var(--s-5);
+    }
+  }
+
+  .enquire {
+    display: grid;
+    gap: var(--s-5);
+  }
+
+  .enquire__form {
+    padding: var(--s-4);
+  }
+
+  @media (min-width: 1024px) {
+    .enquire {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+      column-gap: var(--s-6);
+      align-items: start;
+    }
+
+    .enquire__head {
+      position: sticky;
+      top: calc(var(--nav-h-compact) + 40px);
+    }
+
+    .enquire__form {
+      padding: var(--s-5);
+    }
+  }
+
+  .there {
+    display: grid;
+    gap: var(--s-5);
+  }
+
+  .there__facts {
+    margin-top: var(--s-5);
+  }
+
+  .there__map {
+    position: relative;
+    display: grid;
+    align-content: space-between;
+    gap: var(--s-4);
+    min-height: 360px;
+    padding: var(--s-4);
+    border-radius: var(--radius);
+    overflow: hidden;
+    text-decoration: none;
+  }
+
+  /* The place mark stays in Passport contexts; a plain pin marks the map */
+  .there__pin {
+    position: relative;
+    justify-self: center;
+    display: grid;
+    place-items: center;
+    width: 88px;
+    height: 88px;
+    margin-top: var(--s-5);
+    border: 1px solid rgb(250 250 245 / 0.5);
+    border-radius: 50%;
+    color: var(--natural-white);
+  }
+
+  .there__pin :global(svg) {
+    width: 36px;
+    height: 36px;
+  }
+
+  .there__where,
+  .there__open {
+    position: relative;
+  }
+
+  .there__where {
+    display: grid;
+    gap: 4px;
+    text-align: center;
+  }
+
+  .there__open {
+    display: inline-flex;
+    align-items: center;
+    justify-self: center;
+    gap: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid currentColor;
+  }
+
+  .there__open :global(svg) {
+    width: 14px;
+    height: 14px;
+  }
+
+  @media (min-width: 1024px) {
+    .there {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      column-gap: var(--s-6);
+      align-items: center;
+    }
+  }
+
+  .qa {
+    display: grid;
+    gap: var(--s-7) var(--s-6);
+  }
+
+  .qa__facts {
+    margin-top: var(--s-5);
+  }
+
+  .faq {
+    margin-top: var(--s-5);
+    border-top: 1px solid var(--hairline);
+  }
+
+  .faq__item {
+    border-bottom: 1px solid var(--hairline);
+  }
+
+  .faq__q {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--s-3);
+    padding-block: var(--s-3);
+    font-size: 1.1875rem;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .faq__q::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--hairline);
+    border-radius: 50%;
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .faq__icon :global(svg) {
+    width: 14px;
+    height: 14px;
+  }
+
+  .faq__item[open] .faq__icon {
+    transform: rotate(45deg);
+  }
+
+  .faq__a {
+    padding-bottom: var(--s-4);
+    max-width: 40rem;
+    color: var(--stone);
+  }
+
+  @media (min-width: 1024px) {
+    .qa {
+      grid-template-columns: 1fr 1fr;
+    }
+    /* Without a kicker, the headline still lines up with its neighbour's */
+    .qa .head:not(:has(> .label)) {
+      padding-top: calc(var(--text-label) * 1.3 + var(--s-3));
+    }
+  }
+</style>

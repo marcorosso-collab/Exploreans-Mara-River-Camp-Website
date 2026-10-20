@@ -1,0 +1,174 @@
+---
+/** One booking dialog for the whole site, opened by any [data-book-open] control. */
+import BookingForm from './BookingForm.astro';
+import Icon from './Icon.astro';
+import MapLines from './MapLines.astro';
+import { site as getSite } from '../lib/data';
+import { telHref } from '../lib/format';
+
+const site = await getSite();
+---
+<dialog class="book-dialog" id="book" aria-labelledby="book-title" data-book-dialog>
+  <div class="book-dialog__panel">
+    <button type="button" class="book-dialog__close" aria-label="Close" data-book-close><Icon name="x" /></button>
+    <div class="book-dialog__aside on-place">
+      <MapLines variant="b" tone="light" />
+      <p class="label">Book directly</p>
+      <h2 id="book-title" class="t-headline">Your dates at the river</h2>
+      <p class="book-dialog__note">Live rates and availability from the camp's own booking engine, opened in a new tab.</p>
+    </div>
+    <div class="book-dialog__main">
+      <BookingForm placement="dialog" />
+      <hr class="rule" />
+      <div class="book-dialog__help">
+        <p class="label muted">Plan it with the team</p>
+        <p>
+          The reservations team will help with dates, rooms and experiences.<br />
+          <a class="link" href={`mailto:${site.reservations_email}`}>{site.reservations_email}</a> &middot; <a class="link" href={telHref(site.phone)}>{site.phone}</a>
+        </p>
+        <a class="link-arrow" href="/plan-your-stay/#enquire">Send an enquiry <Icon name="arrow-right" /></a>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('[data-book-dialog]');
+  if (dialog) {
+    const open = () => {
+      dialog.showModal();
+      window.__lenis?.stop();
+      requestAnimationFrame(() => dialog.classList.add('is-open'));
+      window.dataLayer?.push({ event: 'booking_open' });
+    };
+    const close = () => {
+      dialog.classList.remove('is-open');
+      window.__lenis?.start();
+      window.setTimeout(() => dialog.close(), 280);
+    };
+    document.querySelectorAll('[data-book-open]').forEach((b) => b.addEventListener('click', open));
+    dialog.querySelector('[data-book-close]')!.addEventListener('click', close);
+    dialog.addEventListener('cancel', (e) => {
+      e.preventDefault();
+      close();
+    });
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) close();
+    });
+  }
+</script>
+
+<style>
+  .book-dialog {
+    width: min(980px, calc(100% - 24px));
+    max-width: none;
+    max-height: calc(100dvh - 24px);
+    padding: 0;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--natural-white);
+    color: var(--basalt);
+    overflow: auto;
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 280ms var(--ease),
+      transform 400ms var(--ease-out);
+  }
+
+  .book-dialog.is-open {
+    opacity: 1;
+    transform: none;
+  }
+
+  .book-dialog::backdrop {
+    background: rgb(43 43 38 / 0.6);
+  }
+
+  .book-dialog__panel {
+    position: relative;
+    display: grid;
+  }
+
+  .book-dialog__aside {
+    position: relative;
+    display: grid;
+    align-content: end;
+    gap: var(--s-3);
+    padding: var(--s-5) var(--s-4) var(--s-4);
+    overflow: hidden;
+  }
+
+  .book-dialog__note {
+    color: color-mix(in srgb, var(--natural-white) 80%, transparent);
+  }
+
+  .book-dialog__main {
+    position: relative;
+    display: grid;
+    gap: var(--s-4);
+    padding: var(--s-5) var(--s-4) var(--s-4);
+  }
+
+  .book-dialog__close {
+    position: absolute;
+    z-index: 2;
+    top: 8px;
+    right: 8px;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    font-size: 22px;
+  }
+
+  .book-dialog__close:hover {
+    background: var(--linen);
+  }
+
+  .book-dialog__help {
+    display: grid;
+    gap: var(--s-2);
+    justify-items: start;
+  }
+
+  @media (max-width: 767px) {
+    .book-dialog__aside {
+      padding-top: var(--s-4);
+    }
+
+    .book-dialog__aside h2 {
+      font-size: var(--text-subhead);
+    }
+
+    .book-dialog__aside .book-dialog__note {
+      display: none;
+    }
+
+    .book-dialog__close {
+      color: var(--natural-white);
+    }
+
+    .book-dialog__close:hover {
+      background: rgb(250 250 245 / 0.12);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .book-dialog__panel {
+      grid-template-columns: 5fr 7fr;
+    }
+
+    .book-dialog__aside {
+      padding: var(--s-5);
+    }
+
+    .book-dialog__main {
+      padding: var(--s-6) var(--s-5) var(--s-5);
+    }
+  }
+</style>

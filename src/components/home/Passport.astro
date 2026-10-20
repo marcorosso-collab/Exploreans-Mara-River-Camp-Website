@@ -1,0 +1,47 @@
+---
+/** 7. The Passport section: the place mark and the stamps to collect */
+import { getEntry } from 'astro:content';
+import PassportSpread from '../PassportSpread.astro';
+import Icon from '../Icon.astro';
+
+const p = (await getEntry('home', 'home'))!.data.passport;
+---
+<section class="pass section" id="passport" aria-labelledby="pass-title">
+  <div class="wrap pass__grid">
+    <div class="head">
+      <p class="label label--place" data-reveal>{p.label} <span class="soon">Soon</span></p>
+      <h2 id="pass-title" class="t-headline" data-reveal style="--i:1">{p.headline}</h2>
+      <p class="t-lead" data-reveal style="--i:2">{p.lead}</p>
+      <div class="pass__actions" data-reveal style="--i:3">
+        <a href="/passport/" class="btn btn--outline">Turn the pages <Icon name="arrow-right" class="arrow" /></a>
+        <a href="/plan-your-stay/#enquire" class="link-arrow" data-pick-some hidden>Plan these days with us <Icon name="arrow-right" /></a>
+      </div>
+    </div>
+    <div data-reveal style="--i:2">
+      <PassportSpread />
+    </div>
+  </div>
+</section>
+
+<style>
+  .pass__grid {
+    display: grid;
+    gap: var(--s-5);
+  }
+
+  .pass__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-3) var(--s-4);
+    margin-top: var(--s-3);
+  }
+
+  @media (min-width: 1200px) {
+    .pass__grid {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      column-gap: var(--s-6);
+      align-items: center;
+    }
+  }
+</style>

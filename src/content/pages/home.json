@@ -1,0 +1,141 @@
+{
+  "seo_title": "Mara River Camp | A tented camp in the Maasai Mara, Kenya | Exploreans",
+  "seo_description": "A tented camp on a quiet bend of the Mara River, at the foot of the Oloololo Escarpment. Walk with Maasai guides at first light, follow the Great Migration from July to October and sleep beside the river.",
+  "hero": {
+    "kicker": "Maasai Mara, Kenya",
+    "title": "A tented camp on a quiet bend of the Mara River",
+    "video": "/video/mara-river-camp-hero-1920.mp4",
+    "video_mobile": "/video/mara-river-camp-hero-720sq.mp4",
+    "poster": "/video/mara-river-camp-hero-poster.webp",
+    "alt": "The Mara River from above, elephants beside a safari vehicle, a table laid on the plains and a giraffe at the edge of the trees"
+  },
+  "story": {
+    "label": "What you will live",
+    "headline": "The day begins on foot, with the river still in mist",
+    "text": "Mara River Camp sits on {0}, at the foot of {1}. {2} pass through the camp itself, and from July to October {3} gathers at crossing points close by. {4} read the grass, the tracks and the birds, and share them at walking pace. Evenings end by the open fire, as the stars come out over the river.",
+    "targets": [
+      {
+        "text": "a quiet bend of the Mara River",
+        "image": "/images/places/mara-river-camp/mara-river-camp-nature-river-bend-aerial-01-960.webp",
+        "alt": "The Mara River curving between grassland and trees, seen from above"
+      },
+      {
+        "text": "the Oloololo Escarpment",
+        "image": "/images/places/mara-river-camp/mara-river-camp-nature-escarpment-01-960.webp",
+        "alt": "The forested Oloololo Escarpment rising above the river valley"
+      },
+      {
+        "text": "Elephants, giraffes and monkeys",
+        "image": "/images/places/mara-river-camp/mara-river-camp-nature-giraffe-01-960.webp",
+        "alt": "A giraffe standing at the edge of the trees near the camp"
+      },
+      {
+        "text": "the Great Migration",
+        "image": "/images/places/mara-river-camp/mara-river-camp-nature-mara-river-01-960.webp",
+        "alt": "The wide brown water of the Mara River between wooded banks"
+      },
+      {
+        "text": "Maasai guides from the camp",
+        "image": "/images/places/mara-river-camp/mara-river-camp-adventure-maasai-guides-at-first-light-01-960.webp",
+        "alt": "Maasai guides in red shukas looking out over the river at first light"
+      }
+    ]
+  },
+  "day": {
+    "label": "A day at the camp",
+    "headline": "From first light to the fire",
+    "lead": "Every experience here is led by someone who knows the place by heart. This is how a day can unfold.",
+    "moments": [
+      {
+        "time": "First light",
+        "experience": "on-foot-at-first-light",
+        "body": "The grass is still wet and the river is still in mist. Your guide kneels by a fresh track and reads the night that just passed, animal by animal.",
+        "image": "/images/places/mara-river-camp/mara-river-camp-adventure-maasai-guides-at-first-light-01.webp",
+        "alt": "Maasai guides in red shukas looking out over the river at first light"
+      },
+      {
+        "time": "Morning",
+        "experience": "the-morning-game-drive",
+        "body": "The vehicle stops at the edge of the plains and the engine goes quiet. Elephants cross ahead, close enough to hear the grass tear.",
+        "image": "/images/places/mara-river-camp/mara-river-camp-adventure-elephants-game-drive-01.webp",
+        "alt": "Elephants grazing beside a safari vehicle on the open plains"
+      },
+      {
+        "time": "Breakfast",
+        "experience": "a-table-on-the-plains",
+        "body": "A table appears under open sky, laid with white linen and a meal from the camp kitchen. Coffee, warm bread and fresh fruit, with the plains all around.",
+        "image": "/images/places/mara-river-camp/mara-river-camp-taste-bush-breakfast-01.webp",
+        "alt": "The camp team laying a table with a red cloth on the plains beside the safari vehicles"
+      },
+      {
+        "time": "Midday",
+        "experience": "an-afternoon-by-the-pool",
+        "body": "The heat settles over the plains and the camp goes quiet. A book, a swim and a cold drink brought to the sunbed, with the trees moving overhead.",
+        "image": "/images/places/mara-river-camp/mara-river-camp-wellness-pool-from-above-01.webp",
+        "alt": "The camp swimming pool surrounded by sunbeds and trees, seen from above"
+      },
+      {
+        "time": "Late afternoon",
+        "experience": "sundowner-on-the-plains",
+        "body": "A cork is drawn, the plains turn amber and the first glass arrives as the sun drops toward the horizon.",
+        "image": "/images/places/mara-river-camp/mara-river-camp-taste-sundowner-pour-01.webp",
+        "alt": "Sparkling wine poured into a glass against the low sun"
+      },
+      {
+        "time": "After dark",
+        "experience": "fireside-under-the-stars",
+        "body": "The fire is lit on the lawn above the river. Conversation slows as the stars come out, and the night fills with the sounds of the Mara."
+      }
+    ]
+  },
+  "families": {
+    "headline": "Five ways to explore"
+  },
+  "people": {
+    "label": "The people",
+    "headline": "Walking with the people who know it best",
+    "lead": "The welcome begins at the gate, with Maasai hosts singing guests in from the vehicles. From then on, every walk, drive and table is led by someone from the camp.",
+    "image": "/images/places/mara-river-camp/mara-river-camp-culture-maasai-welcome-01.webp",
+    "alt": "Maasai hosts in red shukas singing and jumping to welcome guests at the camp entrance",
+    "roles": [
+      {
+        "role": "Maasai guides",
+        "body": "They lead the walks and the village visits. They grew up on this land and read the grass, the tracks and the birds the way most of us read a page."
+      },
+      {
+        "role": "Guides and drivers",
+        "body": "They lead the game drives, morning, afternoon or the whole day, and know where the herds are likely to be before the vehicle leaves camp."
+      },
+      {
+        "role": "Camp hosts and kitchen team",
+        "body": "They lay the tables on the plains, keep the Zebra Bar open until bedtime and light the fire on the lawn every night."
+      }
+    ]
+  },
+  "stay": {
+    "label": "Rooms and spaces",
+    "headline": "Canvas, timber and the sound of the river",
+    "lead": "River tents along the bank, bush tents with room to spread out and a two-bedroom log cabin with a deck over the water."
+  },
+  "closer": {
+    "label": "The place, specifically",
+    "headline": "Look closer at the river",
+    "lead": "From the air, the Mara River below camp is a ribbon of brown water. Look again and there is a pod of hippos, resting in the shallows.",
+    "image": "/images/places/mara-river-camp/mara-river-camp-nature-hippos-from-above-01.webp",
+    "alt": "A pod of hippos resting in the brown water of the Mara River, seen from above",
+    "hint": "Move over the photograph to look closer"
+  },
+  "expect": {
+    "headline": "What to expect"
+  },
+  "passport": {
+    "label": "The Exploreans Passport",
+    "headline": "Your page at Mara River Camp",
+    "lead": "Every guest will receive an Exploreans Passport, stamped by the guide who leads each experience. Mark the experiences you would like to collect and we will plan your days around them."
+  },
+  "plan": {
+    "label": "Plan your journey",
+    "headline": "The river is waiting",
+    "lead": "Choose your dates to see rates and book directly, or write to the reservations team and they will help you find the right moment."
+  }
+}

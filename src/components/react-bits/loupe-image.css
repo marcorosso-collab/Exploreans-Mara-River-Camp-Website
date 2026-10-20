@@ -1,0 +1,13 @@
+.loupe-image {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  user-select: none;
+  -webkit-user-select: none;
+  outline: none;
+}
+
+.loupe-image:focus-visible {
+  outline: 2px solid color-mix(in oklch, currentColor 45%, transparent);
+  outline-offset: 4px;
+}

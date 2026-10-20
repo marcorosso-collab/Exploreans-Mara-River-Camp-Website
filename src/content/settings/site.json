@@ -1,0 +1,30 @@
+{
+  "property_name": "Mara River Camp",
+  "region": "Maasai Mara, Kenya",
+  "default_description": "A tented camp on a quiet bend of the Mara River, at the foot of the Oloololo Escarpment in Kenya's Maasai Mara. Guided walks with Maasai guides, game drives, river tents and a log cabin over the water.",
+  "og_image": "/images/places/mara-river-camp/mara-river-camp-nature-river-bend-aerial-01.webp",
+  "booking_url": "https://www.simplebooking.it/ibe2/hotel/11535?lang=EN&cur=USD",
+  "reservations_email": "reservations.exploreansmara@planhotel.com",
+  "info_email": "info.exploreansmara@planhotel.com",
+  "phone": "+254 (0)100 363608",
+  "reservations_hours": "Monday to Friday, 8am to 6pm East Africa Time",
+  "address": ["Maasai Mara National Reserve", "Narok County, Kenya"],
+  "maps_url": "https://maps.app.goo.gl/gS3XVrnozeC9pVcS7",
+  "latitude": -1.5065,
+  "longitude": 35.143,
+  "nav": [
+    { "label": "Stay", "href": "/stay/" },
+    { "label": "Experiences", "href": "/experiences/" },
+    { "label": "Passport", "href": "/passport/" },
+    { "label": "Stories", "href": "/stories/" },
+    { "label": "Plan your stay", "href": "/plan-your-stay/" }
+  ],
+  "social": [],
+  "group_line": "Exploreans is part of Planhotel Hospitality Group.",
+  "newsletter": {
+    "headline": "A note from the river.",
+    "body": "Occasional letters from the camp: when the herds reach the river, what the guides saw this week, and one invitation.",
+    "button": "Subscribe",
+    "success": "Thank you. Your first letter arrives with the next story from the river."
+  }
+}

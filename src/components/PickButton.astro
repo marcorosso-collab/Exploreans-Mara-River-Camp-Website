@@ -1,0 +1,119 @@
+---
+/**
+ * Mark an experience for your stay: the dashed ring of an empty Passport stamp that inks
+ * in when chosen. Wired by scripts/passport.ts through [data-pick].
+ */
+import Stamp from './Stamp.astro';
+import type { StampId } from '../lib/stamps';
+
+interface Props {
+  slug: string;
+  name: string;
+  stamp?: string;
+  size?: 'sm' | 'md';
+  class?: string;
+}
+
+const { slug, name, stamp, size = 'md', class: className } = Astro.props;
+---
+<button
+  type="button"
+  class:list={['pick', `pick--${size}`, className]}
+  aria-pressed="false"
+  data-pick={slug}
+  data-pick-name={name}
+>
+  <span class="pick__ring" aria-hidden="true">
+    {stamp && <span class="pick__ink"><Stamp id={stamp as StampId} size={size === 'sm' ? 30 : 38} decorative /></span>}
+    {!stamp && <span class="pick__tick"></span>}
+  </span>
+  <span class="pick__text">
+    <span class="pick__off">Mark for my stay</span>
+    <span class="pick__on">Marked for my stay</span>
+  </span>
+  <span class="visually-hidden">: {name}</span>
+</button>
+
+<style>
+  .pick {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    font-family: var(--font-label);
+    font-size: var(--text-label);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: left;
+  }
+
+  .pick__ring {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1.5px dashed color-mix(in srgb, currentColor 55%, transparent);
+    transition: border-color var(--dur) var(--ease);
+  }
+
+  .pick--sm .pick__ring {
+    width: 36px;
+    height: 36px;
+  }
+
+  .pick__ink {
+    display: grid;
+    color: var(--place);
+    opacity: 0;
+    transform: scale(1.35) rotate(-8deg);
+    transition:
+      opacity 260ms var(--ease),
+      transform 420ms var(--ease-out);
+  }
+
+  .pick__tick {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--place);
+    opacity: 0;
+    transform: scale(0.4);
+    transition: opacity 260ms var(--ease), transform 420ms var(--ease-out);
+  }
+
+  .pick:hover .pick__ring {
+    border-color: currentColor;
+  }
+
+  .pick[aria-pressed='true'] .pick__ring {
+    border-color: transparent;
+  }
+
+  .pick[aria-pressed='true'] .pick__ink,
+  .pick[aria-pressed='true'] .pick__tick {
+    opacity: 1;
+    transform: none;
+  }
+
+  .pick[aria-pressed='true'] .pick__ring:has(.pick__tick) {
+    border: 1.5px solid var(--place);
+  }
+
+  .pick__on {
+    display: none;
+  }
+
+  .pick[aria-pressed='true'] .pick__on {
+    display: inline;
+  }
+
+  .pick[aria-pressed='true'] .pick__off {
+    display: none;
+  }
+</style>

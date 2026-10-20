@@ -1,384 +1,181 @@
 ---
+import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import { getCollection } from 'astro:content';
+import PageHeader from '../../components/PageHeader.astro';
+import ExperienceCard from '../../components/ExperienceCard.astro';
+import PickButton from '../../components/PickButton.astro';
+import Stamp from '../../components/Stamp.astro';
+import Icon from '../../components/Icon.astro';
+import { experiences, direction } from '../../lib/data';
+import { FAMILY_NAMES, stampLabel, type StampId } from '../../lib/stamps';
 
-// Generate static paths for all experiences
 export async function getStaticPaths() {
-  const experiences = await getCollection('experiences');
-  return experiences.map((exp) => ({
-    params: { slug: exp.slug },
-    props: { exp },
+  const list = await experiences();
+  return list.map((experience) => ({
+    params: { slug: experience.id },
+    props: {
+      experience,
+      more: [
+        ...list.filter((e) => e.id !== experience.id && e.data.family === experience.data.family),
+        ...list.filter((e) => e.id !== experience.id && e.data.family !== experience.data.family),
+      ].slice(0, 3),
+    },
   }));
 }
 
-const { exp } = Astro.props;
-const { Content } = await exp.render();
-
-// SEO fields - use CMS values with sensible fallbacks
-const seoTitle = exp.data.seo_title || `${exp.data.title} | Exploreans Mara River Camp — Maasai Mara Safari`;
-const seoDescription = exp.data.seo_description || `${exp.data.title} at Exploreans Mara River Camp — ${exp.data.description} Experience authentic safari adventures in Kenya's Maasai Mara.`;
-
-// Support up to 4 images (image, image2, image3, image4)
-const images = [
-  exp.data.image,
-  exp.data.image2,
-  exp.data.image3,
-  exp.data.image4,
-].filter(Boolean);
-
-const hasCarousel = images.length > 1;
+const { experience, more } = Astro.props;
+const e = experience.data;
+const { Content } = await render(experience);
+const siteUrl = Astro.site!.toString().replace(/\/$/, '');
+const jsonLd = [
+  {
+    '@type': 'TouristAttraction',
+    name: e.name,
+    description: e.live,
+    ...(e.image ? { image: `${siteUrl}${e.image}` } : {}),
+    isAccessibleForFree: false,
+    containedInPlace: { '@id': `${siteUrl}/#lodging` },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${siteUrl}/` },
+      { '@type': 'ListItem', position: 2, name: 'Experiences', item: `${siteUrl}/experiences/` },
+      { '@type': 'ListItem', position: 3, name: e.name, item: `${siteUrl}/experiences/${experience.id}/` },
+    ],
+  },
+];
 ---
+<Base
+  title={e.seo_title ?? `${e.name} | Mara River Camp`}
+  description={e.seo_description ?? e.live}
+  ogImage={e.image}
+  navTheme={e.image ? 'overlay' : 'solid'}
+  jsonLd={jsonLd}
+>
+  <PageHeader
+    label={`${FAMILY_NAMES[e.family]} · ${direction(e.family)}`}
+    title={e.name}
+    lead={e.live}
+    image={e.image}
+    alt={e.alt}
+    crumbs={[{ label: 'Home', href: '/' }, { label: 'Experiences', href: '/experiences/' }, { label: e.name }]}
+  />
 
-<Base title={seoTitle} description={seoDescription} ogImage={exp.data.og_image} navDark={true}>
-  <article class="experience-detail">
-    <div class="topo-bg topo-bg--light topo-bg--opacity-10"></div>
-    <div class="container">
-      <!-- Back Link -->
-      <a href="/#experiences" class="back-link">← Back to Experiences</a>
-      
-      <!-- Image Carousel / Gallery -->
-      <div class="image-gallery" data-carousel={hasCarousel}>
-        {hasCarousel ? (
-          <>
-            <div class="carousel-container">
-              {images.map((img, index) => (
-                <div class={`carousel-slide ${index === 0 ? 'active' : ''}`} data-slide={index}>
-                  <img src={img} alt={exp.data.imageAlt || ''} />
-                </div>
-              ))}
-            </div>
-            <button class="carousel-prev" aria-label="Previous image">←</button>
-            <button class="carousel-next" aria-label="Next image">→</button>
-            <div class="carousel-dots">
-              {images.map((_, index) => (
-                <button class={`dot ${index === 0 ? 'active' : ''}`} data-slide={index} aria-label={`Go to image ${index + 1}`}></button>
-              ))}
-            </div>
-          </>
-        ) : (
-          <div class="single-image">
-            {images[0] ? (
-              <img src={images[0]} alt={exp.data.imageAlt || ''} />
-            ) : (
-              <div class="img-placeholder">{exp.data.title}</div>
-            )}
-          </div>
-        )}
-      </div>
-
-      <!-- Experience Header -->
-      <header class="exp-header">
-        <div class="exp-meta">
-          <span class="exp-label">{exp.data.label}</span>
-          {exp.data.duration && <span class="exp-duration">{exp.data.duration}</span>}
-        </div>
-        <h1 class="exp-title">{exp.data.title}</h1>
-        <p class="exp-description">{exp.data.description}</p>
-      </header>
-
-      <!-- Experience Body Content -->
-      <div class="exp-body">
+  <section class="section">
+    <div class="wrap xd">
+      <div class="prose xd__story" data-reveal>
         <Content />
       </div>
-
-      <!-- CTA Button - Linked to CMS URL -->
-      {exp.data.ctaUrl && (
-        <div class="exp-cta">
-          <a href={exp.data.ctaUrl} class="btn-primary" target="_blank" rel="noopener">
-            {exp.data.ctaText || 'Book This Experience'}
-          </a>
+      <aside class="xd__card on-linen" aria-label="The experience at a glance">
+        <div class="xd__top">
+          <p class="label label--place">{FAMILY_NAMES[e.family]} &middot; Mara River Camp</p>
+          {e.stamp && <Stamp id={e.stamp as StampId} size={56} class="xd__stamp" label={`${stampLabel(e.stamp as StampId)} stamp`} />}
         </div>
-      )}
+        <p class="t-subhead">{e.name}</p>
+        <dl class="xd__fields">
+          <div><dt class="label muted">Led by</dt><dd>{e.led_by}</dd></div>
+          <div><dt class="label muted">When and how long</dt><dd>{e.when}</dd></div>
+          <div><dt class="label muted">What you will live</dt><dd class="xd__live">{e.live}</dd></div>
+          <div><dt class="label muted">Good to know</dt><dd>{e.good_to_know}</dd></div>
+          {e.stamp && <div><dt class="label muted">Stamp</dt><dd>{stampLabel(e.stamp as StampId)}, in your Exploreans Passport</dd></div>}
+        </dl>
+        <PickButton slug={experience.id} name={e.name} stamp={e.stamp} />
+        <div class="xd__actions">
+          <a href={`/plan-your-stay/?experience=${experience.id}#enquire`} class="btn btn--place">Plan it into your stay <Icon name="arrow-right" class="arrow" /></a>
+        </div>
+      </aside>
     </div>
-  </article>
-  
-  <!-- Experience Schema -->
-  <script type="application/ld+json" set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "TouristAttraction",
-    "name": `${exp.data.title} — Exploreans Mara River Camp`,
-    "description": exp.data.description,
-    "image": exp.data.image ? `https://mara.exploreans.com${exp.data.image}` : undefined,
-    "isPartOf": {
-      "@type": "Hotel",
-      "name": "Exploreans Mara River Camp",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Maasai Mara",
-        "addressRegion": "Narok County",
-        "addressCountry": "KE"
-      }
-    }
-  })} />
+  </section>
+
+  <section class="section" aria-labelledby="more-title">
+    <div class="wrap">
+      <div class="more__head">
+        <h2 id="more-title" class="t-headline">More from the camp</h2>
+        <a class="link-arrow" href="/experiences/">Every experience <Icon name="arrow-right" /></a>
+      </div>
+      <div class="more">
+        {more.map((m) => <ExperienceCard experience={m} variant="compact" />)}
+      </div>
+    </div>
+  </section>
 </Base>
 
-<script>
-  // Carousel functionality
-  document.addEventListener('DOMContentLoaded', () => {
-    const gallery = document.querySelector('.image-gallery[data-carousel="true"]');
-    if (!gallery) return;
-
-    const slides = gallery.querySelectorAll('.carousel-slide');
-    const dots = gallery.querySelectorAll('.carousel-dots .dot');
-    const prevBtn = gallery.querySelector('.carousel-prev');
-    const nextBtn = gallery.querySelector('.carousel-next');
-    let currentSlide = 0;
-
-    function showSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.toggle('active', i === index);
-      });
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-      });
-      currentSlide = index;
-    }
-
-    prevBtn?.addEventListener('click', () => {
-      const newIndex = currentSlide === 0 ? slides.length - 1 : currentSlide - 1;
-      showSlide(newIndex);
-    });
-
-    nextBtn?.addEventListener('click', () => {
-      const newIndex = currentSlide === slides.length - 1 ? 0 : currentSlide + 1;
-      showSlide(newIndex);
-    });
-
-    dots.forEach((dot, index) => {
-      dot.addEventListener('click', () => showSlide(index));
-    });
-  });
-</script>
-
 <style>
-  .experience-detail {
-    padding: 160px 0 80px;
-    background: var(--natural-white);
-    min-height: 100vh;
-    position: relative;
-    overflow: hidden;
-  }
-  .experience-detail > .container {
-    position: relative;
-    z-index: 1;
+  .xd {
+    display: grid;
+    gap: var(--s-6);
   }
 
-  .back-link {
-    font-family: var(--font-functional);
-    display: inline-block;
-    margin-top: 40px;
-    margin-bottom: 32px;
-    font-size: 12px;
-    font-weight: 400;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--bush-shadow);
-    transition: color 0.2s;
-  }
-  .back-link:hover {
-    color: var(--forest-green);
+  .xd__card {
+    display: grid;
+    gap: var(--s-3);
+    align-content: start;
+    padding: var(--s-4);
+    border-radius: var(--radius);
   }
 
-  /* Image Gallery / Carousel */
-  .image-gallery {
-    position: relative;
-    margin-bottom: 48px;
-    border-radius: 4px;
-    overflow: hidden;
-  }
-
-  .single-image img,
-  .carousel-slide img {
-    width: 100%;
-    height: 500px;
-    object-fit: cover;
-  }
-
-  /* Carousel Styles */
-  .carousel-container {
-    position: relative;
-    height: 500px;
-  }
-
-  .carousel-slide {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-  }
-
-  .carousel-slide.active {
-    opacity: 1;
-  }
-
-  .carousel-prev,
-  .carousel-next {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 48px;
-    height: 48px;
-    background: rgba(255,255,255,0.9);
-    border: none;
-    border-radius: 50%;
-    font-size: 18px;
-    color: var(--mara-charcoal);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 10;
-  }
-
-  .carousel-prev:hover,
-  .carousel-next:hover {
-    background: var(--white);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  }
-
-  .carousel-prev { left: 20px; }
-  .carousel-next { right: 20px; }
-
-  .carousel-dots {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
+  .xd__top {
     display: flex;
-    gap: 10px;
-    z-index: 10;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--s-3);
   }
 
-  .carousel-dots .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.5);
-    border: none;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  .xd__top :global(.xd__stamp) {
+    color: var(--place);
   }
 
-  .carousel-dots .dot.active {
-    background: var(--white);
-    transform: scale(1.2);
+  .xd__fields {
+    display: grid;
+    gap: var(--s-3);
+    margin: 0 0 var(--s-2);
   }
 
-  /* Experience Header */
-  .exp-header {
-    margin-bottom: 48px;
+  .xd__fields dt {
+    font-size: 0.75rem;
+    margin-bottom: 2px;
   }
 
-  .exp-meta {
-    font-family: var(--font-functional);
+  .xd__fields dd {
+    margin: 0;
+  }
+
+  .xd__live {
+    font-style: italic;
+  }
+
+  .xd__actions {
+    padding-top: var(--s-3);
+    border-top: 1px solid color-mix(in srgb, var(--basalt) 14%, transparent);
+  }
+
+  .more__head {
     display: flex;
-    gap: 16px;
-    margin-bottom: 16px;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: end;
+    gap: var(--s-3);
+    margin-bottom: var(--s-5);
   }
 
-  .exp-label {
-    color: var(--sage);
-    font-weight: 500;
+  .more {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    gap: var(--gutter);
   }
 
-  .exp-duration {
-    color: var(--bush-shadow);
-  }
-
-  .exp-title {
-    font-family: var(--font-display);
-    font-size: clamp(32px, 4vw, 48px);
-    font-weight: 700;
-    color: var(--deep-moss);
-    margin-bottom: 16px;
-  }
-
-  .exp-description {
-    font-size: 18px;
-    line-height: 1.65;
-    color: var(--bush-shadow);
-    max-width: 600px;
-  }
-
-  /* Experience Body */
-  .exp-body {
-    max-width: 720px;
-    margin-bottom: 64px;
-    font-size: 16px;
-    line-height: 1.65;
-    color: var(--bush-shadow);
-  }
-
-  .exp-body :global(h2) {
-    font-family: var(--font-display);
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--deep-moss);
-    margin: 48px 0 24px;
-  }
-
-  .exp-body :global(h3) {
-    font-family: var(--font-display);
-    font-size: 22px;
-    font-weight: 400;
-    color: var(--deep-moss);
-    margin: 36px 0 16px;
-  }
-
-  .exp-body :global(p) {
-    margin-bottom: 20px;
-  }
-
-  .exp-body :global(strong) {
-    color: var(--deep-moss);
-    font-weight: 700;
-  }
-
-  /* CTA */
-  .exp-cta {
-    text-align: center;
-    padding-top: 32px;
-    border-top: 1px solid rgba(0,0,0,0.08);
-  }
-
-  .btn-primary {
-    font-family: var(--font-functional);
-    display: inline-block;
-    padding: 16px 32px;
-    background: var(--forest-green);
-    color: var(--natural-white);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    transition: background 0.3s ease;
-  }
-
-  .btn-primary:hover {
-    background: var(--deep-moss);
-  }
-
-  /* Responsive */
-  @media (max-width: 768px) {
-    .experience-detail {
-      padding: 80px 0 60px;
+  @media (min-width: 1024px) {
+    .xd {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+      column-gap: var(--s-6);
+      align-items: start;
     }
 
-    .single-image img,
-    .carousel-container {
-      height: 300px;
-    }
-
-    .carousel-prev,
-    .carousel-next {
-      width: 40px;
-      height: 40px;
-      font-size: 16px;
+    .xd__card {
+      position: sticky;
+      top: calc(var(--nav-h-compact) + 24px);
+      padding: var(--s-5);
     }
   }
 </style>

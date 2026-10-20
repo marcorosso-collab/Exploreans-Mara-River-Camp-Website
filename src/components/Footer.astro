@@ -1,0 +1,266 @@
+---
+import Lockup from './Lockup.astro';
+import MapLines from './MapLines.astro';
+import Icon from './Icon.astro';
+import { site as getSite } from '../lib/data';
+import { telHref } from '../lib/format';
+
+const site = await getSite();
+const year = new Date().getFullYear();
+// Every Exploreans, listed together: the one place where type colours sit side by side
+const places = [
+  { name: 'Mara River Camp', region: 'Maasai Mara, Kenya', href: '/', kind: 'safari' },
+  { name: 'Watamu Beach Club & Villas', region: 'Watamu, Kenya', href: 'https://watamu.exploreans.com/', kind: 'lagoon' },
+];
+---
+<footer class="footer on-basalt">
+  <MapLines variant="b" tone="light" lantern reveal />
+
+  <div class="wrap footer__inner">
+    <section class="footer__letter" aria-labelledby="newsletter-title">
+      <h2 id="newsletter-title" class="t-headline" data-reveal>{site.newsletter.headline}</h2>
+      <div class="footer__form-wrap" data-reveal style="--i:1">
+        <p class="t-lead muted">{site.newsletter.body}</p>
+        <form
+          class="footer__form"
+          name="newsletter"
+          method="POST"
+          action="/thank-you/"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          data-ajax-form
+        >
+          <input type="hidden" name="form-name" value="newsletter" />
+          <p class="visually-hidden"><label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label></p>
+          <label class="label footer__label" for="newsletter-email">Email address</label>
+          <div class="footer__field">
+            <input id="newsletter-email" type="email" name="email" required autocomplete="email" inputmode="email" />
+            <button type="submit" class="btn btn--light">
+              {site.newsletter.button}
+              <Icon name="arrow-right" class="arrow" />
+            </button>
+          </div>
+          <p class="form-status footer__status" role="status" data-form-status data-success={site.newsletter.success}></p>
+        </form>
+      </div>
+    </section>
+
+    <div class="footer__sign">
+      <Lockup reversed class="footer__lockup" />
+      <p class="footer__master">Explore beyond. Explore within.</p>
+    </div>
+
+    <div class="footer__cols">
+      <nav aria-label="The camp">
+        <h2 class="label accent">The camp</h2>
+        <ul role="list">
+          {site.nav.map((item) => <li><a class="link" href={item.href}>{item.label}</a></li>)}
+          <li><button type="button" class="link footer__book" data-book-open>Book your stay</button></li>
+        </ul>
+      </nav>
+      <div>
+        <h2 class="label accent">Reservations</h2>
+        <ul role="list">
+          <li><a class="link" href={`mailto:${site.reservations_email}`}>{site.reservations_email}</a></li>
+          <li><a class="link" href={telHref(site.phone)}>{site.phone}</a></li>
+          <li class="muted">{site.reservations_hours}</li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="label accent">Find us</h2>
+        <address>
+          <ul role="list">
+            {site.address.map((line) => <li>{line}</li>)}
+            <li><a class="link" href={site.maps_url} rel="noopener" target="_blank">Open in Google Maps</a></li>
+            {site.social.map((s) => <li><a class="link" href={s.href} rel="noopener" target="_blank">{s.label}</a></li>)}
+          </ul>
+        </address>
+      </div>
+      <nav aria-label="Exploreans places">
+        <h2 class="label accent">Exploreans</h2>
+        <ul role="list">
+          {places.map((p) => (
+            <li data-place={p.kind}>
+              <a class="footer__place" href={p.href}>
+                <span class="footer__bar" aria-hidden="true"></span>
+                <span><span class="link">{p.name}</span><span class="footer__region muted">{p.region}</span></span>
+              </a>
+            </li>
+          ))}
+          <li><a class="link" href="https://exploreans.com/">exploreans.com</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer__base">
+      <p class="data muted">{site.group_line}</p>
+      <p class="data muted">&copy; {year} Exploreans</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  import '../scripts/forms';
+</script>
+
+<style>
+  .footer {
+    position: relative;
+    overflow: hidden;
+    padding-top: clamp(var(--s-6), 9vw, 140px);
+  }
+
+  .footer__inner {
+    position: relative;
+    display: grid;
+    gap: var(--s-6);
+  }
+
+  .footer__letter {
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  .footer__form-wrap {
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  .footer__form {
+    display: grid;
+    gap: 8px;
+  }
+
+  .footer__label {
+    color: var(--warm-ochre);
+  }
+
+  .footer__field {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--s-2);
+  }
+
+  .footer__field input {
+    flex: 1 1 240px;
+    min-height: 52px;
+    padding: 12px 14px;
+    border: 1px solid rgb(250 250 245 / 0.32);
+    border-radius: var(--radius);
+    background: transparent;
+    color: var(--natural-white);
+    font-size: 1.0625rem;
+  }
+
+  .footer__field input:focus-visible {
+    outline: none;
+    border-color: var(--natural-white);
+    box-shadow: 0 0 0 1px var(--natural-white);
+  }
+
+  .footer__field .btn {
+    min-height: 52px;
+  }
+
+  .footer__status {
+    color: var(--warm-ochre);
+  }
+
+  .footer__sign {
+    display: grid;
+    justify-items: start;
+    gap: var(--s-5);
+    padding-top: var(--s-6);
+    border-top: 1px solid rgb(250 250 245 / 0.16);
+  }
+
+  .footer__sign :global(.footer__lockup) {
+    --w: clamp(180px, 22vw, 260px);
+  }
+
+  .footer__master {
+    font-size: var(--text-subhead);
+    font-style: italic;
+    color: var(--warm-ochre);
+  }
+
+  .footer__cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: var(--s-5) var(--gutter);
+  }
+
+  .footer__cols h2 {
+    margin-bottom: var(--s-3);
+  }
+
+  .footer__cols ul {
+    display: grid;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer__cols address {
+    font-style: normal;
+  }
+
+  .footer__cols .link {
+    word-break: break-word;
+  }
+
+  .footer__book {
+    padding: 0 0 2px;
+    border: 0;
+    background-color: transparent;
+    font-size: inherit;
+    text-align: left;
+  }
+
+  .footer__place {
+    display: flex;
+    gap: 12px;
+    text-decoration: none;
+  }
+
+  .footer__bar {
+    flex: none;
+    width: 4px;
+    border-radius: 2px;
+    background: var(--place);
+    box-shadow: 0 0 0 1px rgb(250 250 245 / 0.18);
+  }
+
+  .footer__region {
+    display: block;
+    font-family: var(--font-label);
+    font-size: 0.875rem;
+  }
+
+  .footer__base {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--s-2);
+    padding-block: var(--s-4) var(--s-5);
+    border-top: 1px solid rgb(250 250 245 / 0.16);
+  }
+
+  @media (min-width: 1024px) {
+    .footer__letter {
+      grid-template-columns: 6fr 5fr;
+      column-gap: var(--s-6);
+      align-items: start;
+    }
+
+    .footer__sign {
+      grid-template-columns: auto 1fr;
+      align-items: end;
+      column-gap: var(--s-6);
+    }
+
+    .footer__master {
+      justify-self: end;
+    }
+  }
+</style>

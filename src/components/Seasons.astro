@@ -1,0 +1,183 @@
+---
+/**
+ * The river month by month. The Great Migration months carry a Safari Green bar. Opens on
+ * the current month in the guest's own time zone.
+ */
+import { page } from '../lib/data';
+
+interface Props {
+  headingLevel?: 'h2' | 'h3';
+  title?: string;
+}
+
+const { headingLevel = 'h3', title = 'The river, month by month' } = Astro.props;
+const plan = await page('plan');
+const months = plan.months ?? [];
+const Heading = headingLevel;
+---
+<div class="seasons" data-seasons>
+  <div class="seasons__top">
+    <Heading class="t-subhead">{title}</Heading>
+    <p class="seasons__key data"><span class="seasons__swatch" aria-hidden="true"></span> The Great Migration at the river</p>
+  </div>
+  <div class="seasons__months" role="tablist" aria-label="Months of the year">
+    {months.map((m, i) => (
+      <button
+        type="button"
+        role="tab"
+        id={`season-tab-${i}`}
+        class:list={['seasons__month', { 'is-migration': m.migration }]}
+        aria-selected={i === 6 ? 'true' : 'false'}
+        aria-controls={`season-panel-${i}`}
+        tabindex={i === 6 ? 0 : -1}
+        data-month={i}
+      >
+        <span class="seasons__abbr">{m.month.slice(0, 3)}</span>
+        <span class="seasons__bar" aria-hidden="true"></span>
+      </button>
+    ))}
+  </div>
+  <div class="seasons__panels">
+    {months.map((m, i) => (
+      <div class="seasons__panel" role="tabpanel" id={`season-panel-${i}`} aria-labelledby={`season-tab-${i}`} hidden={i !== 6} data-panel={i}>
+        <p class="label label--place">{m.month}{m.migration && ' · Great Migration'}</p>
+        <p class="t-subhead">{m.title}</p>
+        <p class="muted">{m.body}</p>
+      </div>
+    ))}
+  </div>
+  {plan.season_note && <p class="seasons__note data muted">{plan.season_note}</p>}
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-seasons]').forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-month]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-panel]'));
+    const select = (i: number, focus = false) => {
+      tabs.forEach((t, k) => {
+        t.setAttribute('aria-selected', String(k === i));
+        t.tabIndex = k === i ? 0 : -1;
+      });
+      panels.forEach((p, k) => (p.hidden = k !== i));
+      if (focus) tabs[i].focus();
+    };
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => select(i));
+      t.addEventListener('keydown', (e) => {
+        const n = tabs.length;
+        if (e.key === 'ArrowRight') select((i + 1) % n, true);
+        else if (e.key === 'ArrowLeft') select((i - 1 + n) % n, true);
+        else if (e.key === 'Home') select(0, true);
+        else if (e.key === 'End') select(n - 1, true);
+        else return;
+        e.preventDefault();
+      });
+    });
+    select(new Date().getMonth());
+  });
+</script>
+
+<style>
+  .seasons {
+    display: grid;
+    gap: var(--s-4);
+  }
+
+  .seasons__top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--s-2) var(--s-4);
+  }
+
+  .seasons__key {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--stone);
+  }
+
+  .seasons__swatch {
+    width: 22px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--place);
+  }
+
+  .seasons__months {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  @media (min-width: 640px) {
+    .seasons__months {
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+    }
+  }
+
+  .seasons__month {
+    display: grid;
+    gap: 8px;
+    justify-items: center;
+    min-height: 56px;
+    padding: 12px 0 10px;
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    background: var(--natural-white);
+    font-family: var(--font-label);
+    font-size: var(--text-label);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition:
+      background-color var(--dur) var(--ease),
+      color var(--dur) var(--ease),
+      border-color var(--dur) var(--ease);
+  }
+
+  .seasons__month:hover {
+    border-color: var(--basalt);
+  }
+
+  .seasons__bar {
+    width: 60%;
+    height: 4px;
+    border-radius: 2px;
+    background: transparent;
+  }
+
+  .seasons__month.is-migration .seasons__bar {
+    background: var(--place);
+  }
+
+  .seasons__month[aria-selected='true'] {
+    background: var(--basalt);
+    border-color: var(--basalt);
+    color: var(--natural-white);
+  }
+
+  .seasons__month[aria-selected='true'].is-migration .seasons__bar {
+    background: var(--warm-ochre);
+  }
+
+  .seasons__panels {
+    min-height: 9.5rem;
+  }
+
+  .seasons__panel {
+    display: grid;
+    gap: var(--s-2);
+    max-width: 40rem;
+    animation: reveal-in 600ms var(--ease-out);
+  }
+
+  .seasons__panel[hidden] {
+    display: none;
+  }
+
+  .seasons__note {
+    padding-top: var(--s-3);
+    border-top: 1px solid var(--hairline);
+  }
+</style>

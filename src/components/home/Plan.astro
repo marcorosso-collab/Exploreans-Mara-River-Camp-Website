@@ -1,0 +1,97 @@
+---
+/** 8. Plan your journey */
+import { getEntry } from 'astro:content';
+import BookingForm from '../BookingForm.astro';
+import MapLines from '../MapLines.astro';
+import Icon from '../Icon.astro';
+import { site as getSite } from '../../lib/data';
+import { telHref } from '../../lib/format';
+
+const p = (await getEntry('home', 'home'))!.data.plan;
+const site = await getSite();
+---
+<section class="plan section on-place" id="plan" aria-labelledby="plan-title">
+  <MapLines variant="b" tone="light" reveal />
+  <div class="wrap plan__grid">
+    <div class="head">
+      <p class="label accent" data-reveal>{p.label}</p>
+      <h2 id="plan-title" class="t-display" data-reveal style="--i:1">{p.headline}</h2>
+      <p class="t-lead" data-reveal style="--i:2">{p.lead}</p>
+      <ul role="list" class="plan__contact data" data-reveal style="--i:3">
+        <li><Icon name="envelope-simple" /> <a class="link" href={`mailto:${site.reservations_email}`}>{site.reservations_email}</a></li>
+        <li><Icon name="phone" /> <a class="link" href={telHref(site.phone)}>{site.phone}</a></li>
+        <li><Icon name="airplane-tilt" /> <span>About 15 minutes by road from Kichwa Tembo Airstrip</span></li>
+      </ul>
+    </div>
+    <div class="plan__card" data-reveal style="--i:2">
+      <BookingForm placement="home-plan" />
+      <a class="link-arrow" href="/plan-your-stay/#enquire">Or send the team an enquiry <Icon name="arrow-right" /></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .plan {
+    overflow: hidden;
+  }
+
+  .plan__grid {
+    position: relative;
+    display: grid;
+    gap: var(--s-5);
+  }
+
+  .plan__grid > * {
+    min-width: 0;
+  }
+
+  .plan .accent {
+    color: color-mix(in srgb, var(--natural-white) 82%, transparent);
+  }
+
+  .plan__contact {
+    display: grid;
+    gap: 10px;
+    margin-top: var(--s-3);
+  }
+
+  .plan__contact li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    overflow-wrap: anywhere;
+  }
+
+  .plan__contact :global(svg) {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    opacity: 0.8;
+  }
+
+  .plan__card {
+    display: grid;
+    gap: var(--s-4);
+    justify-items: start;
+    padding: var(--s-4);
+    border-radius: var(--radius);
+    background: var(--natural-white);
+    color: var(--basalt);
+  }
+
+  .plan__card > :global(form) {
+    width: 100%;
+  }
+
+  @media (min-width: 1024px) {
+    .plan__grid {
+      grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+      column-gap: var(--s-6);
+      align-items: center;
+    }
+
+    .plan__card {
+      padding: var(--s-5);
+    }
+  }
+</style>

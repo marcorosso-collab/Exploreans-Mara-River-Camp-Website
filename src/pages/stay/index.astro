@@ -1,0 +1,183 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import Img from '../../components/Img.astro';
+import Icon from '../../components/Icon.astro';
+import StayReveal from '../../components/islands/StayReveal';
+import WithinShade from '../../components/islands/WithinShade';
+import { page, rooms } from '../../lib/data';
+
+const p = await page('stay');
+const list = await rooms();
+---
+<Base title={p.seo_title ?? p.title} description={p.seo_description ?? p.lead} navTheme="solid" ogImage={p.image}>
+  <PageHeader label={p.label} title={p.title} lead={p.lead} />
+
+  <div class="reveal">
+    <StayReveal client:visible src={p.image!} alt={p.alt!}>
+      <div class="reveal__text">
+        <p class="label">On the bank of the Mara River</p>
+        <p class="t-headline">Hippos below, birdsong above</p>
+      </div>
+    </StayReveal>
+  </div>
+
+  <section class="section" aria-label="Rooms">
+    <div class="wrap rooms">
+      {list.map((room, i) => {
+        const r = room.data;
+        return (
+          <article class:list={['row', { 'row--flip': i % 2 === 1 }]} id={room.id}>
+            <a href={`/stay/${room.id}/`} class="row__media frame" data-clip data-follow="Look inside">
+              <Img src={r.image} alt={r.alt} sizes="(min-width: 1024px) 58vw, 100vw" />
+            </a>
+            <div class="row__text">
+              <p class="label label--place" data-reveal>{String(i + 1).padStart(2, '0')} &middot; {r.setting}</p>
+              <h2 class="t-headline" data-reveal style="--i:1"><a href={`/stay/${room.id}/`} class="row__title">{r.title}</a></h2>
+              <p class="t-lead muted" data-reveal style="--i:2">{r.summary}</p>
+              <dl class="facts" data-reveal style="--i:3">
+                <div><dt>Size</dt><dd>{r.size}</dd></div>
+                <div><dt>Sleeps</dt><dd>{r.sleeping}</dd></div>
+              </dl>
+              <div class="row__actions" data-reveal style="--i:4">
+                <a href={`/stay/${room.id}/`} class="btn btn--outline">Look inside <Icon name="arrow-right" class="arrow" /></a>
+                <button type="button" class="link-arrow row__book" data-book-open>Check dates <Icon name="arrow-right" /></button>
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <section class="camp section on-linen" aria-labelledby="camp-title">
+    <div class="camp__shade" aria-hidden="true"><WithinShade client:media="(min-width: 768px) and (prefers-reduced-motion: no-preference)" /></div>
+    <div class="wrap camp__grid">
+      <div class="head">
+        <p class="label label--place" data-reveal>Explore within</p>
+        <h2 id="camp-title" class="t-headline" data-reveal style="--i:1">Between the drives, the camp</h2>
+        <p class="t-lead" data-reveal style="--i:2">In the middle of the day the animals rest in the shade, and so does the camp.</p>
+      </div>
+      <ul role="list" class="camp__list" data-reveal-group>
+        {(p.in_camp ?? []).map((c) => (
+          <li class="camp__item" data-reveal>
+            <h3 class="t-subhead">{c.title}</h3>
+            <p>{c.body}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .reveal {
+    padding-inline: var(--margin);
+  }
+
+  .reveal__text {
+    display: grid;
+    gap: var(--s-2);
+    justify-items: center;
+    padding: var(--s-4);
+    color: var(--natural-white);
+    text-align: center;
+  }
+
+  .rooms {
+    display: grid;
+    gap: clamp(var(--s-6), 10vw, 160px);
+  }
+
+  .row {
+    display: grid;
+    gap: var(--s-5);
+    align-items: center;
+  }
+
+  .row__media {
+    display: block;
+    aspect-ratio: 4 / 3;
+  }
+
+  .row__text {
+    display: grid;
+    gap: var(--s-3);
+    justify-items: start;
+  }
+
+  .row__text .facts {
+    width: 100%;
+    margin-top: var(--s-2);
+  }
+
+  .row__title {
+    text-decoration: none;
+  }
+
+  .row__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--s-3) var(--s-4);
+    margin-top: var(--s-3);
+  }
+
+  .row__book {
+    background: none;
+    border: 0;
+    border-bottom: 1px solid currentColor;
+    color: inherit;
+  }
+
+  @media (min-width: 1024px) {
+    .row {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      column-gap: var(--s-6);
+    }
+
+    .row--flip .row__media {
+      order: 2;
+    }
+  }
+
+  .camp {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .camp__shade {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.85;
+  }
+
+  .camp__shade > :global(*) {
+    width: 100%;
+    height: 100%;
+  }
+
+  .camp__grid {
+    display: grid;
+    gap: var(--s-6);
+  }
+
+  .camp__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: var(--gutter);
+  }
+
+  .camp__item {
+    display: grid;
+    gap: var(--s-2);
+    align-content: start;
+    padding: var(--s-4);
+    border-radius: var(--radius);
+    background: rgb(250 250 245 / 0.82);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+  }
+</style>

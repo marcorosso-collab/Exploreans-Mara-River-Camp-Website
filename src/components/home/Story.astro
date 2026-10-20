@@ -1,0 +1,96 @@
+---
+/** 2. What you will live: a short story, with the place a hover away */
+import { getEntry } from 'astro:content';
+import StoryHover from '../islands/StoryHover';
+import MapLines from '../MapLines.astro';
+import Img from '../Img.astro';
+import Icon from '../Icon.astro';
+
+const s = (await getEntry('home', 'home'))!.data.story;
+---
+<section class="story section" id="story" aria-labelledby="story-title">
+  <MapLines variant="a" tone="ochre" reveal />
+  <div class="wrap story__grid">
+    <div class="story__head">
+      <p class="label label--place" data-reveal>{s.label}</p>
+      <h2 id="story-title" class="t-headline" data-reveal style="--i:1">{s.headline}</h2>
+    </div>
+    <div class="story__text t-quote" data-reveal style="--i:2">
+      <StoryHover client:visible text={s.text} targets={s.targets} />
+    </div>
+    <ul role="list" class="story__thumbs rail" aria-label="The place in photographs">
+      {s.targets.map((t) => (
+        <li>
+          <figure>
+            <span class="frame story__thumb"><Img src={t.image} alt={t.alt} sizes="70vw" /></span>
+            <figcaption class="caption">{t.text}</figcaption>
+          </figure>
+        </li>
+      ))}
+    </ul>
+    <a class="link-arrow story__more" href="#day" data-reveal>How a day unfolds <Icon name="arrow-right" /></a>
+  </div>
+</section>
+
+<style>
+  .story {
+    overflow: hidden;
+  }
+
+  .story__grid {
+    position: relative;
+    display: grid;
+    gap: var(--s-5);
+  }
+
+  .story__head {
+    display: grid;
+    gap: var(--s-3);
+    max-width: 30rem;
+  }
+
+  .story__text {
+    font-style: normal;
+    font-size: clamp(1.5rem, 1.1rem + 1.5vw, 2.375rem);
+    line-height: 1.38;
+    max-width: 30em;
+  }
+
+  .story__more {
+    justify-self: start;
+  }
+
+  /* Touch screens see the photographs in a rail beneath the text */
+  .story__thumbs {
+    grid-auto-columns: minmax(64%, 1fr);
+  }
+
+  .story__thumb {
+    display: block;
+    aspect-ratio: 4 / 3;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .story__thumbs {
+      display: none;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .story__grid {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      column-gap: var(--s-6);
+      align-items: start;
+    }
+
+    .story__head {
+      position: sticky;
+      top: 120px;
+    }
+
+    .story__more,
+    .story__thumbs {
+      grid-column: 2;
+    }
+  }
+</style>

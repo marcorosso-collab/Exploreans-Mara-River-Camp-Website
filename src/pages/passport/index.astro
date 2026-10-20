@@ -1,0 +1,208 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import PassportBook from '../../components/islands/PassportBook';
+import Stamp from '../../components/Stamp.astro';
+import MapLines from '../../components/MapLines.astro';
+import Icon from '../../components/Icon.astro';
+import { page, experiences, byFamily } from '../../lib/data';
+import { stampLabel, type StampId } from '../../lib/stamps';
+import { wordmarkSvg } from '../../lib/wordmark';
+
+const p = await page('passport');
+const families = byFamily((await experiences()).filter((e) => e.data.stamp)).map((g) => ({
+  family: g.family,
+  name: g.name,
+  rings: g.items.map((e) => ({ slug: e.id, name: e.data.name, stamp: e.data.stamp!, stampLabel: stampLabel(e.data.stamp as StampId) })),
+}));
+const total = families.reduce((n, f) => n + f.rings.length, 0);
+---
+<Base title={p.seo_title ?? p.title} description={p.seo_description ?? p.lead} navTheme="solid">
+  <PageHeader label={p.label} title={p.title} lead={p.lead}>
+    <p class="soon pp-soon" data-reveal style="--i:4">Coming soon</p>
+  </PageHeader>
+
+  <section class="book-wrap" aria-label="Your Mara River Camp Passport">
+    <div class="wrap">
+      <PassportBook client:visible place="Mara River Camp" families={families} rewards={p.rewards ?? []} steps={p.steps ?? []} wordmark={wordmarkSvg()} />
+      <div class="book-wrap__after">
+        <p class="data muted"><span data-pick-count>0</span> of {total} experiences marked. Your choices stay in this browser and travel with your enquiry.</p>
+        <a class="btn btn--place" href="/plan-your-stay/#enquire" data-pick-some hidden>Plan these days with us <Icon name="arrow-right" class="arrow" /></a>
+        <a class="link-arrow" href="/experiences/" data-pick-none>Browse every experience <Icon name="arrow-right" /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="steps-title">
+    <div class="wrap">
+      <div class="head">
+        <p class="label label--place" data-reveal>How it will work</p>
+        <h2 id="steps-title" class="t-headline" data-reveal style="--i:1">Stamped by the people who lead the way</h2>
+      </div>
+      <ol role="list" class="steps" data-reveal-group>
+        {(p.steps ?? []).map((s, i) => (
+          <li class="step" data-reveal>
+            <span class="step__no data" aria-hidden="true">{i + 1}</span>
+            <h3 class="t-subhead">{s.title}</h3>
+            <p class="muted">{s.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section on-linen" aria-labelledby="rewards-title">
+    <MapLines variant="b" tone="basalt" />
+    <div class="wrap rewards">
+      <div class="head">
+        <p class="label label--place" data-reveal>Stamps and rewards</p>
+        <h2 id="rewards-title" class="t-headline" data-reveal style="--i:1">Two reasons to keep exploring</h2>
+        {p.note && <p class="t-lead" data-reveal style="--i:2">{p.note}</p>}
+      </div>
+      <div class="rewards__list">
+        {(p.rewards ?? []).map((r, i) => (
+          <article class:list={['reward', { 'reward--alt': i === 1 }]} data-reveal style={`--i:${i}`}>
+            <span class="reward__stamp place-mark">
+              {i === 0 ? <Stamp id="place-mara-river-camp" size={64} decorative /> : <Stamp id="tasting" size={64} decorative />}
+            </span>
+            <div>
+              <p class="label label--place">{r.label}</p>
+              <h3 class="t-subhead">{r.title}</h3>
+              <p class="muted">{r.body}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  {p.journal && (
+    <section class="section on-basalt journal" aria-labelledby="journal-title">
+      <MapLines variant="c" tone="light" lantern />
+      <div class="wrap journal__grid">
+        <div class="head">
+          <p class="label accent" data-reveal>The Travel Journal</p>
+          <h2 id="journal-title" class="t-headline" data-reveal style="--i:1">{p.journal.headline}</h2>
+          <p class="t-lead" data-reveal style="--i:2">{p.journal.body}</p>
+          <p class="muted" data-reveal style="--i:3">{p.journal.privacy}</p>
+        </div>
+        <ul role="list" class="journal__prompts" data-reveal-group>
+          {p.journal.prompts.map((q) => (
+            <li data-reveal>
+              <p class="label accent">Explore {q.direction}</p>
+              <p class="t-quote">{q.prompt}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )}
+</Base>
+
+<style>
+  .pp-soon {
+    margin-left: 0;
+    color: var(--place);
+  }
+
+  .book-wrap {
+    padding-bottom: var(--s-6);
+  }
+
+  .book-wrap__after {
+    display: grid;
+    justify-items: center;
+    gap: var(--s-3);
+    margin-top: var(--s-4);
+    text-align: center;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--s-5) var(--gutter);
+    margin-top: var(--s-6);
+  }
+
+  .step {
+    display: grid;
+    gap: var(--s-2);
+    align-content: start;
+  }
+
+  .step__no {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    margin-bottom: var(--s-2);
+    border-radius: 50%;
+    background: var(--place);
+    color: var(--natural-white);
+  }
+
+  .rewards {
+    position: relative;
+    display: grid;
+    gap: var(--s-6);
+  }
+
+  .rewards__list {
+    display: grid;
+    gap: var(--gutter);
+  }
+
+  .reward {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--s-4);
+    padding: var(--s-5) var(--s-4);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    background: var(--natural-white);
+  }
+
+  .reward > div {
+    display: grid;
+    gap: var(--s-2);
+  }
+
+  .reward__stamp {
+    color: var(--place);
+  }
+
+  @media (min-width: 900px) {
+    .rewards__list {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .journal {
+    overflow: hidden;
+  }
+
+  .journal__grid {
+    position: relative;
+    display: grid;
+    gap: var(--s-6);
+  }
+
+  .journal__prompts {
+    display: grid;
+    gap: 0;
+  }
+
+  .journal__prompts li {
+    display: grid;
+    gap: var(--s-2);
+    padding-block: var(--s-4);
+    border-top: 1px solid rgb(250 250 245 / 0.16);
+  }
+
+  @media (min-width: 1024px) {
+    .journal__grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+      column-gap: var(--s-6);
+    }
+  }
+</style>

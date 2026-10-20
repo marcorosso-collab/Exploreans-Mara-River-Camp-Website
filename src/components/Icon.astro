@@ -1,0 +1,24 @@
+---
+/** Phosphor icons (light weight), inlined at build time. One family for the whole site. */
+import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+
+interface Props {
+  name:
+    | 'arrow-right' | 'arrow-left' | 'arrow-up-right' | 'list' | 'x' | 'play' | 'pause'
+    | 'caret-down' | 'caret-left' | 'caret-right' | 'check' | 'plus' | 'minus'
+    | 'envelope-simple' | 'phone' | 'map-pin' | 'airplane-tilt' | 'calendar-blank' | 'users'
+    | 'arrows-out' | 'magnifying-glass-plus' | 'sun-horizon' | 'moon-stars';
+  class?: string;
+  size?: number;
+}
+
+const { name, class: className = 'icon', size } = Astro.props;
+const require = createRequire(import.meta.url);
+const file = require.resolve(`@phosphor-icons/core/assets/light/${name}-light.svg`);
+const svg = readFileSync(file, 'utf8').replace(
+  '<svg ',
+  `<svg class="${className}" aria-hidden="true" focusable="false"${size ? ` width="${size}" height="${size}"` : ''} `,
+);
+---
+<Fragment set:html={svg} />
