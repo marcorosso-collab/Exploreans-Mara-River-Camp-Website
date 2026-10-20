@@ -79,7 +79,7 @@ const home = defineCollection({
         }),
       ),
     }),
-    families: z.object({ label: z.string(), headline: z.string(), lead: z.string() }),
+    families: z.object({ label: optString, headline: z.string(), lead: optString }),
     people: z.object({
       label: z.string(),
       headline: z.string(),

@@ -14,9 +14,9 @@ const groups = byFamily(await experiences());
   <MapLines variant="c" tone="basalt" lantern />
   <div class="wrap">
     <div class="head head--split">
-      <p class="label label--place" data-reveal>{f.label}</p>
+      {f.label && <p class="label label--place" data-reveal>{f.label}</p>}
       <h2 id="fam-title" class="t-headline" data-reveal style="--i:1">{f.headline}</h2>
-      <p class="t-lead" data-reveal style="--i:2">{f.lead}</p>
+      {f.lead && <p class="t-lead" data-reveal style="--i:2">{f.lead}</p>}
     </div>
 
     <div class="fam__directions" aria-hidden="true">

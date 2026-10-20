@@ -129,9 +129,9 @@ collections:
             name: "families"
             widget: "object"
             fields:
-              - { label: "Kicker", name: "label", widget: "string" }
+              - { label: "Kicker (optional)", name: "label", widget: "string", required: false }
               - { label: "Headline", name: "headline", widget: "string" }
-              - { label: "Lead", name: "lead", widget: "text" }
+              - { label: "Lead (optional)", name: "lead", widget: "text", required: false }
           - label: "4. The people"
             name: "people"
             widget: "object"
