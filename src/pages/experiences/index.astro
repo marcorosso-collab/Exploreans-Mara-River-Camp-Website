@@ -57,6 +57,7 @@ const jsonLd = [
         </div>
       ))}
       <p class="xps__empty muted" data-empty hidden>Choose a family above to see its experiences.</p>
+      <p class="xps__note data">Rates are in US dollars and subject to change. Park and conservancy fees are shown with each experience. The reservations team confirms the current rate when you book.</p>
     </div>
   </section>
 
@@ -208,6 +209,12 @@ const jsonLd = [
     }
   }
 
+  .xps__note {
+    max-width: 48rem;
+    padding-block: var(--s-4) var(--s-6);
+    color: var(--stone);
+  }
+
   .xps__cta-inner {
     display: grid;
     gap: var(--s-4);
@@ -215,7 +222,13 @@ const jsonLd = [
   }
 
   @media (min-width: 1024px) {
-    .xps__cta-inner {
+    .xps__note {
+    max-width: 48rem;
+    padding-block: var(--s-4) var(--s-6);
+    color: var(--stone);
+  }
+
+  .xps__cta-inner {
       grid-template-columns: 1fr auto;
       align-items: center;
       column-gap: var(--s-6);

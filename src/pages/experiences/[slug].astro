@@ -33,7 +33,7 @@ const jsonLd = [
     name: e.name,
     description: e.live,
     ...(e.image ? { image: `${siteUrl}${e.image}` } : {}),
-    isAccessibleForFree: false,
+    isAccessibleForFree: e.included,
     containedInPlace: { '@id': `${siteUrl}/#lodging` },
   },
   {
@@ -76,10 +76,32 @@ const jsonLd = [
         <dl class="xd__fields">
           <div><dt class="label muted">Led by</dt><dd>{e.led_by}</dd></div>
           <div><dt class="label muted">When and how long</dt><dd>{e.when}</dd></div>
+          {e.where && <div><dt class="label muted">Where</dt><dd>{e.where}</dd></div>}
           <div><dt class="label muted">What you will live</dt><dd class="xd__live">{e.live}</dd></div>
           <div><dt class="label muted">Good to know</dt><dd>{e.good_to_know}</dd></div>
           {e.stamp && <div><dt class="label muted">Stamp</dt><dd>{stampLabel(e.stamp as StampId)}, in your Exploreans Passport</dd></div>}
         </dl>
+        <div class="xd__rates">
+          {e.included ? (
+            <p class="xd__free"><span class="label">With every stay</span> Included with every stay at the camp, at no extra charge.</p>
+          ) : (
+            <>
+              <p class="label muted">{e.rates.length > 1 ? 'Rates' : 'Rate'}</p>
+              <dl class="xd__lines">
+                {e.rates.map((r) => <div><dt>{r.label}</dt><dd class="data">{r.value}</dd></div>)}
+              </dl>
+              {e.fees.length > 0 && (
+                <>
+                  <p class="label muted xd__also">Also payable</p>
+                  <dl class="xd__lines">
+                    {e.fees.map((f) => <div><dt>{f.label}</dt><dd class="data">{f.value}</dd></div>)}
+                  </dl>
+                </>
+              )}
+              <p class="xd__note data">Rates are in US dollars and subject to change. The reservations team confirms the current rate when you book.</p>
+            </>
+          )}
+        </div>
         <PickButton slug={experience.id} name={e.name} stamp={e.stamp} />
         <div class="xd__actions">
           <a href={`/plan-your-stay/?experience=${experience.id}#enquire`} class="btn btn--place">Plan it into your stay <Icon name="arrow-right" class="arrow" /></a>
@@ -143,6 +165,56 @@ const jsonLd = [
 
   .xd__live {
     font-style: italic;
+  }
+
+  .xd__rates {
+    display: grid;
+    gap: var(--s-2);
+    padding-top: var(--s-3);
+    border-top: 1px solid color-mix(in srgb, var(--basalt) 14%, transparent);
+  }
+
+  .xd__lines {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+  }
+
+  .xd__lines div {
+    display: grid;
+    gap: 2px;
+  }
+
+  .xd__lines dt {
+    font-size: 0.9375rem;
+  }
+
+  .xd__lines dd {
+    margin: 0;
+  }
+
+  .xd__also {
+    margin-top: var(--s-2);
+  }
+
+  .xd__note {
+    margin-top: var(--s-2);
+    font-size: 0.8125rem;
+    color: var(--stone);
+  }
+
+  .xd__free {
+    display: grid;
+    gap: 6px;
+  }
+
+  .xd__free .label {
+    justify-self: start;
+    padding: 6px 10px;
+    border-radius: 3px;
+    background: var(--place);
+    color: var(--natural-white);
+    font-size: 0.75rem;
   }
 
   .xd__actions {

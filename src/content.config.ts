@@ -166,10 +166,17 @@ const experiences = defineCollection({
     /** The Passport stamp it earns. Left empty until the brand team draws one. */
     stamp: z.preprocess(blank, stamp.optional()),
     order: z.number(),
+    /** Part of every stay at no charge ("With every stay" in the Passport) */
+    included: z.boolean().default(false),
     led_by: z.string(),
     when: z.string(),
+    where: optString,
     live: z.string(),
     good_to_know: z.string(),
+    /** What the guest pays, line by line: "Private jeep" → "USD 400 per jeep, up to seven guests" */
+    rates: z.preprocess(blank, z.array(pair).default([])),
+    /** Fees paid on top of the rate: park, conservancy, guide, ranger */
+    fees: z.preprocess(blank, z.array(pair).default([])),
     image: optString,
     alt: optString,
   }),

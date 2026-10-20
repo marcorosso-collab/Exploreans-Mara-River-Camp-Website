@@ -28,10 +28,11 @@ export const byFamily = (list: Experience[]) =>
 /** Explore beyond: Adventure, Nature, Culture, Taste. Explore within: Wellness. */
 export const direction = (family: FamilyId) => (family === 'wellness' ? 'Explore within' : 'Explore beyond');
 
+// As they read on the Mara River Camp Passport page
 export const FAMILY_LINES: Record<FamilyId, string> = {
-  adventure: 'On foot, on the water, up in the air',
-  nature: 'Wildlife, skies and seasons',
-  culture: 'People, crafts and stories',
-  taste: 'Kitchens and tables in the open',
-  wellness: 'Stillness, movement and rest',
+  adventure: 'On foot, aloft, after dark',
+  nature: 'Wildlife and the river',
+  culture: 'People and stories',
+  taste: 'Breakfast and sundown',
+  wellness: 'Stillness and rest',
 };

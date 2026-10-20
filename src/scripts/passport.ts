@@ -3,7 +3,8 @@
  * Kept in this browser only, shared by every page through a small event, and sent with
  * the enquiry form so the reservations team can plan the days around it.
  */
-const KEY = 'exploreans-mara-passport';
+// v2: the experiences were renamed to match the camp's Passport (October 2026)
+const KEY = 'exploreans-mara-passport-v2';
 export const EVENT = 'passport:change';
 
 export function readPicks(): string[] {
@@ -76,6 +77,15 @@ export function wirePickButtons(root: ParentNode = document) {
     });
     document.querySelectorAll<HTMLElement>('[data-pick-count]').forEach((el) => {
       el.textContent = String(list.length);
+    });
+    // The Mara page is complete with one stamp in each of the five families
+    const families = new Set(
+      Array.from(document.querySelectorAll<HTMLElement>('[data-pick][data-pick-family]'))
+        .filter((el) => list.includes(el.dataset.pick!))
+        .map((el) => el.dataset.pickFamily),
+    );
+    document.querySelectorAll<HTMLElement>('[data-family-count]').forEach((el) => {
+      el.textContent = String(families.size);
     });
     document.querySelectorAll<HTMLElement>('[data-pick-some]').forEach((el) => {
       el.hidden = list.length === 0;
