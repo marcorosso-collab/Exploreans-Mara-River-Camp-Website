@@ -126,9 +126,7 @@
     "hint": "Move over the photograph to look closer"
   },
   "expect": {
-    "label": "What to expect",
-    "headline": "The camp, plainly",
-    "lead": "Open all year, with a different character in every season."
+    "headline": "What to expect"
   },
   "passport": {
     "label": "The Exploreans Passport",

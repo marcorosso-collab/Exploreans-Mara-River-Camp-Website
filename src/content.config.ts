@@ -97,7 +97,7 @@ const home = defineCollection({
       alt: z.string(),
       hint: z.string(),
     }),
-    expect: z.object({ label: z.string(), headline: z.string(), lead: z.string() }),
+    expect: z.object({ label: optString, headline: z.string(), lead: optString }),
     passport: z.object({ label: z.string(), headline: z.string(), lead: z.string() }),
     plan: z.object({ label: z.string(), headline: z.string(), lead: z.string() }),
   }),

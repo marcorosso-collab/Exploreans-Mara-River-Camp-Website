@@ -27,9 +27,9 @@ const plan = await page('plan');
 
     <div class="expect__profile" id="expect">
       <div class="head">
-        <p class="label label--place" data-reveal>{x.label}</p>
+        {x.label && <p class="label label--place" data-reveal>{x.label}</p>}
         <h2 class="t-headline" data-reveal style="--i:1">{x.headline}</h2>
-        <p class="t-lead" data-reveal style="--i:2">{x.lead}</p>
+        {x.lead && <p class="t-lead" data-reveal style="--i:2">{x.lead}</p>}
       </div>
       <dl class="facts" data-reveal>
         {(plan.expect ?? []).map((f) => <div><dt>{f.label}</dt><dd>{f.value}</dd></div>)}
@@ -69,6 +69,10 @@ const plan = await page('plan');
   @media (min-width: 1024px) {
     .expect__grid {
       grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+    /* Without a kicker, the headline still lines up with its neighbour's */
+    .expect__profile .head:not(:has(> .label)) {
+      padding-top: calc(var(--text-label) * 1.3 + var(--s-3));
     }
 
     .expect__seasons {
