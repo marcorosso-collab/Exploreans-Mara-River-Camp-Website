@@ -62,7 +62,7 @@ Wilderness Seekers Limited is in Kenya and Planhotel SA is in Switzerland, and s
 - Enquiries that do not lead to a booking: up to 24 months, so that we can help if you return to plan your stay.
 - Booking and guest records: for as long as tax, accounting and guest registration laws require, generally up to seven years.
 - Letters: until you unsubscribe.
-- Google Analytics data: no longer than 14 months.
+- Google Analytics data: event data for 2 months, and data linked to a visitor's browser for up to 14 months.
 
 ## Your rights
 
