@@ -5,6 +5,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
+import { track } from './analytics';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,14 +15,13 @@ export const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)
 declare global {
   interface Window {
     __lenis?: Lenis | null;
-    dataLayer?: Record<string, unknown>[];
   }
 }
 
 /* Measure the direct-booking funnel: every link out to the booking engine */
 document.addEventListener('click', (e) => {
   const link = (e.target as Element).closest<HTMLAnchorElement>('a[data-book-link]');
-  if (link) window.dataLayer?.push({ event: 'booking_click', placement: link.dataset.bookLink, url: link.href });
+  if (link) track('booking_click', { placement: link.dataset.bookLink, link_url: link.href });
 });
 
 /* ---------- Smooth scroll ---------- */

@@ -8,23 +8,56 @@
   "info_email": "info.exploreansmara@planhotel.com",
   "phone": "+254 (0)100 363608",
   "reservations_hours": "Monday to Friday, 8am to 6pm East Africa Time",
-  "address": ["Maasai Mara National Reserve", "Narok County, Kenya"],
+  "address": [
+    "Maasai Mara National Reserve",
+    "Narok County, Kenya"
+  ],
   "maps_url": "https://maps.app.goo.gl/gS3XVrnozeC9pVcS7",
   "latitude": -1.5065,
   "longitude": 35.143,
   "nav": [
-    { "label": "Stay", "href": "/stay/" },
-    { "label": "Experiences", "href": "/experiences/" },
-    { "label": "Passport", "href": "/passport/" },
-    { "label": "Stories", "href": "/stories/" },
-    { "label": "Plan your stay", "href": "/plan-your-stay/" }
+    {
+      "label": "Stay",
+      "href": "/stay/"
+    },
+    {
+      "label": "Experiences",
+      "href": "/experiences/"
+    },
+    {
+      "label": "Passport",
+      "href": "/passport/"
+    },
+    {
+      "label": "Stories",
+      "href": "/stories/"
+    },
+    {
+      "label": "Plan your stay",
+      "href": "/plan-your-stay/"
+    }
   ],
   "social": [],
-  "group_line": "Exploreans is part of Planhotel Hospitality Group.",
+  "group_line": "Exploreans Mara River Camp is owned and operated by Wilderness Seekers Limited, Nairobi, Kenya. Exploreans is a brand of Planhotel SA, used under franchise.",
   "newsletter": {
     "headline": "A note from the river.",
     "body": "Occasional letters from the camp: when the herds reach the river, what the guides saw this week, and one invitation.",
     "button": "Subscribe",
     "success": "Thank you. Your first letter arrives with the next story from the river."
+  },
+  "legal": {
+    "operator": {
+      "name": "Wilderness Seekers Limited",
+      "trading_as": "Exploreans Mara River Camp (also known as Mara Rianta Camp)",
+      "company_number": "PVT-PJUY677K",
+      "business_registration": "BN/2010/89258",
+      "address": "P.O. Box 43825-00100, Nairobi, Kenya"
+    },
+    "franchisor": {
+      "name": "Planhotel SA",
+      "address": "Via Cantonale 3, 6900 Lugano, Switzerland",
+      "vat": "CHE-109.049.266"
+    },
+    "privacy_email": "info.exploreansmara@planhotel.com"
   }
 }

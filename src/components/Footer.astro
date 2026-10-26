@@ -41,6 +41,7 @@ const places = [
             </button>
           </div>
           <p class="form-status footer__status" role="status" data-form-status data-success={site.newsletter.success}></p>
+          <p class="data muted footer__note">Unsubscribe at any time. See our <a class="link" href="/privacy/">privacy policy</a>.</p>
         </form>
       </div>
     </section>
@@ -93,8 +94,13 @@ const places = [
     </div>
 
     <div class="footer__base">
-      <p class="data muted">{site.group_line}</p>
-      <p class="data muted">&copy; {year} Exploreans</p>
+      <p class="data muted footer__legal">{site.group_line}</p>
+      <ul role="list" class="footer__policies data">
+        <li><a class="link" href="/privacy/">Privacy</a></li>
+        <li><a class="link" href="/cookies/">Cookies</a></li>
+        <li><button type="button" class="link footer__book" data-cookie-settings>Cookie settings</button></li>
+        <li class="muted">&copy; {year} {site.legal.operator.name}</li>
+      </ul>
     </div>
   </div>
 </footer>
@@ -235,6 +241,17 @@ const places = [
     display: block;
     font-family: var(--font-label);
     font-size: 0.875rem;
+  }
+
+  .footer__legal {
+    max-width: 46rem;
+  }
+
+  .footer__policies {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px 20px;
   }
 
   .footer__base {

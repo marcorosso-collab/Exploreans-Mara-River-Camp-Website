@@ -33,13 +33,15 @@ const site = await getSite();
 </dialog>
 
 <script>
+  import { track } from '../scripts/analytics';
+
   const dialog = document.querySelector<HTMLDialogElement>('[data-book-dialog]');
   if (dialog) {
     const open = () => {
       dialog.showModal();
       window.__lenis?.stop();
       requestAnimationFrame(() => dialog.classList.add('is-open'));
-      window.dataLayer?.push({ event: 'booking_open' });
+      track('booking_open');
     };
     const close = () => {
       dialog.classList.remove('is-open');

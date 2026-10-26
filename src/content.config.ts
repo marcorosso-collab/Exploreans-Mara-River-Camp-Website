@@ -35,6 +35,22 @@ const settings = defineCollection({
     nav: z.array(z.object({ label: z.string(), href: z.string() })),
     social: z.preprocess(blank, z.array(z.object({ label: z.string(), href: z.url() })).default([])),
     group_line: z.string(),
+    /** The companies behind the site, for the footer, legal pages and structured data */
+    legal: z.object({
+      operator: z.object({
+        name: z.string(),
+        trading_as: z.string(),
+        company_number: z.string(),
+        business_registration: z.string(),
+        address: z.string(),
+      }),
+      franchisor: z.object({
+        name: z.string(),
+        address: z.string(),
+        vat: z.string(),
+      }),
+      privacy_email: z.email(),
+    }),
     newsletter: z.object({
       headline: z.string(),
       body: z.string(),
@@ -200,4 +216,14 @@ const stories = defineCollection({
   }),
 });
 
-export const collections = { settings, home, pages, stay, experiences, stories };
+/* ─── Legal: privacy and cookie policies ─── */
+const legal = defineCollection({
+  loader: glob({ pattern: '*.md', base: './src/content/legal' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    updated: z.coerce.date(),
+  }),
+});
+
+export const collections = { settings, home, pages, stay, experiences, stories, legal };

@@ -61,7 +61,28 @@ collections:
             fields:
               - { label: "Label", name: "label", widget: "string" }
               - { label: "Link", name: "href", widget: "string" }
-          - { label: "Group line (footer)", name: "group_line", widget: "string" }
+          - { label: "Legal line (footer)", name: "group_line", widget: "text" }
+          - label: "Legal entities"
+            name: "legal"
+            widget: "object"
+            fields:
+              - label: "Owner and operator"
+                name: "operator"
+                widget: "object"
+                fields:
+                  - { label: "Company name", name: "name", widget: "string" }
+                  - { label: "Trading as", name: "trading_as", widget: "string" }
+                  - { label: "Company number", name: "company_number", widget: "string" }
+                  - { label: "Business registration number", name: "business_registration", widget: "string" }
+                  - { label: "Registered address", name: "address", widget: "string" }
+              - label: "Brand franchisor"
+                name: "franchisor"
+                widget: "object"
+                fields:
+                  - { label: "Company name", name: "name", widget: "string" }
+                  - { label: "Address", name: "address", widget: "string" }
+                  - { label: "VAT number", name: "vat", widget: "string" }
+              - { label: "Privacy contact email", name: "privacy_email", widget: "string" }
           - label: "Newsletter"
             name: "newsletter"
             widget: "object"
@@ -442,3 +463,28 @@ collections:
       - { label: "SEO title", name: "seo_title", widget: "string", required: false }
       - { label: "SEO description", name: "seo_description", widget: "text", required: false }
       - { label: "Story", name: "body", widget: "markdown" }
+
+  # ═══════════════════════════════════════════════════════════
+  # LEGAL
+  # ═══════════════════════════════════════════════════════════
+  - name: "legal"
+    label: "Legal pages"
+    files:
+      - name: "privacy"
+        label: "Privacy policy"
+        file: "src/content/legal/privacy.md"
+        format: frontmatter
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description (SEO)", name: "description", widget: "text" }
+          - { label: "Last updated", name: "updated", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+          - { label: "Policy", name: "body", widget: "markdown" }
+      - name: "cookies"
+        label: "Cookie policy"
+        file: "src/content/legal/cookies.md"
+        format: frontmatter
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description (SEO)", name: "description", widget: "text" }
+          - { label: "Last updated", name: "updated", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+          - { label: "Policy", name: "body", widget: "markdown", hint: "Update the cookie tables whenever a new tag or tool is added to the site." }
