@@ -67,6 +67,7 @@ const uid = `bk-${placement}`;
 
 <script>
   import { bookingHref } from '../lib/booking';
+  import { track } from '../scripts/analytics';
 
   const iso = (d: Date) => {
     const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
@@ -156,7 +157,7 @@ const uid = `bk-${placement}`;
         adults: Number(adults.value),
         childAges: childAges(),
       });
-      window.dataLayer?.push({ event: 'booking_click', placement: form.dataset.placement, url: href });
+      track('booking_click', { placement: form.dataset.placement, link_url: href });
       // A real link click opens the engine in a new tab without tripping popup blockers
       const a = document.createElement('a');
       a.href = href;

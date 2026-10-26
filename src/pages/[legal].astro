@@ -1,0 +1,129 @@
+---
+/** The privacy and cookie policies, written in Markdown and editable in the CMS */
+import { getCollection, render } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { site as getSite } from '../lib/data';
+import { formatDate } from '../lib/format';
+
+export async function getStaticPaths() {
+  return (await getCollection('legal')).map((entry) => ({ params: { legal: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const site = await getSite();
+const { operator, franchisor } = site.legal;
+---
+<Base title={`${entry.data.title} | Mara River Camp`} description={entry.data.description} navTheme="solid">
+  <PageHeader label="Legal" title={entry.data.title} lead={`Last updated ${formatDate(entry.data.updated)}`} />
+
+  <section class="section section--tight">
+    <div class="wrap legal">
+      <aside class="legal__aside" aria-label="The companies">
+        <div class="legal__entity">
+          <p class="label label--place">Owner and operator</p>
+          <p>{operator.name}</p>
+          <p class="data muted">{operator.trading_as}</p>
+          <p class="data muted">Company number {operator.company_number}<br />Business registration {operator.business_registration}<br />{operator.address}</p>
+        </div>
+        <div class="legal__entity">
+          <p class="label label--place">Exploreans brand, under franchise</p>
+          <p>{franchisor.name}</p>
+          <p class="data muted">{franchisor.address}<br />VAT {franchisor.vat}</p>
+        </div>
+        <div class="legal__entity">
+          <p class="label label--place">Privacy contact</p>
+          <p><a class="link" href={`mailto:${site.legal.privacy_email}`}>{site.legal.privacy_email}</a></p>
+        </div>
+        {entry.id === 'cookies' && (
+          <button type="button" class="btn btn--outline" data-cookie-settings>Cookie settings</button>
+        )}
+      </aside>
+      <article class="prose legal__body">
+        <Content />
+      </article>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .legal {
+    display: grid;
+    gap: var(--s-6);
+  }
+
+  .legal__aside {
+    display: grid;
+    gap: var(--s-4);
+    align-content: start;
+    justify-items: start;
+  }
+
+  .legal__entity {
+    display: grid;
+    gap: 4px;
+  }
+
+  .legal__body :global(h2) {
+    margin-top: 2em;
+  }
+
+  .legal__body :global(h3) {
+    margin-top: 1.6em;
+    font-size: 1.1875rem;
+    font-weight: 400;
+  }
+
+  .legal__body :global(ul) {
+    padding-left: 1.2em;
+  }
+
+  .legal__body :global(li + li) {
+    margin-top: 0.4em;
+  }
+
+  .legal__body :global(table) {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    border-collapse: collapse;
+    font-family: var(--font-label);
+    font-size: var(--text-data);
+  }
+
+  .legal__body :global(th),
+  .legal__body :global(td) {
+    padding: 10px 14px 10px 0;
+    border-bottom: 1px solid var(--hairline);
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .legal__body :global(th) {
+    font-weight: 400;
+    font-size: var(--text-label);
+    letter-spacing: var(--label-track);
+    text-transform: uppercase;
+    color: var(--stone);
+    border-bottom-color: var(--warm-ochre);
+  }
+
+  .legal__body :global(p:first-child) {
+    font-size: var(--text-body);
+    line-height: var(--leading-body);
+  }
+
+  @media (min-width: 1024px) {
+    .legal {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      column-gap: var(--s-6);
+    }
+
+    .legal__aside {
+      position: sticky;
+      top: calc(var(--nav-h-compact) + 32px);
+      align-self: start;
+    }
+  }
+</style>

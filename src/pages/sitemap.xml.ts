@@ -3,7 +3,7 @@ import { experiences, rooms, stories } from '../lib/data';
 
 export const GET: APIRoute = async ({ site }) => {
   const base = site!.toString().replace(/\/$/, '');
-  const pages = ['/', '/stay/', '/experiences/', '/passport/', '/stories/', '/plan-your-stay/'];
+  const pages = ['/', '/stay/', '/experiences/', '/passport/', '/stories/', '/plan-your-stay/', '/privacy/', '/cookies/'];
   const urls = [
     ...pages.map((p) => ({ loc: p })),
     ...(await rooms()).map((r) => ({ loc: `/stay/${r.id}/` })),

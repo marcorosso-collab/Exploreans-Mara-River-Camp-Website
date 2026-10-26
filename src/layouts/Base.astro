@@ -9,6 +9,7 @@ import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import BookingDialog from '../components/BookingDialog.astro';
+import ConsentBanner from '../components/ConsentBanner.astro';
 import { site as getSite } from '../lib/data';
 
 interface Props {
@@ -45,6 +46,7 @@ const graph = [
     '@type': 'LodgingBusiness',
     '@id': `${siteUrl}/#lodging`,
     name: `Exploreans ${site.property_name}`,
+    legalName: site.legal.operator.name,
     description: site.default_description,
     url: `${siteUrl}/`,
     image: `${siteUrl}${site.og_image}`,
@@ -118,27 +120,51 @@ const graph = [
 
     <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': graph }).replace(/</g, '\\u003c')} />
 
-    <!-- Google Tag Manager -->
-    <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-PZCKDW9Z');</script>
-    <!-- End Google Tag Manager -->
-
-    <!-- Google Analytics (GA4) -->
-    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-QV5BLB9NV3"></script>
+    <!--
+      Consent first (Google Consent Mode v2). Everything is denied by default, and Google
+      Analytics and Tag Manager load only after the visitor accepts analytics in the cookie
+      banner. The choice lives in localStorage for 12 months. See src/components/ConsentBanner.astro.
+    -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-QV5BLB9NV3');
+      window.gtag = gtag;
+      gtag('consent', 'default', {
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied',
+        analytics_storage: 'denied',
+        functionality_storage: 'granted',
+        security_storage: 'granted'
+      });
+      (function () {
+        var KEY = 'exploreans-mara-consent', VERSION = 1, MAX_AGE = 365 * 864e5, choice = null;
+        try { choice = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
+        var valid = choice && choice.v === VERSION && Date.now() - choice.t < MAX_AGE;
+        window.__consent = valid ? choice : null;
+        window.__loadTags = function () {
+          if (window.__tagsLoaded) return;
+          window.__tagsLoaded = true;
+          gtag('consent', 'update', { analytics_storage: 'granted' });
+          // Google Analytics 4
+          var ga = document.createElement('script');
+          ga.async = true;
+          ga.src = 'https://www.googletagmanager.com/gtag/js?id=G-QV5BLB9NV3';
+          document.head.appendChild(ga);
+          gtag('js', new Date());
+          gtag('config', 'G-QV5BLB9NV3');
+          // Google Tag Manager
+          dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+          var gtm = document.createElement('script');
+          gtm.async = true;
+          gtm.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-PZCKDW9Z';
+          document.head.appendChild(gtm);
+        };
+        if (valid && choice.analytics) window.__loadTags();
+      })();
     </script>
   </head>
   <body>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PZCKDW9Z" height="0" width="0" style="display:none;visibility:hidden" title="Google Tag Manager"></iframe></noscript>
-
     <a class="skip-link label" href="#main">Skip to content</a>
     <Nav theme={navTheme} />
     <main id="main" tabindex="-1">
@@ -146,6 +172,7 @@ const graph = [
     </main>
     <Footer />
     <BookingDialog />
+    <ConsentBanner />
 
     <div id="follower" class="follower" aria-hidden="true"><span class="follower__label"></span></div>
     <p id="passport-live" class="visually-hidden" role="status" aria-live="polite"></p>

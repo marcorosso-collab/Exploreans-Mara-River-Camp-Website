@@ -1,4 +1,6 @@
 /** Netlify forms that submit in place, falling back to /thank-you/ without JavaScript */
+import { track } from './analytics';
+
 document.querySelectorAll<HTMLFormElement>('form[data-ajax-form]').forEach((form) => {
   const status = form.querySelector<HTMLElement>('[data-form-status]');
   form.addEventListener('submit', async (e) => {
@@ -17,7 +19,7 @@ document.querySelectorAll<HTMLFormElement>('form[data-ajax-form]').forEach((form
       if (!res.ok) throw new Error(String(res.status));
       form.reset();
       form.dispatchEvent(new CustomEvent('form:sent'));
-      window.dataLayer?.push({ event: 'form_submit', form: form.getAttribute('name') });
+      track('form_submit', { form_name: form.getAttribute('name') });
       if (status) status.textContent = status.dataset.success ?? 'Thank you. Your message is on its way.';
     } catch {
       if (status) status.textContent = 'Something interrupted the connection. Please try again, or write to us by email.';

@@ -1,0 +1,290 @@
+---
+/**
+ * Cookie consent. Opt-in for everyone: Google Analytics and Tag Manager stay off until the
+ * visitor accepts analytics (the loader and Consent Mode defaults live in Base.astro).
+ * "Accept analytics" and "Essential only" carry equal weight. Any [data-cookie-settings]
+ * control reopens the preferences, so a choice can be changed at any time.
+ */
+---
+<section class="consent" aria-labelledby="consent-title" data-consent hidden>
+  <div class="consent__card">
+    <h2 id="consent-title" class="consent__title">Cookies, kept to a minimum</h2>
+    <p class="consent__text">
+      The site uses a few essential settings so that it works, such as remembering this choice. With your
+      permission, we also use Google Analytics to understand how the site is used. Read the <a class="link" href="/cookies/">cookie policy</a> and the <a class="link" href="/privacy/">privacy policy</a>.
+    </p>
+
+    <div class="consent__prefs" data-consent-prefs hidden>
+      <div class="consent__row">
+        <div>
+          <p class="consent__name">Essential</p>
+          <p class="consent__desc">Remember your cookie choice and the experiences you mark in your Passport. Always on.</p>
+        </div>
+        <span class="consent__always label">Always on</span>
+      </div>
+      <label class="consent__row">
+        <div>
+          <span class="consent__name">Analytics</span>
+          <span class="consent__desc">Google Analytics counts visits and how pages are used, so we can improve the site.</span>
+        </div>
+        <span class="consent__switch">
+          <input type="checkbox" role="switch" data-consent-analytics />
+          <span class="consent__track" aria-hidden="true"></span>
+        </span>
+      </label>
+    </div>
+
+    <div class="consent__actions">
+      <button type="button" class="btn btn--place consent__btn" data-consent-accept>Accept analytics</button>
+      <button type="button" class="btn consent__btn" data-consent-reject>Essential only</button>
+      <button type="button" class="consent__more" data-consent-more aria-expanded="false">Choose</button>
+      <button type="button" class="btn btn--outline consent__btn" data-consent-save hidden>Save my choice</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  const KEY = 'exploreans-mara-consent';
+  const VERSION = 1;
+
+  const root = document.querySelector<HTMLElement>('[data-consent]')!;
+  const prefs = root.querySelector<HTMLElement>('[data-consent-prefs]')!;
+  const toggle = root.querySelector<HTMLInputElement>('[data-consent-analytics]')!;
+  const more = root.querySelector<HTMLButtonElement>('[data-consent-more]')!;
+  const save = root.querySelector<HTMLButtonElement>('[data-consent-save]')!;
+
+  const show = (withPrefs = false) => {
+    toggle.checked = Boolean(window.__consent?.analytics);
+    prefs.hidden = !withPrefs;
+    save.hidden = !withPrefs;
+    more.hidden = withPrefs;
+    more.setAttribute('aria-expanded', String(withPrefs));
+    root.hidden = false;
+    requestAnimationFrame(() => root.classList.add('is-open'));
+  };
+
+  const hide = () => {
+    root.classList.remove('is-open');
+    window.setTimeout(() => (root.hidden = true), 300);
+  };
+
+  /* Remove Google Analytics cookies on this domain and its parent */
+  const clearAnalyticsCookies = () => {
+    const host = location.hostname;
+    const domains = ['', host, `.${host}`, `.${host.split('.').slice(-2).join('.')}`];
+    document.cookie.split(';').forEach((c) => {
+      const name = c.split('=')[0].trim();
+      if (!/^_ga(_|$)|^_gid$|^_gat/.test(name)) return;
+      domains.forEach((d) => {
+        document.cookie = `${name}=; Max-Age=0; path=/${d ? `; domain=${d}` : ''}`;
+      });
+    });
+  };
+
+  const decide = (analytics: boolean) => {
+    const choice = { v: VERSION, t: Date.now(), analytics };
+    try {
+      localStorage.setItem(KEY, JSON.stringify(choice));
+    } catch {
+      /* Private browsing: the choice holds for this visit */
+    }
+    window.__consent = choice;
+    if (analytics) {
+      window.__loadTags?.();
+    } else {
+      window.gtag?.('consent', 'update', { analytics_storage: 'denied' });
+      clearAnalyticsCookies();
+    }
+    hide();
+  };
+
+  root.querySelector('[data-consent-accept]')!.addEventListener('click', () => decide(true));
+  root.querySelector('[data-consent-reject]')!.addEventListener('click', () => decide(false));
+  save.addEventListener('click', () => decide(toggle.checked));
+  more.addEventListener('click', () => show(true));
+
+  document.querySelectorAll('[data-cookie-settings]').forEach((el) =>
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      show(true);
+    }),
+  );
+
+  if (!window.__consent) show(false);
+</script>
+
+<style>
+  .consent {
+    position: fixed;
+    left: var(--margin);
+    right: var(--margin);
+    bottom: var(--s-3);
+    z-index: calc(var(--z-menu) + 1);
+    display: flex;
+    justify-content: flex-start;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 300ms var(--ease),
+      transform 450ms var(--ease-out);
+  }
+
+  .consent.is-open {
+    opacity: 1;
+    transform: none;
+  }
+
+  .consent__card {
+    width: 100%;
+    max-width: 440px;
+    max-height: calc(100dvh - 32px);
+    overflow: auto;
+    display: grid;
+    gap: var(--s-3);
+    padding: var(--s-4);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius);
+    background: var(--natural-white);
+    color: var(--basalt);
+    box-shadow: 0 18px 50px -24px rgb(43 43 38 / 0.45);
+    pointer-events: auto;
+  }
+
+  .consent__title {
+    font-size: var(--text-subhead);
+    line-height: var(--leading-subhead);
+  }
+
+  .consent__text {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--stone);
+  }
+
+  .consent__prefs {
+    display: grid;
+    border-top: 1px solid var(--hairline);
+  }
+
+  .consent__row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: var(--s-3);
+    padding-block: 12px;
+    border-bottom: 1px solid var(--hairline);
+    cursor: default;
+  }
+
+  label.consent__row {
+    cursor: pointer;
+  }
+
+  .consent__name {
+    display: block;
+    font-size: 1rem;
+  }
+
+  .consent__desc {
+    display: block;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--stone);
+  }
+
+  .consent__always {
+    font-size: 0.75rem;
+    color: var(--place);
+  }
+
+  .consent__switch {
+    position: relative;
+    display: inline-grid;
+    width: 46px;
+    height: 26px;
+  }
+
+  .consent__switch input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .consent__track {
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--basalt) 22%, transparent);
+    transition: background-color var(--dur) var(--ease);
+  }
+
+  .consent__track::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--natural-white);
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .consent__switch input:checked + .consent__track {
+    background: var(--place);
+  }
+
+  .consent__switch input:checked + .consent__track::after {
+    transform: translateX(20px);
+  }
+
+  .consent__switch input:focus-visible + .consent__track {
+    outline: 2px solid var(--basalt);
+    outline-offset: 2px;
+  }
+
+  .consent__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--s-2);
+  }
+
+  .consent__btn {
+    min-height: 46px;
+    padding: 0 12px;
+  }
+
+  .consent__more {
+    grid-column: 1 / -1;
+    justify-self: start;
+    min-height: 40px;
+    padding: 0;
+    border: 0;
+    border-bottom: 1px solid currentColor;
+    background: none;
+    font-family: var(--font-label);
+    font-size: var(--text-label);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  [data-consent-save] {
+    grid-column: 1 / -1;
+  }
+
+  /* Bottom right on wide screens, clear of the hero headline */
+  @media (min-width: 1024px) {
+    .consent {
+      justify-content: flex-end;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .consent__actions {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
