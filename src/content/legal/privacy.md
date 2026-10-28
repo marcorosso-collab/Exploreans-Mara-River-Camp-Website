@@ -1,14 +1,14 @@
 ---
 title: Privacy policy
 description: How Exploreans Mara River Camp collects, uses and protects your personal data, who is responsible for it and how to exercise your rights.
-updated: 2026-10-26
+updated: 2026-10-28
 ---
 
 This policy explains how we collect, use and protect personal data when you visit mara.exploreans.com, send us an enquiry, subscribe to our letters or stay at Exploreans Mara River Camp. It applies to guests and website visitors wherever they live.
 
 ## Who we are
 
-Exploreans Mara River Camp (also known as Mara Rianta Camp) is owned and operated by **Wilderness Seekers Limited**, a company registered in Kenya (company number PVT-PJUY677K, business registration number BN/2010/89258), P.O. Box 43825-00100, Nairobi, Kenya.
+Exploreans Mara River Camp is owned and operated by **Wilderness Seekers Limited**, a company registered in Kenya (company number PVT-PJUY677K, business registration number BN/2010/89258), P.O. Box 43825-00100, Nairobi, Kenya.
 
 The camp carries the Exploreans brand under a franchise agreement with **Planhotel SA**, Via Cantonale 3, 6900 Lugano, Switzerland (VAT CHE-109.049.266). Planhotel SA runs this website, the camp's reservations inbox and our letters, and sells stays at the camp through its distribution channels.
 
