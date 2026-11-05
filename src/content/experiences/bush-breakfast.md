@@ -11,8 +11,8 @@ good_to_know: 'A buffet breakfast with a live cooking station, pastries, fruit, 
 rates:
   - label: Bush breakfast
     value: USD 80 per person, minimum four guests
-image: /images/places/mara-river-camp/mara-river-camp-taste-bush-breakfast-01.webp
-alt: The camp team laying a table with a red cloth on the plains beside the safari vehicles
+image: /images/places/mara-river-camp/mara-river-camp-taste-bush-breakfast-on-the-plains-01.webp
+alt: A guest at a bush breakfast table on the plains, with the camp team and the safari vehicle behind
 seo_title: Bush breakfast in the Maasai Mara | Mara River Camp | Exploreans
 seo_description: A bush breakfast near Olkiombo Airstrip in the Maasai Mara, with a live cooking station, from Mara River Camp.
 ---

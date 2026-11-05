@@ -4,24 +4,32 @@
   "label": "Stay",
   "title": "Sleep to the sound of the river",
   "lead": "Canvas and timber under the trees of the riverbank. Every tent and the cabin has its own terrace or deck, an en-suite bathroom and turndown every evening.",
-  "image": "/images/places/mara-river-camp/mara-river-camp-nature-mara-river-01.webp",
-  "alt": "The wide brown water of the Mara River between wooded banks, below the camp",
+  "image": "/images/places/mara-river-camp/mara-river-camp-stay-river-tent-river-view-deck-01.webp",
+  "alt": "Two stools at a small wooden deck above the Mara River, with binoculars and drinks on the rail",
   "in_camp": [
     {
       "title": "The deck and the pool",
-      "body": "A swimming pool among the trees, with sunbeds and shade for the middle of the day."
+      "body": "A swimming pool among the trees, with sunbeds and shade for the middle of the day.",
+      "image": "/images/places/mara-river-camp/mara-river-camp-wellness-pool-drinks-01.webp",
+      "alt": "A member of the camp team carrying drinks beside the pool"
     },
     {
       "title": "The Zebra Bar",
-      "body": "Poolside by day and beside the fire in the evening, open until the last guest calls it a night."
+      "body": "Poolside by day and beside the fire in the evening, open until the last guest calls it a night.",
+      "image": "/images/places/mara-river-camp/mara-river-camp-taste-zebra-bar-01.webp",
+      "alt": "The barman pouring a drink for a guest at the Zebra Bar"
     },
     {
       "title": "At the table",
-      "body": "Breakfast, lunch and dinner in the garden or on the deck, with local, Asian and international dishes from the camp kitchen."
+      "body": "Breakfast, lunch and dinner in the garden or on the deck, with local, Asian and international dishes from the camp kitchen.",
+      "image": "/images/places/mara-river-camp/mara-river-camp-taste-dinner-on-the-deck-01.webp",
+      "alt": "A table set for dinner on the deck, lit by lanterns at dusk"
     },
     {
       "title": "Around camp",
-      "body": "Wi-Fi throughout, a gift shop, laundry and a medical service."
+      "body": "The lounge and its log fire, Wi-Fi throughout, a gift shop, laundry and a medical service.",
+      "image": "/images/places/mara-river-camp/mara-river-camp-stay-lounge-fireplace-01.webp",
+      "alt": "The lounge with white sofas, a zebra hide and a log fire"
     }
   ]
 }

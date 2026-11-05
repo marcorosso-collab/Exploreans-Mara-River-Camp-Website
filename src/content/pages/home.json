@@ -64,15 +64,15 @@
         "time": "Breakfast",
         "experience": "bush-breakfast",
         "body": "Near Olkiombo Airstrip, the camp kitchen cooks in the open: eggs to order, pastries, fruit and fresh coffee, with the plains all around.",
-        "image": "/images/places/mara-river-camp/mara-river-camp-taste-bush-breakfast-01.webp",
-        "alt": "The camp team laying a table with a red cloth on the plains beside the safari vehicles"
+        "image": "/images/places/mara-river-camp/mara-river-camp-taste-bush-breakfast-on-the-plains-01.webp",
+        "alt": "A guest at a bush breakfast table on the plains, with the camp team and the safari vehicle behind"
       },
       {
         "time": "Midday",
         "experience": "by-the-pool",
         "body": "The heat settles and the camp goes quiet. A book, a swim and the sound of the river.",
-        "image": "/images/places/mara-river-camp/mara-river-camp-wellness-pool-from-above-01.webp",
-        "alt": "The camp swimming pool surrounded by sunbeds and trees, seen from above"
+        "image": "/images/places/mara-river-camp/mara-river-camp-wellness-pool-01.webp",
+        "alt": "The camp swimming pool among the trees, with sunbeds and umbrellas"
       },
       {
         "time": "Late afternoon",
@@ -91,7 +91,9 @@
       {
         "time": "After dark",
         "experience": "around-the-fire",
-        "body": "The fire is lit on the River Deck. Stories from the Maasai team, and the hippos calling below in the dark."
+        "body": "The fire is lit on the River Deck. Stories from the Maasai team, and the hippos calling below in the dark.",
+        "image": "/images/places/mara-river-camp/mara-river-camp-culture-boma-fire-at-dusk-01.webp",
+        "alt": "A Maasai host beside the fire in the boma at dusk, with lanterns along the deck behind"
       }
     ]
   },
@@ -102,8 +104,8 @@
     "label": "The people",
     "headline": "Walking with the people who know it best",
     "lead": "The welcome begins at the gate, with Maasai hosts singing guests in from the vehicles. From then on, every walk, drive and table is led by someone from the camp.",
-    "image": "/images/places/mara-river-camp/mara-river-camp-culture-maasai-welcome-01.webp",
-    "alt": "Maasai hosts in red shukas singing and jumping to welcome guests at the camp entrance",
+    "image": "/images/places/mara-river-camp/mara-river-camp-culture-maasai-guides-welcome-01.webp",
+    "alt": "A guest greeting two Maasai guides beside an Exploreans safari vehicle at sunrise",
     "roles": [
       {
         "role": "Maasai guides and hosts",

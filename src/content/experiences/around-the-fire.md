@@ -9,6 +9,8 @@ when: Every evening
 where: The River Deck
 live: Evenings end at the fire on the River Deck, with stories from the Maasai team and the hippos calling below.
 good_to_know: Part of every stay. A nightcap from the Zebra Bar comes to the fireside.
+image: /images/places/mara-river-camp/mara-river-camp-culture-boma-fire-at-dusk-01.webp
+alt: A Maasai host beside the fire in the boma at dusk, with lanterns along the deck behind
 seo_title: Around the fire on the River Deck | Mara River Camp | Exploreans
 seo_description: Every evening at Mara River Camp ends at the fire on the River Deck, with stories from the Maasai team.
 ---

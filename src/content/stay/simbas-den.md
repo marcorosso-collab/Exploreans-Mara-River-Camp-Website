@@ -16,15 +16,17 @@ features:
   - Bathrobes, slippers, bathroom amenities and hairdryer
   - Wi-Fi
   - Turndown every evening
-image: /images/places/mara-river-camp/mara-river-camp-stay-log-cabin-01.webp
-alt: Armchairs and a wide bed inside the timber walls of Simba's Den, lit by lamps
+image: /images/places/mara-river-camp/mara-river-camp-stay-simbas-den-breakfast-on-the-deck-01.webp
+alt: Breakfast laid on the deck of Simba's Den, with the Mara River below
 gallery:
-  - image: /images/places/mara-river-camp/mara-river-camp-stay-log-cabin-sitting-room-01.webp
-    alt: A reading corner by the window in Simba's Den, with timber walls and lamplight
-  - image: /images/places/mara-river-camp/mara-river-camp-stay-log-cabin-bedroom-01.webp
-    alt: The main bedroom of Simba's Den, with a wide bed and timber walls
-  - image: /images/places/mara-river-camp/mara-river-camp-stay-log-cabin-dining-01.webp
-    alt: The dining table and living area of Simba's Den, lit by lamps
+  - image: /images/places/mara-river-camp/mara-river-camp-stay-simbas-den-living-room-01.webp
+    alt: The timber living room of Simba's Den, with sofas, lamps and a chandelier
+  - image: /images/places/mara-river-camp/mara-river-camp-stay-simbas-den-bedroom-01.webp
+    alt: A bedroom in Simba's Den, with timber walls and windows on three sides
+  - image: /images/places/mara-river-camp/mara-river-camp-stay-simbas-den-breakfast-detail-01.webp
+    alt: Fresh fruit, pastries and juice on the breakfast table on the deck of Simba's Den
+  - image: /images/places/mara-river-camp/mara-river-camp-stay-simbas-den-en-suite-01.webp
+    alt: The bathroom in Simba's Den, with a walk-in shower and a stone basin
 seo_title: Simba's Den, a log cabin on the Mara River | Mara River Camp | Exploreans
 seo_description: Simba's Den is a two-bedroom log cabin with a deck over the Mara River, for families and small groups. 120 sqm with a 27 sqm deck, for up to six guests.
 ---

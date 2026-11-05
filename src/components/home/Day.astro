@@ -36,7 +36,7 @@ const last = moments.length - 1;
           {moments.map((m, i) => (
             <div class:list={['day__shot', { 'is-active': i === 0 }]} data-shot={i}>
               {m.image ? (
-                <Img src={m.image} alt="" sizes="(min-width: 1024px) 55vw, 100vw" />
+                <Img src={m.image} alt={m.alt ?? ''} sizes="(min-width: 1024px) 55vw, 100vw" />
               ) : (
                 <div class="day__night">
                   {Array.from({ length: 46 }, (_, k) => (
@@ -58,9 +58,9 @@ const last = moments.length - 1;
       <ol role="list" class="day__list">
         {moments.map((m, i) => (
           <li class="day__moment" data-moment={i} data-night={i === last ? '' : undefined}>
-            <div class="day__card-media frame" aria-hidden="true">
+            <div class="day__card-media frame">
               {m.image ? (
-                <Img src={m.image} alt="" sizes="100vw" />
+                <Img src={m.image} alt={m.alt ?? ''} sizes="100vw" />
               ) : (
                 <div class="day__night">
                   {Array.from({ length: 30 }, (_, k) => (

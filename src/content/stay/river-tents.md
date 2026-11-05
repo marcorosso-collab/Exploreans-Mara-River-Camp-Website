@@ -14,17 +14,19 @@ features:
   - Bathrobes, slippers, bathroom amenities and hairdryer
   - Wi-Fi
   - Turndown every evening
-image: /images/places/mara-river-camp/mara-river-camp-stay-river-tent-01.webp
-alt: A guest on the terrace of a river tent, with the lawn running down to the Mara River
+image: /images/places/mara-river-camp/mara-river-camp-stay-river-tent-on-the-riverbank-01.webp
+alt: A river tent on the lawn above the Mara River, with a timber fence along the bank
 gallery:
-  - image: /images/places/mara-river-camp/mara-river-camp-stay-river-tent-bedroom-01.webp
-    alt: A wide bed under canvas, facing the open front of a river tent
-  - image: /images/places/mara-river-camp/mara-river-camp-stay-river-tent-02.webp
-    alt: A river tent among the trees, with a guest reading on the terrace
-  - image: /images/places/mara-river-camp/mara-river-camp-stay-river-tent-bedroom-02.webp
-    alt: The bedroom of a river tent, with a wide bed and patterned throws
-  - image: /images/places/mara-river-camp/mara-river-camp-stay-river-tent-bathroom-01.webp
-    alt: The en-suite bathroom of a river tent, with a carved wooden mirror
+  - image: /images/places/mara-river-camp/mara-river-camp-stay-river-tent-double-bed-01.webp
+    alt: A double bed under canvas in a river tent, with the wardrobe and mirror behind
+  - image: /images/places/mara-river-camp/mara-river-camp-stay-river-tent-turndown-01.webp
+    alt: A member of the camp team preparing the bed in a river tent
+  - image: /images/places/mara-river-camp/mara-river-camp-stay-river-tent-river-view-deck-01.webp
+    alt: Two stools at a small wooden deck above the Mara River, with binoculars and drinks on the rail
+  - image: /images/places/mara-river-camp/mara-river-camp-stay-river-tent-en-suite-01.webp
+    alt: The en-suite bathroom of a river tent, with a stone basin and a walk-in shower
+  - image: /images/places/mara-river-camp/mara-river-camp-stay-river-tents-in-the-garden-01.webp
+    alt: River tents among tall bamboo in the camp garden, with a guest on the path
 seo_title: River tents on the Mara River | Mara River Camp | Exploreans
 seo_description: Canvas river tents on the bank of the Mara River, each with a private terrace over the water. 17 sqm with a 7 sqm terrace, for up to three guests.
 ---
