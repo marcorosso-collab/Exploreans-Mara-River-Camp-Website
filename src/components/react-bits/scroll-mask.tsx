@@ -21,6 +21,13 @@ export interface ScrollMaskProps {
   scrollLength?: number;
   /** Fraction of the runway after which the reveal has fully opened */
   settle?: number;
+  /**
+   * Exploreans edit: how early the reveal starts, in viewport heights before the section
+   * pins. 0 waits for the pin (as shipped); 1 starts as soon as the section enters the screen.
+   */
+  lead?: number;
+  /** Exploreans edit: how open the mask already is at the start, from 0 (closed) to 1 */
+  start?: number;
   /** Follow damping applied to the scroll position, 0 snaps instantly */
   smooth?: number;
   /** Edge softness of the mask, as a percentage of the frame */
@@ -169,6 +176,8 @@ export const ScrollMask = ({
   word = "SCROLL",
   scrollLength = 1.7,
   settle = 0.84,
+  lead = 0,
+  start = 0,
   smooth = 0.14,
   feather = 14,
   stagger = 0.55,
@@ -279,7 +288,9 @@ export const ScrollMask = ({
 
   const paint = useCallback(
     (raw: number) => {
-      const p = glide(clamp(raw / finish, 0, 1));
+      const from = clamp(start, 0, 0.9);
+      const opening = from + (1 - from) * clamp(raw / finish, 0, 1);
+      const p = glide(opening);
       let lens = 1;
 
       if (!tiled && veilRef.current) {
@@ -342,6 +353,7 @@ export const ScrollMask = ({
       soft,
       stagger,
       stamp,
+      start,
       tiled,
       variant,
       zoom,
@@ -356,8 +368,10 @@ export const ScrollMask = ({
     const rect = root.getBoundingClientRect();
     const run = rect.height - tall;
     if (run <= 0) return 0;
-    return clamp(-rect.top / run, 0, 1);
-  }, []);
+    // Exploreans edit: count from `lead` viewport heights before the pin, not only after it
+    const early = tall * clamp(lead, 0, 1);
+    return clamp((early - rect.top) / (run + early), 0, 1);
+  }, [lead]);
 
   useEffect(() => {
     const root = rootRef.current;

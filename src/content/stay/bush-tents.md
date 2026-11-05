@@ -15,13 +15,15 @@ features:
   - Bathrobes, slippers, bathroom amenities and hairdryer
   - Wi-Fi
   - Turndown every evening
-image: /images/places/mara-river-camp/mara-river-camp-stay-bush-tent-interior-01.webp
-alt: A bed with white netting inside a bush tent, the canvas open to green bush
+image: /images/places/mara-river-camp/mara-river-camp-stay-bush-tent-canopy-bed-01.webp
+alt: A four-poster bed with white netting in a bush tent, a hat and travel bag at its foot
 gallery:
-  - image: /images/places/mara-river-camp/mara-river-camp-stay-bush-tent-bedroom-01.webp
-    alt: A four-poster bed with white netting and a red throw inside a bush tent
-  - image: /images/places/mara-river-camp/mara-river-camp-stay-bush-tent-bathroom-01.webp
-    alt: The stone-tiled en-suite bathroom of a bush tent
+  - image: /images/places/mara-river-camp/mara-river-camp-stay-bush-tent-family-room-01.webp
+    alt: A bush tent with a canopy double bed and a single bed, set up for a family
+  - image: /images/places/mara-river-camp/mara-river-camp-stay-bush-tent-en-suite-01.webp
+    alt: The en-suite bathroom of a bush tent, with two stone basins and a shower behind a curved wall
+  - image: /images/places/mara-river-camp/mara-river-camp-stay-bush-tent-under-the-trees-01.webp
+    alt: A bush tent set among tall trees in the camp grounds
 seo_title: Bush tents | Mara River Camp, Maasai Mara | Exploreans
 seo_description: Spacious bush tents at Mara River Camp, each with a private terrace looking into the bush. 32 sqm with a 10 sqm terrace, for up to four guests.
 ---

@@ -4,8 +4,8 @@ excerpt: What each season brings to the river, from the green months to the grea
 date: 2026-01-15
 family: nature
 author: The team at Mara River Camp
-image: /images/places/mara-river-camp/mara-river-camp-nature-mara-river-01.webp
-alt: The wide brown water of the Mara River between wooded banks
+image: /images/places/mara-river-camp/mara-river-camp-nature-mara-river-morning-01.webp
+alt: The Mara River in early morning light, the far bank reflected in still water
 seo_title: When to visit the Maasai Mara | A year on the Mara River | Exploreans
 seo_description: The Maasai Mara season by season, from the green months to the Great Migration crossings from July to October, as seen from Mara River Camp.
 ---

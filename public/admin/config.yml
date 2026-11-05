@@ -226,6 +226,8 @@ collections:
             fields:
               - { label: "Title", name: "title", widget: "string" }
               - { label: "Text", name: "body", widget: "text" }
+              - { label: "Photograph", name: "image", widget: "image", required: false }
+              - { label: "Alt text", name: "alt", widget: "string", required: false }
 
       - name: "experiences"
         label: "Experiences"

@@ -129,7 +129,7 @@ const pages = defineCollection({
     image: optString,
     alt: optString,
     /* Stay */
-    in_camp: z.array(z.object({ title: z.string(), body: z.string() })).optional(),
+    in_camp: z.array(z.object({ title: z.string(), body: z.string(), image: optString, alt: optString })).optional(),
     /* Passport */
     steps: z.array(z.object({ title: z.string(), body: z.string() })).optional(),
     rewards: z.array(z.object({ label: z.string(), title: z.string(), body: z.string() })).optional(),

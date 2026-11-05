@@ -17,8 +17,10 @@ export default function StayReveal({ src, alt, children }: Props) {
       variant="iris"
       src={src}
       alt={alt}
-      scrollLength={1.2}
-      settle={0.8}
+      scrollLength={1}
+      settle={0.7}
+      lead={0.85}
+      start={0.18}
       smooth={0.12}
       feather={12}
       zoom={1.1}
