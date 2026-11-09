@@ -101,3 +101,14 @@
   for = "/video/*"
   [headers.values]
     Cache-Control = "public, max-age=604800"
+
+# Keep the CMS out of search results. robots.txt lets crawlers in so they can read this header
+[[headers]]
+  for = "/admin"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
