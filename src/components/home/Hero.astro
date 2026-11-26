@@ -169,7 +169,10 @@ const h = (await getEntry('home', 'home'))!.data.hero;
     position: absolute;
     inset: 0;
     background: var(--natural-white);
-    animation: hero-line 2.8s var(--ease) infinite;
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: hero-line 2.8s var(--ease) infinite;
+    }
   }
 
   @keyframes hero-line {

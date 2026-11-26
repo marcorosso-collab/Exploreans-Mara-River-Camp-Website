@@ -5,14 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex">
   <title>Exploreans CMS</title>
-  <link rel="stylesheet" href="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.css">
 </head>
 <body>
-  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
-  <script>
-    SveltiaCMS.init({
-      config: '/admin/config.yml'
-    });
-  </script>
+  <!--
+    Pinned to one release with a Subresource Integrity hash, so a new or tampered file on the
+    CDN can never run on this page (it holds the editor's GitHub access). Sveltia ships its
+    styles inside the script, and starts itself with config.yml from this folder. To upgrade:
+    change the version in the URL, then replace the hash with the output of
+      curl -s https://unpkg.com/@sveltia/cms@VERSION/dist/sveltia-cms.js | openssl dgst -sha384 -binary | openssl base64 -A
+  -->
+  <script
+    src="https://unpkg.com/@sveltia/cms@0.263.0/dist/sveltia-cms.js"
+    integrity="sha384-hVO21ZfJcVoU4TMwvTwtOuSoFXfzzTWKVsnPRgTLVxm2HXEriFFotrXTziF1FvDv"
+    crossorigin="anonymous"
+  ></script>
 </body>
 </html>

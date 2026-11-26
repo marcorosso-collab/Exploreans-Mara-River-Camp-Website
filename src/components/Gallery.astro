@@ -228,7 +228,10 @@ const id = `gallery-${label.toLowerCase().replace(/[^a-z]+/g, '-')}`;
     gap: 14px;
     justify-items: center;
     max-width: 100%;
-    animation: reveal-in 500ms var(--ease-out);
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: reveal-in 500ms var(--ease-out);
+    }
   }
 
   .lightbox__slide[hidden] {

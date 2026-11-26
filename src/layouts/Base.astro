@@ -122,8 +122,10 @@ const graph = [
 
     <!--
       Consent first (Google Consent Mode v2). Everything is denied by default, and Google
-      Analytics and Tag Manager load only after the visitor accepts analytics in the cookie
-      banner. The choice lives in localStorage for 12 months. See src/components/ConsentBanner.astro.
+      Analytics loads only after the visitor accepts analytics in the cookie banner. Google Tag
+      Manager (GTM-PZCKDW9Z) is not loaded while its container is empty; to add it back, load
+      gtm.js here and update the cookie policy. The choice lives in localStorage for 12 months.
+      See src/components/ConsentBanner.astro.
     -->
     <script is:inline>
       window.dataLayer = window.dataLayer || [];
@@ -153,12 +155,6 @@ const graph = [
           document.head.appendChild(ga);
           gtag('js', new Date());
           gtag('config', 'G-QV5BLB9NV3');
-          // Google Tag Manager
-          dataLayer.push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
-          var gtm = document.createElement('script');
-          gtm.async = true;
-          gtm.src = 'https://www.googletagmanager.com/gtm.js?id=GTM-PZCKDW9Z';
-          document.head.appendChild(gtm);
         };
         if (valid && choice.analytics) window.__loadTags();
       })();
@@ -186,8 +182,11 @@ const graph = [
 </html>
 
 <style is:global>
-  @view-transition {
-    navigation: auto;
+  /* Cross-page fade, only for visitors who have not asked for less motion */
+  @media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+      navigation: auto;
+    }
   }
 
   ::view-transition-old(root),

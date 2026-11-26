@@ -73,7 +73,7 @@ All copy lives in `src/content/` and is editable at `/admin` (Sveltia CMS, GitHu
 
 ### Photography
 
-Processed photography is in `public/images/places/mara-river-camp/`, named `place-family-subject-number`, as `name.webp` (1920 px) plus `name-960.webp`. `Img.astro` picks up the small variant and reads real dimensions to prevent layout shift. CMS uploads go to `public/images/uploads/` and are converted to WebP at 1920 px.
+Processed photography is in `public/images/places/mara-river-camp/`, named `place-family-subject-number`, as `name.webp` (1920 px) plus `-640`, `-960` and `-1280` variants, each also as AVIF. After adding photos, run `node scripts/image-variants.mjs` to make the missing variants. `Img.astro` serves AVIF with a WebP fallback, lists whichever widths exist, and reads real dimensions to prevent layout shift. CMS uploads go to `public/images/uploads/` and are converted to WebP at 1920 px.
 
 ## Before publishing anything new
 

@@ -12,18 +12,46 @@ interface Props {
 
 const { src, alt, sizes = '100vw', class: className, priority = false, position } = Astro.props;
 const srcset = srcsetFor(src);
+const avifSrcset = srcsetFor(src, 'avif');
 const dims = dimensionsOf(src);
 ---
-<img
-  class={className}
-  src={src}
-  srcset={srcset}
-  sizes={srcset ? sizes : undefined}
-  alt={alt}
-  width={dims?.width}
-  height={dims?.height}
-  loading={priority ? 'eager' : 'lazy'}
-  decoding={priority ? 'sync' : 'async'}
-  fetchpriority={priority ? 'high' : undefined}
-  style={position ? `object-position:${position}` : undefined}
-/>
+{/* AVIF where the browser takes it, WebP otherwise. The <picture> is display: contents so
+    the <img> still lays out as a direct child of whatever holds it. */}
+{avifSrcset ? (
+  <picture class="img-picture">
+    <source type="image/avif" srcset={avifSrcset} sizes={sizes} />
+    <img
+      class={className}
+      src={src}
+      srcset={srcset}
+      sizes={srcset ? sizes : undefined}
+      alt={alt}
+      width={dims?.width}
+      height={dims?.height}
+      loading={priority ? 'eager' : 'lazy'}
+      decoding={priority ? 'sync' : 'async'}
+      fetchpriority={priority ? 'high' : undefined}
+      style={position ? `object-position:${position}` : undefined}
+    />
+  </picture>
+) : (
+  <img
+    class={className}
+    src={src}
+    srcset={srcset}
+    sizes={srcset ? sizes : undefined}
+    alt={alt}
+    width={dims?.width}
+    height={dims?.height}
+    loading={priority ? 'eager' : 'lazy'}
+    decoding={priority ? 'sync' : 'async'}
+    fetchpriority={priority ? 'high' : undefined}
+    style={position ? `object-position:${position}` : undefined}
+  />
+)}
+
+<style is:global>
+  .img-picture {
+    display: contents;
+  }
+</style>
