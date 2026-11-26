@@ -186,8 +186,11 @@ const graph = [
 </html>
 
 <style is:global>
-  @view-transition {
-    navigation: auto;
+  /* Cross-page fade, only for visitors who have not asked for less motion */
+  @media (prefers-reduced-motion: no-preference) {
+    @view-transition {
+      navigation: auto;
+    }
   }
 
   ::view-transition-old(root),

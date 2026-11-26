@@ -254,7 +254,10 @@ const last = moments.length - 1;
     border-radius: 50%;
     background: var(--natural-white);
     opacity: 0.7;
-    animation: twinkle 3.6s var(--ease) var(--d) infinite alternate;
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: twinkle 3.6s var(--ease) var(--d) infinite alternate;
+    }
   }
 
   @keyframes twinkle {
@@ -381,9 +384,4 @@ const last = moments.length - 1;
     }
   }
 
-  @media (prefers-reduced-motion: reduce) {
-    .day__star {
-      animation: none;
-    }
-  }
 </style>

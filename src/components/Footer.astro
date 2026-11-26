@@ -159,7 +159,9 @@ const places = [
   }
 
   .footer__field input:focus-visible {
-    outline: none;
+    /* Transparent rather than none: high-contrast modes drop box-shadow but paint the outline */
+    outline: 2px solid transparent;
+    outline-offset: 2px;
     border-color: var(--natural-white);
     box-shadow: 0 0 0 1px var(--natural-white);
   }

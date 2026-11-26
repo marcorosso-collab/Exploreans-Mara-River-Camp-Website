@@ -1,6 +1,6 @@
 ---
 /**
- * Cookie consent. Opt-in for everyone: Google Analytics and Tag Manager stay off until the
+ * Cookie consent. Opt-in for everyone: Google Analytics stays off until the
  * visitor accepts analytics (the loader and Consent Mode defaults live in Base.astro).
  * "Accept analytics" and "Essential only" carry equal weight. Any [data-cookie-settings]
  * control reopens the preferences, so a choice can be changed at any time.
@@ -244,6 +244,26 @@
   .consent__switch input:focus-visible + .consent__track {
     outline: 2px solid var(--basalt);
     outline-offset: 2px;
+  }
+
+  /* High-contrast modes remove background colours, which is all the drawn switch is made of.
+     Give it a border, and show the "on" state with a system colour. */
+  @media (forced-colors: active) {
+    .consent__track {
+      border: 1px solid CanvasText;
+    }
+
+    .consent__track::after {
+      background: CanvasText;
+    }
+
+    .consent__switch input:checked + .consent__track {
+      background: Highlight;
+    }
+
+    .consent__switch input:checked + .consent__track::after {
+      background: HighlightText;
+    }
   }
 
   .consent__actions {

@@ -169,7 +169,10 @@ const Heading = headingLevel;
     display: grid;
     gap: var(--s-2);
     max-width: 40rem;
-    animation: reveal-in 600ms var(--ease-out);
+
+    @media (prefers-reduced-motion: no-preference) {
+      animation: reveal-in 600ms var(--ease-out);
+    }
   }
 
   .seasons__panel[hidden] {
