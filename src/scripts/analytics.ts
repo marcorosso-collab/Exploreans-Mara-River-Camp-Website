@@ -1,7 +1,8 @@
 /**
  * Analytics events, sent only when the visitor has accepted analytics cookies.
- * Events go straight to Google Analytics 4 with gtag, and also into the dataLayer so
- * any tag added later in Google Tag Manager receives them too.
+ * Events go to Google Analytics 4 through gtag, which queues them on the dataLayer. They are
+ * not pushed to the dataLayer a second time: if Google Tag Manager is added later with its own
+ * GA4 event tags, the same visit would be counted twice.
  */
 declare global {
   interface Window {
@@ -16,5 +17,4 @@ declare global {
 export function track(event: string, params: Record<string, unknown> = {}) {
   if (!window.__consent?.analytics) return;
   window.gtag?.('event', event, params);
-  window.dataLayer?.push({ event, ...params });
 }

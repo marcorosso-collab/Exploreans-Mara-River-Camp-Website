@@ -1,7 +1,7 @@
 ---
 title: Cookie policy
 description: The cookies and similar technologies used on mara.exploreans.com, what each one does, how long it lasts and how to change your choice.
-updated: 2026-10-26
+updated: 2026-11-26
 ---
 
 This policy explains the cookies and similar technologies used on mara.exploreans.com. It sits alongside our [privacy policy](/privacy/), which explains who we are and how we look after your personal data.
@@ -12,7 +12,7 @@ Cookies are small files that a website stores in your browser. Similar technolog
 
 ## Your choice
 
-When you first visit, we ask whether you accept analytics cookies. Google Analytics and Google Tag Manager stay switched off until you accept. You can change your choice at any time through **Cookie settings** at the foot of every page. We ask again after 12 months.
+When you first visit, we ask whether you accept analytics cookies. Google Analytics stays switched off until you accept. You can change your choice at any time through **Cookie settings** at the foot of every page. We ask again after 12 months.
 
 ## What we use
 
@@ -33,8 +33,6 @@ Used only if you accept. Google Analytics helps us understand how many people vi
 |---|---|---|---|
 | _ga | Google Analytics | Distinguishes one visitor from another | 2 years |
 | _ga_QV5BLB9NV3 | Google Analytics | Keeps track of a visit | 2 years |
-
-Google Tag Manager also loads only after you accept analytics. It manages our analytics tags and sets no cookies of its own.
 
 ## Other sites
 
